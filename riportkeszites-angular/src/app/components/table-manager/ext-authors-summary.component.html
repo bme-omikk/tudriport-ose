@@ -1,0 +1,117 @@
+<mat-card *ngIf="globals.isSearchFormVisibleSubject.getValue()">
+    <mat-card-title translate>
+        App.SummaryView.viewName
+    </mat-card-title>
+    <mat-card-content>
+        <span (keyup.enter)="update()">
+            <p translate>App.Common.SearchForm.Steps.ChooseScoring.heading</p>
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ChooseScoring.availableScorings' | translate }}"
+                    [(value)]="actualSearchData.mode"
+                    [disabled]="!availableModes"
+                    (selectionChange)="modeChanged()"
+                    required>
+
+                    <mat-option *ngFor="let mode of availableModes" [value]="mode">{{ mode }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <br>
+            <p translate>App.Common.SearchForm.Steps.ChooseSubject.heading</p>
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ChooseSubject.organizationLevel0' | translate }}"
+                    [(value)]="actualSearchData.org"
+                    (selectionChange)="updateUnits()"
+                    [disabled]="availableOrgs?.length == 0">
+
+                    <mat-option *ngFor="let org of availableOrgs" [value]="org">{{ org }}</mat-option>
+                </mat-select>
+                <button mat-button *ngIf="actualSearchData.org" matSuffix mat-icon-button aria-label="Clear" (click)="clearOrg()">
+                    <mat-icon>close</mat-icon>
+            </button>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ChooseSubject.organizationLevel1' | translate }}"
+                    [(value)]="actualSearchData.unit"
+                    (selectionChange)="updateSubUnits()"
+                    [disabled]="!actualSearchData.org || availableUnits?.length == 0">
+
+                    <mat-option *ngFor="let unit of availableUnits" [value]="unit">{{ unit }}</mat-option>
+                </mat-select>
+                <button mat-button *ngIf="actualSearchData.unit" matSuffix mat-icon-button aria-label="Clear" (click)="clearUnits()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ChooseSubject.organizationLevel2' | translate }}"
+                    [(value)]="actualSearchData.subunit"
+                    (selectionChange)="updateSubSubUnits()"
+                    [disabled]="!actualSearchData.org || !actualSearchData.unit || availableSubUnits?.length == 0">
+
+                    <mat-option *ngFor="let subunit of availableSubUnits" [value]="subunit">{{ subunit }}</mat-option>
+                </mat-select>
+                <button mat-button *ngIf="actualSearchData.subunit" matSuffix mat-icon-button aria-label="Clear" (click)="clearSubUnits()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ChooseSubject.organizationLevel3' | translate }}"
+                    [(value)]="actualSearchData.subsubunit"
+                    [disabled]="!actualSearchData.org || !actualSearchData.unit || !actualSearchData.subunit || availableSubSubUnits?.length == 0">
+
+                    <mat-option *ngFor="let subsubunit of availableSubSubUnits" [value]="subsubunit">{{ subsubunit || "(Nincs megadva)" }}</mat-option>
+                </mat-select>
+                <button mat-button *ngIf="actualSearchData.subsubunit" matSuffix mat-icon-button aria-label="Clear" (click)="clearSubSubUnits()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <br/>
+            <p translate>App.Common.SearchForm.Steps.ScoringParameters.heading</p>
+            <mat-form-field>
+                <input
+                    matInput
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ScoringParameters.pYear' | translate }}"
+                    [matAutocomplete]="yearAutocompleteList"
+                    [(ngModel)]="actualSearchData.year">
+                <button mat-button *ngIf="actualSearchData.year" matSuffix mat-icon-button aria-label="Clear" (click)="actualSearchData.year=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-hint translate>App.Common.SearchForm.Steps.ScoringParameters.pYearHint</mat-hint>
+            </mat-form-field>
+            <mat-autocomplete #yearAutocompleteList="matAutocomplete">
+                <mat-option *ngFor="let y of yearSuggestList" [value]="y">
+                  {{y}}
+                </mat-option>
+            </mat-autocomplete>
+            <br/>
+            <!-- spacer, otherwise mat-hint and subsequent fields overlap -->
+            <div style="height: 3em;"></div>
+            <div *ngFor="let extraField of viewableExtraFields">
+                <mat-form-field>
+                    <input matInput placeholder="{{extraField.label}}" [(ngModel)]="extraField.value">
+                    <button mat-button *ngIf="extraField.value" matSuffix mat-icon-button aria-label="Clear" (click)="extraField.value=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-hint *ngIf="extraField.hint">{{extraField.hint}}</mat-hint>
+                </mat-form-field>
+            </div>
+            <br/>
+        </span>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button (click)="update()" [disabled]="!actualSearchData.mode">
+            <span translate>App.Common.SearchForm.btnDoScoring</span>
+        </button>
+    </mat-card-actions>
+</mat-card>
+
+<app-table-manager #tableManager (isDataLoaded)="isDataLoaded = $event" (openPopup)="openPopup($event)"></app-table-manager>

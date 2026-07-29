@@ -1,0 +1,38 @@
+mat-toolbar {
+    font-size: 1em;
+    min-height: 0;
+    color: white;
+    margin: 2px 0;
+    font-weight: bold;
+}
+
+mat-toolbar-row {
+    height: auto;
+    height: 2em;
+    cursor: pointer;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+/* info */
+.type-0 {
+    background-color: #17a2b8;
+}
+
+/* success */
+.type-1 {
+    background-color: #28a745;
+}
+
+/* warning */
+.type-2 {
+    background-color: #ffc107;
+    color: black;
+}
+
+/* error */
+.type-3 {
+    background-color: #dc3545;
+}

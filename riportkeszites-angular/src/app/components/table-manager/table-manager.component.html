@@ -1,0 +1,17 @@
+<br><br>
+<mat-card>
+    <mat-card-actions>
+        <button mat-raised-button (click)="exportToSpreadsheet()" *ngIf="exportableTablePresent">
+            <span translate>App.Common.btnExportTableToSpreadsheet</span>
+        </button>
+    </mat-card-actions>
+
+    <mat-card-content>
+        <mat-progress-bar
+            mode="indeterminate"
+            *ngIf="showLoadingBar"
+            matTooltip="{{ 'App.Common.scoringProgressbarHint' | translate }}">
+        </mat-progress-bar>
+        <div #tableContainer></div>
+    </mat-card-content>
+</mat-card>

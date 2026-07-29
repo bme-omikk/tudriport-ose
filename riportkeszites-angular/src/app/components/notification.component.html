@@ -1,0 +1,12 @@
+<mat-toolbar *ngFor="let notification of notifications" class="type-{{ notification.type }}">
+  <mat-toolbar-row (click)="close(notification)">
+    <span *ngIf="notification.isHTML; else textOnlyNotification" [innerHTML]="notification.text"></span>
+    <ng-template #textOnlyNotification>
+      {{ notification.text }}
+    </ng-template>
+    <span class="spacer"></span>
+    <button mat-icon-button>
+      <mat-icon aria-label="Close notification">close</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

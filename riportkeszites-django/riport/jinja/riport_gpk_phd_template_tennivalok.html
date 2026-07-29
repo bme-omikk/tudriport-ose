@@ -1,0 +1,709 @@
+<p style="margin-top: 0px; margin-bottom: 5px;">
+<b>Tennivalók</b>
+<br><br>
+A GPK Doktori Iskola szabályai olyan állapotú közleményeket is beszámítanak bizonyos pontokon, melyeket az MTMT protokollja csak
+'Egyéb' közleménytípussal
+enged felvinni [pl. bírálatra befogadott kézirat; elfogadott, de még Előzetes kiadásként (<i>Early view / Online first / …</i>) sem elérhető kézirat]. Ezenkívül könyvelendő valahol, hogy egy közlemény egy doktorandusz számára tézisponthoz kapcsolódik-e, továbbá az
+MTMT-ben tárolt
+folyóirat-adatok bizonyos ritka esetekben nem naprakészek.
+Ezek miatt a program
+azokat az MTMT-beli közleményrekordokat veszi számításba,
+melyekhez fel lett vive egy
+<br>
+<span class="emph" style="color: red;">alább generált (!)</span>
+<br>
+<span class="emph">Egyéb URL</span> külső azonosító, melyben a <span class="emph">szükséges többlet adatok</span> tárolódnak.
+Ez kinézetre egy weboldal címe (URL-je), valójában pedig a többlet
+adatok elkódolt alakja. Példák:
+</p>
+<table style="margin-top: 0px; margin-bottom: 5px;"><tr>
+    <td width="1px">
+    <span style="font-family: monospace;">&nbsp;&nbsp;&nbsp;</span>
+    </td>
+    <td>
+    <span style="font-family: monospace;">
+        https://phd.gpk.bme.hu/pub/s/j/l9/t3?1234567<br>
+        https://phd.gpk.bme.hu/pub/s70707070/j2345/l6/t1?2345678<br>
+        https://phd.gpk.bme.hu/pub/s/j2345-wn-in-sy-fy-m1/l8/t3?3456789<br>
+        https://phd.gpk.bme.hu/pub/s/c456789/l9/t2?4567890
+    </span>
+    </td>
+    <td width="1px"
+    valign="top">&nbsp;&nbsp;&nbsp;azaz&nbsp;tagolásban&nbsp;&nbsp;&nbsp;</td>
+    <td>
+    <span style="font-family: monospace;">
+        https://phd.gpk.bme.hu/pub/<span
+        class="szina">s</span>/<span
+        class="szinb">j</span>/<span
+        class="szinc">l9</span>/<span
+        class="szind">t3</span>?<span
+        class="szine">1234567</span><br>
+        https://phd.gpk.bme.hu/pub/<span
+        class="szina">s70707070</span>/<span
+        class="szinb">j2345</span>/<span
+        class="szinc">l6</span>/<span
+        class="szind">t1</span>?<span
+        class="szine">2345678</span><br>
+        https://phd.gpk.bme.hu/pub/<span
+        class="szina">s</span>/<span
+        class="szinb">j2345-wn-in-sy-fy-m1</span>/<span
+        class="szinc">l8</span>/<span
+        class="szind">t3</span>?<span
+        class="szine">3456789</span><br>
+        https://phd.gpk.bme.hu/pub/<span 
+        class="szina">s</span>/<span
+        class="szinb">c456789</span>/<span
+        class="szinc">l9</span>/<span
+        class="szind">t2</span>?<span
+        class="szine">4567890</span>
+    </span>
+    </td>
+</tr></table>
+<p style="margin-top: 0px; margin-bottom: 0px;">
+Bennük
+<br>
+<span class="szina" style="padding: 0px 1px 0px 0px;">&nbsp;</span>
+    az <span style="font-family: monospace;">s</span> kezdetű első blokk a
+    levonandó témavezetővel kapcsolatos esetleges különleges tudnivalók helye,
+<br>
+<span class="szinb" style="padding: 0px 1px 0px 0px;">&nbsp;</span>
+    a második blokk a közlemény fajtáját jelöli ki és különleges tudnivalókat
+    adhat meg,
+<br>
+<span class="szinc" style="padding: 0px 1px 0px 0px;">&nbsp;</span>
+    a harmadik a bírálati folyamat szerinti állapotszintet adja meg,
+<br>
+<span class="szind" style="padding: 0px 1px 0px 0px;">&nbsp;</span>
+    a negyedik azt tárolja, hogy a közlemény tézisponthoz kapcsolódik-e,
+<br>
+<span class="szine" style="padding: 0px 1px 0px 0px;">&nbsp;</span>
+    az ötödik pedig egy időbélyegző, mely az URL-t egyedivé teszi;
+<br>
+
+a részletek a következők.
+
+<table>
+
+    <tr colspan = 3>  <!-- hack: üres sor -->
+    <td style="font-size: 5px;">&nbsp;</td>
+    </tr>
+    <tr>
+
+    <td width="1px" class="szina">&nbsp;</td>
+    <td align="center" valign="top">&nbsp;&nbsp;1.&nbsp;</td>
+
+
+    <!-- 1. blokk: s -->
+    <td>
+        Az első blokkban elegendő csupán az
+        <br>
+        <span style="font-family: monospace;">s</span>
+        <br>
+        kód (mely a <span style="font-family: monospace;">supervisor</span>-ra
+        utal), kivéve, ha van a szerzők között olyan doktorandusz, akinél
+        <span class="emph">témavezető-váltás</span> történt, és nem a programban
+        eltárolt témavezető (ld. 'Tudnivalók' rész) vonandó le. Az ilyen
+        kivételes esetek a következő példák szerint jelezhetők:
+        <ul style="list-style-type: circle;">
+        <li>
+            ha a <span style="font-family: monospace;">70707070</span>
+            MTMT-azonosítójú ex-témavezető vonandó le (a közlemény összes
+            doktorandusz szerzője számára):
+            <br>
+            <span style="font-family: monospace;">s70707070</span>
+        </li>
+        <li>
+            ha a <span style="font-family: monospace;">70707070</span>
+            ex-témavezető
+            vonandó le az <span style="font-family: monospace;">10101010</span> és
+            <span style="font-family: monospace;">20202020</span> doktorandusz
+            szerző számára, és a
+            <span style="font-family: monospace;">80808080</span> ex-témavezető
+            vonandó le a
+            <span style="font-family: monospace;">30303030</span> doktorandusz
+            szerző számára:
+            <br>
+            <span style="font-family:
+            monospace;">s70707070-10101010-20202020-s80808080-30303030</span>
+            <br>
+            (itt a témavezetők sorrendje mindegy, és a doktoranduszaik sorrendje
+            is); esetleges további doktorandusz szerzők számára pedig a programban
+            megadott témavezetőjük lesz levonva.
+        </li>
+        </ul>
+        Bárki MTMT-beli <span class="emph">szerző MTMT-azonosítója</span> pl. így
+        olvasható le:
+        <a href="https://mtmt.hu"
+        style="text-decoration:underline;">https://mtmt.hu</a>, 'Nyilvános kereső 
+        felület', a bal hasábban rákeresünk az illetőre, a bejövő oldal URL-je 
+        (lásd fenn a böngésző címsorát) pl.
+        <span style="font-family: monospace;">https://m2.mtmt.hu/gui2/?type=authors&mode=browse&sel=authors10002700</span>,
+        leolvassuk a végén levő számsort (a példában
+        <span style="font-family: monospace;">10002700</span>).
+    </td>
+
+
+    <!-- 2. blokk: j/c/b/bc/a -->
+    </tr>
+    <tr colspan = 3>  <!-- hack: üres sor -->
+    <td style="font-size: 5px;">&nbsp;</td>
+    </tr>
+    <tr>
+
+    <td width="1px" class="szinb">&nbsp;</td>
+    <td align="center" valign="top">&nbsp;&nbsp;2.&nbsp;</td>
+
+    <td>
+        <span class="emph">Egyrészt</span>, az
+        'Egyéb' típussal
+        felvitt nem-végleges állapotú közlemények esetén a
+        típusból és besorolásból nem derül ki, hogy 'folyóiratcikk',
+        'konferenciacikk' vagy 'könyv(fejezet)' fajtájú közleményről van-e szó,
+        ezt a második blokkban adjuk meg. <span class="emph">Másrészt</span>,
+        ide kapcsolódó, esetenként
+        szükséges többlet adatokat is itt tüntethetünk fel.<br>
+        Ebben a második blokkban ötfajta
+        kód szerepelhet:
+        <ul style="list-style-type: circle;">
+        <li>
+            <span style="font-family: monospace;">j</span> (mely a
+            <span style="font-family: monospace;">journal</span>-re utal) =
+            '<span class="emph">folyóiratcikk</span>' (pontos meghatározása a
+            'Tudnivalók' részben):
+            <ul style="list-style-type: square;">
+            <li>
+                <span class="emph">Folyóiratcikk</span> típusú közleményrekord
+                esetén <span class="emph">elegendő</span> csupán a
+                <br>
+                <span style="font-family: monospace;">j</span>
+                <br>
+                kód, ama igen ritka kivételektől eltekintve,
+                amikor azt tapasztaljuk, hogy az MTMT
+                <span class="emph">folyóirat-nyilvántartása</span>
+                nem naprakész a
+                WoS-indexáltság, a hatástényező (impakt faktor, IF) megléte, a
+                Scopus-indexáltság, a külföldi/hazai kiadó vagy a kifogásolható
+                gyakorlat tekintetében, és felül akarnánk írni:
+            </li>
+            <li>
+                <span style="font-family: monospace;">j-wn-in-sy-fy-m1</span>
+                = a közlemény megjelenésének évében a folyóirat nem WoS-indexált
+                (WoS = no), nincs hatástényezője
+                (IF = no), Scopus-indexált (Scopus = yes), külföldi kiadású
+                (foreign = yes), és az MTA ajánlása szerint nem folytatott
+                kifogásolható gyakorlatot a megjelenés évében (MTA = 1). Az öt
+                szempont közül elegendő azokat megadni, amelyekben felül akarjuk
+                írni az MTMT-t, tehát pl. elegendő egy
+                <br>
+                <span style="font-family: monospace;">j-sy-m1</span>
+                <br>
+                kód, és a sorrend is tetszőleges.
+                <br>
+                Ha a közleményhez fel van vive a WoS- ill. Scopus-azonosító, akkor
+                a <span style="font-family: monospace;">wy</span> ill.
+                <span style="font-family: monospace;">sy</span> kódra nincs
+                szükség.
+                <!-- Vigyék fel a WoS- ill. Scopus-azonosítót. -->
+                <!-- Hol ellenőrizhető a w, az i, az s, az f. -->
+                <br>
+                Az MTA (és így az MTMT) a kifogásolható gyakorlatot a <a
+href="https://kanalregister.hkdir.no/en" target="_blank"
+                style="text-decoration:underline;">norvég lista</a> szerinti 0-s
+                besorolás esetén állapítja meg, a magyar nyelvű és a hazai
+                kiadású folyóiratok kivételével. Az MTMT a
+                <a href="https://www.mtmt.hu/norveg_lista/" target="_blank"
+style="text-decoration:underline;">https://www.mtmt.hu/norveg_lista/</a>
+                oldalon vezeti a
+                kifogásolható gyakorlatot folytató folyóiratokat. Jelen
+                kódolásban ezt
+                <span style="font-family: monospace;">m0</span> írja le.
+            </li>
+            <li>
+                <span class="emph">Egyéb</span> típusú
+                közleményrekord esetén
+                <br>
+                <span style="font-family: monospace;">j2345</span>
+                <br>
+                adja meg, hogy a kézirat a
+                <span style="font-family: monospace;">2345</span> 
+                MTMT-azonosítójú folyóirathoz van beadva (folyóirat
+                MTMT-azonosítója a <a href="https://www.mtmt.hu/folyoirat"
+                target="_blank"
+style="text-decoration:underline;">https://www.mtmt.hu/folyoirat</a>
+                oldalon a folyóiratra rákeresve az
+                <span style="font-family: monospace;">MTID</span> adat).
+                <br>
+                Ez a kód kombinálható az előzővel:
+                ha a <span style="font-family: monospace;">2345</span>
+                folyóiratról az MTMT nyilvántartása
+                nem volna naprakész, akkor pl.
+                <br>
+                <span style="font-family: monospace;">j2345-sy-m1</span>
+                <br>
+            </li>
+            </ul>
+            <span class="emph">Figyelem</span>: ha felülírjuk egy vagy több
+            szempontból az MTMT
+            folyóirat-nyilvántartását, <span class="emph">bizonyítékot kellhet
+            benyújtanunk</span> a Doktori Iskolának. Ajánlott inkább megkérni az
+            adat kiigazítását; az MTMT-ben az e-mail-szerű
+            '<span class="emph">Cédula</span>' ("ticket") funkció a legmegfelelőbb
+            ilyen célokra (konkrét közleményhez köthető kérésekre):
+            <ul style="list-style-type: square;">
+            <li>az érintett közleményt kijelöljük (a csík háttérszínét
+            megkattintjuk),</li>
+            <li>fent jobbra (vagy másodlagos egérgombbal) 'Cédulák'.</li>
+            </ul>
+            Előnye, hogy több admin is megkapja, és amelyikük leghamarabb foglalkozni tud vele,
+            az oldja meg.
+        </li>
+        <li>
+            <span style="font-family: monospace;">c</span> (mely a
+            <span style="font-family: monospace;">conference</span>-re utal) =
+            '<span class="emph">konferenciacikk</span>' (pontos meghatározása a
+            'Tudnivalók' részben): a puszta
+            <br>
+            <span style="font-family: monospace;">c</span>
+            <br>
+            kód elegendő, ha a közleményrekordban illetve a befoglaló
+            konferenciakötet-rekordban ki van töltve a 'Konferencia' mező
+            (kitöltése: lehetőleg válasszuk ki az MTMT-be már felvitt
+            konferenciák közül,
+            ha pedig valóban nem szerepel még az MTMT-ben, a konferenciakereső
+            ablak felső, széles, zöld 'Új' gombjával újként vigyük fel &ndash;
+            ilyenkor a konferenciafelvivő ablak 'Megjegyzés' mezőjében tüntessük
+            fel a konferencia honlapját is).
+            <br>
+            Ha a 'Konferencia' mezőt nem tudjuk kitölteni, de találunk (pl. a bal
+            hasáb 'Keresések és sablonok' rovatában az 'Új keresés' révén) más
+            MTMT-beli közleményrekordot,
+            amelyben szerepel ez a konferencia, akkor a kód legyen
+            <br>
+            <span style="font-family: monospace;">c456789</span>
+            <br>
+            alakú, ahol <span style="font-family: monospace;">456789</span> a
+            konferencia MTMT-azonosítója. Ez így olvasható le: a
+            közleményrekordhoz felvitt konferenciát megnyitjuk (a nagyítótól
+            jobbra levő ikonnal; ez akkor is megtehető, ha a közleményrekordot
+            nem szerkeszthetjük), 
+            és a bejövő ablak legfelső adata az MTMT-azonosító.
+            <br>
+            Máskülönben kérjük tanszéki, kari, BME-szintű
+            vagy központi admin segítségét, pl. 'Cédulán' (ld. feljebb). 
+        </li>
+        <li>
+            <span style="font-family: monospace;">b</span> (mely a
+            <span style="font-family: monospace;">book</span>-ra utal) =
+            '<span class="emph">könyv</span>'
+            (pontos meghatározása a 'Tudnivalók' részben): minden esetben (így
+            'Egyéb' típus
+            esetén is) elegendő
+            a puszta <span style="font-family: monospace;">b</span> kód.
+        </li>
+        <li>
+            <span style="font-family: monospace;">bc</span> (mely a
+            <span style="font-family: monospace;">book chapter</span>-re utal) =
+            '<span class="emph">könyvfejezet</span>' (pontos meghatározása a
+            'Tudnivalók' részben): minden esetben (így
+            'Egyéb' típus
+            esetén is) elegendő a
+            puszta <span style="font-family: monospace;">bc</span> kód.
+        </li>
+        <li>
+            <span style="font-family: monospace;">a</span> (mely arra utal, hogy a közleményfajta
+            <span style="font-family: monospace;">automatikusan beazonosítható</span>) =
+            azt gondoljuk, hogy az MTMT alapján egyértelműen beazonosítható a közleményfajta, ezért a programot kérjük meg, azonosítsa be automatikusan.
+            <br>
+            Ilyenkor az <span style="font-family: monospace;">l</span> állapotszint (ld. alább) is automatikusan megállapítódik (<span style="font-family: monospace;">l8</span> lesz, ha be van pipálva a 'Megjelenés előtti' jelölőnégyzet,
+            <span style="font-family: monospace;">l9</span>, ha nincs).
+        </li>
+        </ul>
+    </td>
+
+
+    <!-- 3. blokk: l -->
+    </tr>
+    <tr colspan = 3>  <!-- hack: üres sor -->
+    <td style="font-size: 5px;">&nbsp;</td>
+    </tr>
+    <tr>
+
+    <td width="1px" class="szinc">&nbsp;</td>
+    <td align="center" valign="top">&nbsp;&nbsp;3.&nbsp;</td>
+
+    <td>
+        az <span style="font-family: monospace;">l</span> kód (mely a
+        <span style="font-family: monospace;">level</span>-re utal) a közlemény
+        <span class="emph">állapotszintjét</span> adja meg, 0-tól 9-ig:
+        <ul style="list-style-type: circle;">
+        <li>
+            <span style="font-family: monospace;">l0</span>
+            = beküldve, bírálatra befogadásról még nem érkezett döntés
+        </li>
+        <li>
+            <span style="font-family: monospace;">l1</span>
+            = bírálatra befogadva, első körös bírálat alatt
+        </li>
+        <li>
+            <span style="font-family: monospace;">l2</span>
+            = visszautasítva </li>
+        <li>
+            <span style="font-family: monospace;">l3</span>
+            = jelentős átdolgozás zajlik
+        </li>
+        <li>
+            <span style="font-family: monospace;">l4</span>
+            = jelentős átdolgozás beküldve
+        </li>
+        <li>
+            <span style="font-family: monospace;">l5</span>
+            = kisebb átdolgozás zajlik
+        </li>
+        <li>
+            <span style="font-family: monospace;">l6</span>
+            = kisebb átdolgozás beküldve
+        </li>
+        <li>
+            <span style="font-family: monospace;">l7</span> = elfogadva
+            (elfogadó nyilatkozatot be kellhet nyújtani a Doktori Iskolának)
+        </li>
+        <li>
+            <span style="font-family: monospace;">l8</span> = előzetes kiadás
+            <i>(Early view, Early access, Online first, Ahead of print, In
+            press)</i> [az MTMT-ben 'Megjelenés előtti']: a kiadói honlapon már
+            elérhető, de még nem a végleges adatokkal
+        </li>
+        <li>
+            <span style="font-family: monospace;">l9</span> = végleges
+            megjelenés (végleges évszám, kötetbe lett sorolva, végleges Első és
+            Utolsó oldal vagy Közleményazonosító és Terjedelem)
+        </li>
+        </ul>
+        A kéziratok állapotváltozásait <span class="emph">nem szükséges
+        naprakészen vezetni</span>, elegendő a félévi beszámolók és a
+        Publikáció I–IV (így a komplex vizsga
+        és a cselekményindítás) számára hozni naprakészre.
+    </td>
+
+
+    <!-- 4. blokk: t -->
+    </tr>
+    <tr colspan = 3>  <!-- hack: üres sor -->
+    <td style="font-size: 5px;">&nbsp;</td>
+    </tr>
+    <tr>
+
+    <td width="1px" class="szind">&nbsp;</td>
+    <td align="center" valign="top">&nbsp;&nbsp;4.&nbsp;</td>
+
+    <td>
+        <span style="font-family: monospace;">t</span> =
+        <span class="emph">tézisponthoz kapcsolódik-e</span>:
+        <ul style="list-style-type: circle;">
+        <li><span style="font-family: monospace;">t1</span> = még nem tudni</li>
+        <li><span style="font-family: monospace;">t2</span> = nem</li>
+        <li><span style="font-family: monospace;">t3</span> = igen</li>
+        </ul>
+        Ha egy közlemény több doktorandusz szerzője
+        szemszögéből eltérő a helyzet, akkor pl.<br>
+        <span style="font-family:
+        monospace;">t3-10101010-20202020-t2-30303030</span><br>
+        azt jelzi, hogy a <span style="font-family: monospace;">10101010</span> és
+        <span style="font-family: monospace;">20202020</span> doktorandusz szerzők
+        számára tézisponthoz kapcsolódik, a
+        <span style="font-family: monospace;">30303030</span>
+        doktorandusz számára pedig nem.
+    </td>
+
+
+    <!-- 5. blokk: időbélyegző -->
+    </tr>
+    <tr colspan = 3>  <!-- hack: üres sor -->
+    <td style="font-size: 5px;">&nbsp;</td>
+    </tr>
+    <tr>
+
+    <td width="1px" class="szine">&nbsp;</td>
+    <td align="center" valign="top">&nbsp;&nbsp;5.&nbsp;</td>
+
+    <td>
+        Az időbélyegzőre azért van szükség, hogy egyedivé tegye az URL-t, különben az MTMT-beli duplumellenőrző funkció téves duplumriasztást adhat ki
+        (és pl. 350 ál-duplum között kell keresgéljék az MTMT-admin-ok, hogy van-e valódi duplum). Emiatt voltak már rá példák, hogy egy MTMT-admin
+        eltávolította a GPK PhD Egyéb URL-t.
+        <br>
+        Az időbélyegzőt az <span class="emph">alábbi URL-generáló</span> teszi az URL végére.
+        <br>
+        <!-- <span class="emph" style="color: red;"></span> -->
+        Az időbélyegző nélküli, korábban felvitt Egyéb URL-eket nem kell újragenerálni, utólag el lettek látva időbélyegzővel.
+    </td>
+
+    </tr>
+    <tr colspan = 3>  <!-- hack: üres sor -->
+    <td style="font-size: 5px;">&nbsp;</td>
+    </tr>
+
+</table>
+
+<p style="margin-top: 10px; margin-bottom: 0px;">
+<span class="emph">A közlemények felvitele az MTMT-be</span>: az
+<span style="font-family: monospace;">l</span> állapotszinttel összhangban:
+<ul>
+    <li>
+    A megjelent közlemények (<span style="font-family: monospace;">l9</span>)
+    a végleges Típus&mdash;Besorolással felvive (pl.
+    Folyóiratcikk&mdash;Szakcikk),
+    </li>
+    <li>
+    az előzetes kiadásúak (<span style="font-family: monospace;">l8</span>)
+    bepipált 'Megjelenés előtti' rubrikával (mely a szerkesztőablak felülről
+    hatodik eleme) és a végleges Típus&mdash;Besorolással,
+    </li>
+    <li>
+    a többi pedig
+    'Egyéb' Típussal (mert az MTMT protokollja ezt kívánja), és a Besorolás
+    legyen 'Nem besorolt'
+    (illetve csatolt arXiv, ResearchGate stb. preprint azonosító esetén
+    'Csak repozitóriumban hozzáférhető közlemény').
+    </li>
+</ul>
+Amikor egy 'Egyéb' Típussal felvitt kézirat eljut az előzetes kiadás vagy a végleges
+megjelenés állapotába, a közleményrekord Típusa és Besorolása átállítandó a véglegesre.
+<br>
+Ha a szerzők már nem szerkeszthetik a közleményrekordot, kérjék a tanszéki vagy a
+kari admin segítségét.
+<br>
+A közlemények felviteléhez <b>lásd a 'Tudnivalók' részt is</b>.
+</p>
+
+<p style="margin-bottom: 0px;">
+Amikor ezt az '<span class="emph">Egyéb URL</span>' külső azonosítót
+felvisszük, maga az URL alakú kód
+a 'Külső azonosító jel' rovatba írandó. A piros
+'Külső azonosító neve' legyen 'Egyéb URL'. A 'Megjegyzés' rovatba pedig másoljuk
+be a
+<br>
+<span style="font-family: monospace;">BME GPK Doktori Iskola azonosító</span>
+<br>magyarázó szöveget (hogy minden szerzőtárs és minden MTMT-admin (más intézményé is, központi is) értse, mi
+ennek a külső azonosítónak a szerepe, és nehogy eltávolítsa).
+<br>
+Ez az 'Egyéb URL' külső azonosító <span class="emph">akkor is felvihető és módosítható, ha
+maga a közleményrekord már nem szerkeszthető</span>:
+<ul>
+<li>a közleményt kijelöljük (a csík háttérszínét megkattintjuk),</li>
+    <li>fent 'Műveletek', 'Külső azonosítók kezelése',
+    <br>
+    <ul style="list-style-type: circle;">
+        <li><span class="emph">felvitel</span> a zöld 'Hozzáad' gombbal,</li>
+        <li><span class="emph">módosítás</span> pedig a szemecskétől jobbra levő ikonra 
+        kattintva,</li>
+    </ul>
+    </li>
+    <li>a szerkesztőablak alján 'Mentés és bezárás',</li>
+    <li>'Bezár'.</li>
+</ul>
+<span class="emph">Központi kezelésű</span> közleményhez felvitt Egyéb URL utólag nem módosítható, viszont hatástalanítható:
+vigyünk fel egy újabb Egyéb URL-t, a legutóbb felvitt fog számítani.
+</p>
+
+<p>
+Ha nemcsak egy doktorandusz van a szerzők között, akkor is egyetlen Egyéb URL-t kell felvinni; a doktoranduszok szerinti különbségek a fentiek szerint fejezhetők ki.
+</p>
+
+<p>
+Témavezetői értékeléshez általában nem szükséges ilyen Egyéb URL-t felvinni; kivétel lehet pl., ha felül akarjuk írni az MTMT folyóirat-nyilvántartását,
+vagy pl. ha <span style="font-family: monospace;">l0</span>–<span style="font-family: monospace;">l7</span> állapotú közleményről van szó.
+</p>
+
+<p>
+Az MTMT-beli változtatások <span class="emph">nem azonnal</span> jelentkeznek ezen a
+felületen. A program általában <span class="emph">hétfőnként</span> hozza el az
+MTMT-ből az érintett adatokat és végzi el a számításokat.
+<br>
+Ha ennél gyorsabban szeretnénk látni egy változás eredményét: legfelül 'Beállítások és Adatfrissítő megjelenítése',
+kék <span class="emph">'Adatfrissítés igénylése'</span> gomb, az adatfrissítés általában néhány percen belül lefut.
+</p>
+
+
+<p style="padding: 10px 0px 0px 0px;"><span class="emph">URL-generáló</span> (bonyolultabb esetekben ki kell egészíteni a kapott URL-t):</p>
+<table id="generalo" style="border-collapse: collapse;">
+    <tbody>
+        <tr class="fajtatr">
+            <td rowspan="2" valign="top" class="generalotd"><b>Közleményfajta:</b></td>
+            <td class="generalotd">
+                <input type="radio" id="idfajtaa" name="namefajta" value="a">
+                <label for="idfajtaa"><span style="font-family: monospace;">a</span>:
+                    <b>automatikusan beazonosítható</b>
+                </label>
+            </td>
+            <td class="generalotd">
+                <input type="radio" id="idfajtaj" name="namefajta" value="j">
+                <label for="idfajtaj"><span style="font-family: monospace;">j</span>:
+                    <b>folyóiratcikk</b>
+                </label>
+                <input type="text" size="30" id="namefajta_j_extrafield" placeholder="folyóirat MTMT azonosítója" style="visibility: hidden;" class="highlightPlaceholder" />
+            </td>
+            <td class="generalotd">
+                <input type="radio" id="idfajtab" name="namefajta" value="b">
+                <label for="idfajtab"><span style="font-family: monospace;">b</span>:
+                    <b>könyv</b>
+                </label>
+            </td>
+            <td rowspan="7" align="center" valign="middle" class="vagolaptd">
+                <table id="idurlgeneralo">
+                    <tbody>
+                        <tr>
+                            <button class="urlbutton clipboard-button">
+                                Kérem az URL-t<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a vágólapra&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </button>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+
+        </tr>
+        <tr class="fajtatr">
+
+            <!-- Közleményfajta oszlop helye -->
+            <td class="generalotd">&nbsp;</td>
+            <td class="generalotd">
+                <input type="radio" id="idfajtac" name="namefajta" value="c">
+                <label for="idfajtac"><span style="font-family: monospace;">c</span>:
+                    <b>konferenciacikk</b>
+                </label>
+                <input type="text" size="30" id="namefajta_c_extrafield" placeholder="konferencia MTMT azonosítója" style="visibility: hidden;" class="highlightPlaceholder" />
+            </td>
+            <td class="generalotd">
+                <input type="radio" id="idfajtabc" name="namefajta" value="bc">
+                <label for="idfajtabc"><span style="font-family: monospace;">bc</span>:
+                    <b>könyvfejezet</b>
+                </label>
+            </td>
+            <!-- Gomb oszlop helye -->
+
+        </tr>
+
+
+        <tr class="allapottr">
+
+            <td rowspan="4" valign="top" align="left" class="generalotd"><b>Állapot:</b></td>
+            <td class="generalotd">
+                <input type="radio" id="idl0" name="nameallapot" value="l0">
+                <label for="idl0"><span style="font-family: monospace;">l0</span>: <b>beküldve</b>
+                </label>
+            </td>
+            <td class="generalotd">
+                <input type="radio" id="idl3" name="nameallapot" value="l3">
+                <label for="idl3"><span style="font-family: monospace;">l3</span>: <b>jelentős átdolgozás zajlik</b>
+                </label>
+            </td>
+            <td class="generalotd">
+                <input type="radio" id="idl7" name="nameallapot" value="l7">
+                <label for="idl7"><span style="font-family: monospace;">l7</span>: <b>elfogadva</b>
+                </label>
+            </td>
+
+        </tr>
+        <tr class="allapottr">
+
+            <!-- Állapot oszlop helye -->
+            <td class="generalotd">
+                <input type="radio" id="idl1" name="nameallapot" value="l1">
+                <label for="idl1"><span style="font-family: monospace;">l1</span>: <b>első körös bírálat alatt</b>
+                </label>
+            </td>
+            <td class="generalotd">
+                <input type="radio" id="idl4" name="nameallapot" value="l4">
+                <label for="idl4"><span style="font-family: monospace;">l4</span>: <b>jelentős átdolgozás beküldve</b>
+                </label>
+            </td>
+            <td class="generalotd">
+                <input type="radio" id="idl8" name="nameallapot" value="l8">
+                <label for="idl8"><span style="font-family: monospace;">l8</span>: <b>előzetes kiadás</b>
+                </label>
+            </td>
+            <!-- Gomb oszlop helye -->
+
+        </tr>
+        <tr class="allapottr">
+
+            <!-- Állapot oszlop helye -->
+            <td class="generalotd">
+                <input type="radio" id="idl2" name="nameallapot" value="l2">
+                <label for="idl2"><span style="font-family: monospace;">l2</span>: <b>visszautasítva</b>
+                </label>
+            </td>
+            <td class="generalotd">
+                <input type="radio" id="idl5" name="nameallapot" value="l5">
+                <label for="idl5"><span style="font-family: monospace;">l5</span>: <b>kisebb átdolgozás zajlik</b>
+                </label>
+            </td>
+            <td class="generalotd">
+                <input type="radio" id="idl9" name="nameallapot" value="l9">
+                <label for="idl9"><span style="font-family: monospace;">l9</span>: <b>végleges megjelenés</b>
+                </label>
+            </td>
+            <!-- Gomb oszlop helye -->
+
+        </tr>
+        <tr class="allapottr">
+
+            <!-- Állapot oszlop helye -->
+            <td class="generalotd">&nbsp;</td>
+            <td class="generalotd">
+                <input type="radio" id="idl6" name="nameallapot" value="l6">
+                <label for="idl6"><span style="font-family: monospace;">l6</span>: <b>kisebb átdolgozás beküldve</b>
+                </label>
+            </td>
+            <td class="generalotd">&nbsp;</td>
+            <!-- Gomb oszlop helye -->
+
+        </tr>
+
+
+        <tr class="tezisponttr">
+
+            <td class="generalotd"><b>Tézisponthoz<br>kapcsolódik-e:</b></td>
+            <td class="generalotd">
+                <input type="radio" id="idt1" name="nametezispont" value="t1">
+                <label for="idt1"><span style="font-family: monospace;">t1</span>: <b>még nem tudni</b>
+                </label>
+            </td>
+            <td class="generalotd">
+                <input type="radio" id="idt2" name="nametezispont" value="t2">
+                <label for="idt2"><span style="font-family: monospace;">t2</span>: <b>nem</b>
+                </label>
+            </td>
+            <td class="generalotd">
+                <input type="radio" id="idt3" name="nametezispont" value="t3">
+                <label for="idt3"><span style="font-family: monospace;">t3</span>: <b>igen</b>
+                </label>
+            </td>
+            <!-- Gomb oszlop helye -->
+
+        </tr>
+        <tr>
+
+            <td colspan="5">&nbsp;</td>
+
+        </tr>
+        <tr class="megjegyzestr">
+
+            <td colspan="2"><b>A 'Megjegyzés' mezőbe:</b></td>
+            <td colspan="2" id="megjegyzes" style="font-family: monospace; text-align: left;">BME GPK Doktori Iskola azonosító</td>
+            <!-- <td align=center>Kérem a szöveget<br>a vágólapra</td> -->
+            <td class="vagolaptd" align="center" valign="middle" style="padding: 20px;">
+                <table id="idmegjegyzesgeneralo">
+                    <tbody>
+                        <tr>
+                            <button class="megjegyzesbutton clipboard-button">
+                                <span id="megjegyzes">Kérem a szöveget<br>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a vágólapra&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>                                                                
+                            </button>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>

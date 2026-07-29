@@ -1,0 +1,79 @@
+{
+  "ProjectName": "Tudománymetriai riportkészítő"
+, "ProjectShortName": "Tudriport"
+, "App": {
+    "Menu": {
+      "ChooseView": {
+        "menuText": "Nézet választása"
+      , "_comment": "menu items are given in the appropriate View sections using key viewNameMenuItem"
+      }
+    , "Admin": {
+        "menuText": "Adminisztráció"
+      , "generalInfo": "Áttekintés"
+      , "users": "Felhasználók"
+      , "extAuthorImport": "Névsor importálása"
+      , "extAuthorManage": "Névsorok kezelése"
+      , "inputQueueWaitingItems": "Várakozó feladatok"
+      , "citationDuplums": "Idéző ellenőrzőlisták"
+      , "timeMachineSet": "Időgép beállítása"
+      }
+    }
+  , "Common": {
+      "inputQueueStatus": "Jelenleg {{waitingAuthors}} szerző és {{waitingPublications}} publikáció frissítése várakozik a rendszerben."
+    , "btnExportTableToSpreadsheet": "Táblázat exportálása"
+    , "scoringProgressbarHint": "A szűrési feltételektől függően a művelet akár több percet is igényebevehet."
+    , "SearchForm": {
+        "btnSearchFormHide": "Beállítások és Adatfrissítő elrejtése"
+      , "btnSearchFormShow": "Beállítások és Adatfrissítő megjelenítése"
+      , "btnDoScoring": "Értékelés futtatása"
+      , "btnRequestUpdate": "Adatfrissítés igénylése"
+      , "btnRequestUpdateHint": "A frissítési kérelmek feldolgozása ütemezetten történik, így azok hatása nem azonnali."
+      , "btnCopyToClipboard": "Másolás vágólapra"
+      , "btnOpenInMTMT": "Halmaz megjelenítése az MTMT-ben"
+      , "displayedPublicationIDs": "Megjelenített közlemények MTMT azonosítói"
+      , "Steps": {
+          "ChooseScoring": {
+            "heading": "1. Értékelési mód kiválasztása"
+          , "availableScorings": "Értékelési mód"
+          }
+        , "ChooseSubject": {
+            "heading": "2. Értékelendő személy vagy szervezet megadása"
+          , "organizationLevel0": "Intézmény"
+          , "organizationLevel1": "Hierarchia 1. szint"
+          , "organizationLevel2": "Hierarchia 2. szint"
+          , "organizationLevel3": "Hierarchia 3. szint"
+          , "author": "Szerző"
+          , "authorLabelSupervisor": "Témavezető: {{supervisor_mtmt_authid}}"
+          , "mtmtAuthorId": "MTMT azonosító"
+          }
+        , "ScoringParameters": {
+            "heading": "3. Értékelési paraméterek megadása"
+          , "pYear": "Év"
+          , "pYearHint": "Adjon meg egy évet, időszak jellegű értékelők esetében az időszak utolsó évét. Hagyja üresen az életmű jellegűeknél."
+          , "pYearFrom": "Évjárat: ...-tól"
+          , "pYearTo": "Évjárat: ...-ig"
+          }
+        , "FilterParameters": {
+            "heading": "4. Szűrések megadása"
+          , "pPublicationType": "Típus"
+          , "pPublicationSubtype": "Besorolás"
+          , "pPublicationCharacter": "Jelleg"
+          , "pPublicationIDs": "Publikáció MTMT azonosítók (vesszővel elválasztva)"
+          }
+        }
+      }
+    }
+  , "DetailView": {
+      "viewName": "Részletező nézet"
+    , "viewNameMenuItem": "Részletező nézet"
+    }
+  , "SummaryView": {
+      "viewName": "Listás nézet"
+    , "viewNameMenuItem": "Listás nézet"
+    }
+  , "AdhocView": {
+      "viewName": "Egyedi keresés alapú nézet"
+    , "viewNameMenuItem": "Egyedi keresés alapú nézet"
+    }
+  }  
+}

@@ -1,0 +1,8 @@
+<mat-card *ngIf="permission">
+    <mat-card-title>Időgép beállítása</mat-card-title>
+    <div class="form-container">
+        <mat-form-field>
+            <input matInput type="datetime-local" placeholder="Időgép állása:" (change)="set($event.target.value)">
+        </mat-form-field>
+    </div>
+</mat-card>

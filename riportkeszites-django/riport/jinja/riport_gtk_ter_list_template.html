@@ -1,0 +1,49 @@
+{% if error_messages %}
+
+    {% for e in error_messages %}
+        <p class="error-message">{{ e }}</p>
+    {% endfor %}
+
+{% elif object_list %}
+
+{% set english = mode.endswith('_eng') %}
+
+    {% if english %}
+<p>The table below shows {{ params.year_count }} years' ({{params.year_from}}-{{params.year_to}}) publication score based on publications affiliated to BME GTK.
+</p>
+    {% else %}
+<p>A táblázat {{ params.year_count }} naptári év ({{params.year_from}}-{{params.year_to}}) publikációs teljesítményét mutatja a GTK-hoz affiliált közleményeket véve figyelembe.
+</p>
+    {% endif %}
+
+    <table class="dyn-table even-odd" id="tudriport-list-table">
+        <tr>
+            <th>{{ 'Name' if english else 'Név' }}</th>
+            <th>{{ 'Org unit' if english else 'Szervezeti egység' }}</th>
+            <th>{{ 'Comment' if english else 'Megjegyzés' }}</th>
+            <th>MTMT ID</th>
+            <th>{{ 'Total score of publications' if english else 'Közlemények pontszáma' }}</th>          
+        </tr>
+        {% if is_aggregation_aware %}        
+            <tr>
+                <td><span class="clickable openPopup"><b>{{ 'Aggregated' if english else 'Összesítés' }}</b></span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><b>{{ summary.osszpontszam | round(2) }}</b></td> 
+            </tr>
+        {% endif %}
+        {% for object in object_list %}
+            <tr>
+                <td><span data-mtmt-id="{{ object.author.mtmtcode }}" class="clickable openPopup">{{ object.author.personname }}</span></td>
+                <td>{{ object.author.subunit }}</td>
+                <td>{{ object.author.role }}</td>
+                <td>{{ object.author.mtmtcode }}</td>
+                <td>{{ object.points.osszpontszam | round(2) }}</td>             
+            </tr>
+        {% endfor %}
+    </table>
+
+{% else %}
+    <p class="error-message">Empty scoring error.</p>
+{% endif %}

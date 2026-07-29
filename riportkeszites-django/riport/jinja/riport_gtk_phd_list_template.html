@@ -1,0 +1,94 @@
+{% if error_messages %}
+
+    {% for e in error_messages %}
+        <p class="error-message">{{ e }}</p>
+    {% endfor %}
+
+{% elif object_list %}
+
+{% set english = mode.endswith('_eng') %} <!-- when text elements depend on mode, we use mode == '...._eng' instead -->
+
+{% if mode == 'gtk_phd' %}
+<h2>GTK PhD fokozatszerzés publikációs követelményeinek ellenőrzése</h2>
+{% elif mode == 'gtk_phd_eng' %}
+<h2>GTK PhD publication requirements' check</h2>
+{% elif mode == 'gtk_temavezeto' %}
+<h2>GTK témavezetői publikációs követelményeinek ellenőrzése</h2>
+<p>Ennél az értékelőnél az év paraméter megadásával az 5 éves értékelési periódus záróéve jelölhető ki.</p>
+{% elif mode == 'gtk_docens' %}
+<h2>GTK docensi eljárás publikációs követelményeinek ellenőrzése</h2>
+{% elif mode == 'gtk_habil' %}
+<h2>GTK habilitációs eljárás publikációs követelményeinek ellenőrzése</h2>
+{% endif %}
+
+    <table class="dyn-table even-odd" id="tudriport-list-table">
+        <tr>
+            <th>{{ 'Name' if english else 'Név' }}</th>
+            <th>{{ 'Comment' if english else 'Megjegyzés' }}</th>
+            <th>MTMT ID</th>
+            {% if mode == 'gtk_phd' %}
+            <th>Témavezető</th>
+            {% elif mode == 'gtk_phd_eng' %}
+            <th>Supervisor</th>
+            {% endif %}
+            <th>{{ 'Total score of publications' if english else 'Közlemények pontszáma' }}</th>
+            {% if mode in ['gtk_phd', 'gtk_temavezeto'] %}
+            <th>Követelményeket teljesíti?</th>
+            {% elif mode == 'gtk_phd_eng' %}
+            <th>Requirements fulfilled?</th>
+            {% endif %}
+        </tr>
+        {% if is_aggregation_aware %}        
+            <tr>
+                <td><span class="clickable openPopup"><b>{{ 'Aggregated' if english else 'Összesítés' }}</b></span></td>
+                <td></td>
+                <td></td>
+                {% if mode in ['gtk_phd', 'gtk_phd_eng'] %}
+                <td></td>
+                {% endif %}
+                <td><b>{{ summary.osszpontszam | round(2) }}</b></td> 
+                {% if mode in ['gtk_phd', 'gtk_phd_eng', 'gtk_temavezeto'] %}
+                <td></td>
+                {% endif %}
+            </tr>
+        {% endif %}
+        {% for object in object_list %}
+            <tr>
+                <td>
+                    {% if object.author.supervisor_mtmt_authid %}
+                    <span data-mtmt-id="{{ object.author.mtmtcode }}" class="clickable openPopup" supervisor_mtmt_authid="{{object.author.supervisor_mtmt_authid}}">
+                    {% else %}
+                    <span data-mtmt-id="{{ object.author.mtmtcode }}" class="clickable openPopup">
+                    {% endif %}
+                        {{ object.author.personname }}
+                    </span>
+                </td>                
+                <td>{{ object.author.role }}</td>
+                <td>{{ object.author.mtmtcode }}</td>
+                {% if mode in ['gtk_phd', 'gtk_phd_eng'] %}
+                <td>{{ object.supervisor.authorname }}</td>
+                {% endif %}
+                <td>{{ object.points.osszpontszam | round(2) }}</td>             
+                {% if mode in ['gtk_phd', 'gtk_phd_eng', 'gtk_temavezeto'] %}
+                    {% if object.points.extraInfo.constraintsAllPassed %}
+                    <td align="center" class="igen">{{ 'yes' if english else 'igen'}}</td>
+                    {% else %}
+                    <td align="center" class="nem">{{ 'no' if english else 'nem'}}</td>
+                    {% endif %}
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+
+{% else %}
+    <p class="error-message">Empty scoring error.</p>
+{% endif %}
+
+<style>
+    .nem{
+        color: orange;
+    }
+    .igen{
+        color: green;
+    }
+</style>

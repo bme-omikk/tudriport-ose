@@ -1,0 +1,342 @@
+{% if error_messages %}
+
+    {% for e in error_messages %}
+        <p class="error-message">{{ e }}</p>
+    {% endfor %}
+
+{% elif points %}
+
+    {% if issummary %}
+    <h2>Összesített pontozás</h2>
+    {% else %}
+    <h2>
+        Minimumkövetelmények
+    </h2>
+
+    <table class="dyn-table" border="1">
+        <tr><th>No.</th> <th>Tételes publikációs elvárások</th> <th>saját szám</th> <th>&lt;&gt;</th> <th>Előírt minimum</th> <th>Teljesült-e (igen/nem?)</th></tr>
+        <tr> 
+            <td>1.</td> 
+            <td>Az összes publikáció minimális darabszáma: {{ points.extraInfo.numAllPublicationsThreshold}} </td> 
+            <td align="center">{{ points.extraInfo.numAllPublications}}</td>
+            <td align="center">{% if points.extraInfo.numAllPublicationsThreshold > points.extraInfo.numAllPublications %}&lt;{% elif points.extraInfo.numAllPublications > points.extraInfo.numAllPublicationsThreshold %}&gt;{% else %}={% endif %}</td>
+            <td align="center">{{ points.extraInfo.numAllPublicationsThreshold}}</td>
+            {% if points.extraInfo.numAllPublicationsThreshold > points.extraInfo.numAllPublications %}
+            <td align="center" class="nem">nem?</td>
+            {% else %}
+            <td align="center" class="igen">igen</td>
+            {% endif %}
+        </tr>
+        <tr> 
+            <td>2.</td> 
+            <td>Legalább {{ points.extraInfo.numInForeignPeerreviewedJournalThreshold}} cikk idegen nyelvű lektorált folyóiratban jelent meg</td> 
+            <td align="center">{{points.extraInfo.numInForeignPeerreviewedJournal}}</td>
+            <td align="center">{% if points.extraInfo.numInForeignPeerreviewedJournalThreshold > points.extraInfo.numInForeignPeerreviewedJournal %}&lt;{% elif points.extraInfo.numInForeignPeerreviewedJournal > points.extraInfo.numInForeignPeerreviewedJournalThreshold %}&gt;{% else %}={% endif %}</td>
+            <td align="center">{{ points.extraInfo.numInForeignPeerreviewedJournalThreshold}}</td>
+            {% if points.extraInfo.numInForeignPeerreviewedJournalThreshold > points.extraInfo.numInForeignPeerreviewedJournal %}
+            <td align="center" class="nem">nem?</td>
+            {% else %}
+            <td align="center" class="igen">igen</td>
+            {% endif %}
+        </tr>
+        <tr> 
+            <td>3.</td>
+            <td>Ebből legalább {{ points.extraInfo.numWosOrScopusThreshold}} a Web of Science vagy a Scopus adatbázisban szereplő folyóiratban jelent meg</td>
+            <td align="center">{{points.extraInfo.numWosOrScopus}}</td>
+            <td align="center">{% if points.extraInfo.numWosOrScopusThreshold > points.extraInfo.numWosOrScopus %}&lt;{% elif points.extraInfo.numWosOrScopus > points.extraInfo.numWosOrScopusThreshold %}&gt;{% else %}={% endif %}</td>
+            <td align="center">{{ points.extraInfo.numWosOrScopusThreshold}}</td>
+            {% if points.extraInfo.numWosOrScopusThreshold > points.extraInfo.numWosOrScopus %}
+            <td align="center" class="nem">nem?</td>
+            {% else %}
+            <td align="center" class="igen">igen</td>
+            {% endif %}
+        </tr>
+        <tr> 
+            <td>4.</td> 
+            <td>Legalább {{ points.extraInfo.numforeign50percentThreshold}} publikáció idegen nyelven, a jelölt legalább 50%-os részével</td>
+            <td align="center">{{points.extraInfo.numforeign50percent}}</td>
+            <td align="center">{% if points.extraInfo.numforeign50percentThreshold > points.extraInfo.numforeign50percent %}&lt;{% else %}&gt;{% endif %}</td>
+            <td align="center">{{ points.extraInfo.numforeign50percentThreshold}}</td>
+            {% if points.extraInfo.numforeign50percentThreshold > points.extraInfo.numforeign50percent %}
+            <td align="center" class="nem">nem?</td>
+            {% else %}
+            <td align="center" class="igen">igen</td>
+            {% endif %}
+        </tr>
+        <tr> 
+            <td>5.</td>
+            <td>Legalább {{ points.extraInfo.numHungarianThreshold}} publikáció magyar nyelven</td>
+            <td align="center">{{points.extraInfo.numHungarian}}</td>
+            <td align="center">{% if points.extraInfo.numHungarianThreshold > points.extraInfo.numHungarian %}&lt;{% elif points.extraInfo.numHungarian > points.extraInfo.numHungarianThreshold %}&gt;{% else %}={% endif %}</td>
+            <td align="center">{{ points.extraInfo.numHungarianThreshold}}</td>
+            {% if points.extraInfo.numHungarianThreshold > points.extraInfo.numHungarian %}
+            <td align="center" class="nem">nem?</td>
+            {% else %}
+            <td align="center" class="igen">igen</td>
+            {% endif %}
+        </tr>    
+        <tr> 
+            <td>6.</td> 
+            <td>Publikációs pontszám legalább {{points.extraInfo.pointThreshold}}</td>
+            <td align="center">{{ "%.2f"%points.osszpontszam }}</td>
+            <td align="center">{% if points.extraInfo.pointThreshold > points.osszpontszam %}&lt;{% else %}&gt;{% endif %}</td>
+            <td align="center">{{points.extraInfo.pointThreshold}}</td>
+            {% if points.extraInfo.pointThreshold > points.osszpontszam %}
+            <td align="center" class="nem">nem?</td>
+            {% else %}
+            <td align="center" class="igen">igen</td>
+            {% endif %}
+        </tr>
+    </table>
+    <p>
+        A jelölt a számítógéppel ellenőrizhető publikációs minimumkövetelményeket
+        {% if points.extraInfo.numAllPublicationsThreshold > points.extraInfo.numAllPublications or
+            points.extraInfo.numInForeignPeerreviewedJournalThreshold > points.extraInfo.numInForeignPeerreviewedJournal or
+            points.extraInfo.numWosOrScopusThreshold > points.extraInfo.numWosOrScopus or 
+            points.extraInfo.numHungarianThreshold > points.extraInfo.numHungarian or
+            points.extraInfo.numforeign50percentThreshold > points.extraInfo.numforeign50percent or    
+            points.extraInfo.pointThreshold > points.osszpontszam %}
+        <span class="nem">nem mind teljesíti?</span>
+        {% else %}
+        <span class="igen">mind teljesíti.</span>
+        {% endif %}
+    </p>
+
+    <h2>
+        {{ author.authorname }}
+        {% if author.authorcomment %}({{ author.authorcomment }}){% endif %} 
+    </h2>
+    {% endif %}
+    {% if isriportcomment %}<i>Pontok a 'Hozzájárulás' szorzó nélkül</i>{% endif %}
+
+    <table class="dyn-table" border="1">
+        <tr>
+            <th>Közlemény</th> <th>Külföldön megjelent idegen nyelvű</th> <th> Magyarországon megjelent idegen nyelvű </th> <th> Magyar nyelvű </th> </tr>
+        <tr>    	
+            <td> Folyóiratcikk, lektorált </td> 
+            <td align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['FOLY,LEK,KMINY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,LEK,KMINY'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,LEK,KMINY'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,LEK,KMINY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['FOLY,LEK,KMINY'].szamolas }}</span-->
+            </td>
+            <td align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['FOLY,LEK,MMINY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,LEK,MMINY'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,LEK,MMINY'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,LEK,MMINY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['FOLY,LEK,MMINY'].szamolas }}</span-->
+            </td>
+            <td align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['FOLY,LEK,MNY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,LEK,MNY'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,LEK,MNY'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,LEK,MNY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['FOLY,LEK,MNY'].szamolas }}</span-->   
+            </td>  
+        </tr>
+        <tr> 
+            <td>Folyóiratcikk, nem lektorált</td>
+            <td align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['FOLY,NLE,KMINY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,NLE,KMINY'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,NLE,KMINY'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,NLE,KMINY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['FOLY,NLE,KMINY'].szamolas }}</span-->
+            </td>
+            <td align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['FOLY,NLE,MMINY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,NLE,MMINY'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,NLE,MMINY'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,NLE,MMINY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['FOLY,NLE,MMINY'].szamolas }}</span-->
+            </td>
+            </td>
+            <td align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['FOLY,NLE,MNY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,NLE,MNY'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,NLE,MNY'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,NLE,MNY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['FOLY,NLE,MNY'].szamolas }}</span-->
+            </td>
+        </tr>
+        <tr>
+            <td>Könyv</td>
+            <td colspan="2" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['KONYV,SZERZ,INY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONYV,SZERZ,INY'].reszpont }}
+                {% if points.reszeredmenyek['KONYV,SZERZ,INY'].pubids|length > 0 %}({{ points.reszeredmenyek['KONYV,SZERZ,INY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['KONYV,SZERZ,INY'].szamolas }}</span-->
+            </td>
+            <td align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['KONYV,SZERZ,MNY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONYV,SZERZ,MNY'].reszpont }}
+                {% if points.reszeredmenyek['KONYV,SZERZ,MNY'].pubids|length > 0 %}({{ points.reszeredmenyek['KONYV,SZERZ,MNY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['KONYV,SZERZ,MNY'].szamolas }}</span-->
+            </td>
+        </tr>
+        <tr>    
+            <td> Könyvrészlet, könyvfejezet</td> 
+            <td colspan="2" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['KRKF,SZERZ,INY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KRKF,SZERZ,INY'].reszpont }}
+                {% if points.reszeredmenyek['KRKF,SZERZ,INY'].pubids|length > 0 %}({{ points.reszeredmenyek['KRKF,SZERZ,INY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['KRKF,SZERZ,INY'].szamolas }}</span-->
+            <td align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['KRKF,SZERZ,MNY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KRKF,SZERZ,MNY'].reszpont }}
+                {% if points.reszeredmenyek['KRKF,SZERZ,MNY'].pubids|length > 0 %}({{ points.reszeredmenyek['KRKF,SZERZ,MNY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['KRKF,SZERZ,MNY'].szamolas }}</span-->
+            </td>
+        </tr>
+        <tr> 
+            <td>Szerkesztett kötetben cikk (legalább 10 oldal)</td> 
+            <td colspan="3" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['KONYV,SZERK'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONYV,SZERK'].reszpont }}
+                {% if points.reszeredmenyek['KONYV,SZERK'].pubids|length > 0 %}({{ points.reszeredmenyek['KONYV,SZERK'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['KONYV,SZERK'].szamolas }}</span-->
+            </td>
+        </tr>
+        <tr> 
+            <td>Nyomtatott (vagy elektronikus formában közzétett) egyetemi jegyzet 
+        (legalább 25 oldal)</td> 
+            <td colspan="3" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['JEGYZ25'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['JEGYZ25'].reszpont }}
+                {% if points.reszeredmenyek['JEGYZ25'].pubids|length > 0 %}({{ points.reszeredmenyek['JEGYZ25'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['JEGYZ25'].szamolas }}</span-->
+            </td>
+        </tr>
+        <tr> 
+            <td>Konferencia kiadványában megjelent előadás</td> 
+            <td align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['KONF,KMINY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONF,KMINY'].reszpont }}
+                {% if points.reszeredmenyek['KONF,KMINY'].pubids|length > 0 %}({{ points.reszeredmenyek['KONF,KMINY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['KONF,KMINY'].szamolas }}</span-->
+            </td>
+            <td align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['KONF,MMINY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONF,MMINY'].reszpont }}
+                {% if points.reszeredmenyek['KONF,MMINY'].pubids|length > 0 %}({{ points.reszeredmenyek['KONF,MMINY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['KONF,MMINY'].szamolas }}</span-->
+            </td>
+            <td align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['KONF,MNY'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONF,MNY'].reszpont }}
+                {% if points.reszeredmenyek['KONF,MNY'].pubids|length > 0 %}({{ points.reszeredmenyek['KONF,MNY'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['KONF,MNY'].szamolas }}</span-->
+            </td>
+        </tr>
+        <tr> 
+            <td>Szabadalom</td> 
+            <td colspan="3" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['SZABADALOM'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['SZABADALOM'].reszpont }}
+                {% if points.reszeredmenyek['SZABADALOM'].pubids|length > 0 %}({{ points.reszeredmenyek['SZABADALOM'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['SZABADALOM'].szamolas }}</span-->
+            </td>
+        </tr>
+        <tr> 
+            <td>Recenzió (más szerző művének kinyomtatott értékelése)</td> 
+            <td colspan="3" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['RECENZIO'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['RECENZIO'].reszpont }}
+                {% if points.reszeredmenyek['RECENZIO'].pubids|length > 0 %}({{ points.reszeredmenyek['RECENZIO'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['RECENZIO'].szamolas }}</span-->
+            </td>
+        </tr>
+        <tr> 
+            <td>Elektronikus publikáció (folyóirat/cég honlapján, google scholarral megtalálható, pl BME technical report – a saját honlapon való megjelentetés nem számít pontozható publikációnak)</td> 
+            <td colspan="3" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['ELEK-PUB'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['ELEK-PUB'].reszpont }}
+                {% if points.reszeredmenyek['ELEK-PUB'].pubids|length > 0 %}({{ points.reszeredmenyek['ELEK-PUB'].pubids|length }}){% endif %}
+                <!--span class="tooltiptext">{{ points.reszeredmenyek['ELEK-PUB'].szamolas }}</span-->
+            </td>
+        </tr>
+        <tr>
+            <td>Közlemények hibás vagy hiányos szerzői részaránnyal</td>
+            <td colspan="3" align="center" class="clickable openpubids" data-pubids="{{points.reszeredmenyek['HIBASARANY'].pubids }}">            
+                ({{ points.reszeredmenyek['HIBASARANY'].pubids|length }})</td>
+        </tr>
+        <tr>
+            <td>A fenti pontozásban nem szereplő közlemények</td> 
+            <td colspan="3" align="center" class="clickable openpubids" data-pubids="{{points.reszeredmenyek['NEMPONTOZOTT'].pubids }}">            
+                ({{ points.reszeredmenyek['NEMPONTOZOTT'].pubids|length }})</td>
+        </tr>
+        <tr>
+            <td >A fentiek összpontszáma</td>
+            <td colspan="3" align="center">{{ "%.2f"%points.osszpontszam }}</td>
+        </tr>
+    </table>
+
+    <h2>
+        Pontértékek
+    </h2>
+
+    <table class="dyn-table" border="1">
+        <tr>
+            <th>Közlemény</th> <th>Külföldön megjelent idegen nyelvű</th> <th> Magyarországon megjelent idegen nyelvű </th> <th> Magyar nyelvű </th> </tr>
+        <tr>    	
+            <td> Folyóiratcikk, lektorált </td> 
+            <td align="center">{{points.tokenek['FOLY,LEK,KMINY'].score}}</td>
+            <td align="center">{{points.tokenek['FOLY,LEK,MMINY'].score}}</td>
+            <td align="center">{{points.tokenek['FOLY,LEK,MNY'].score}}</td>        
+        </tr>
+        <tr> 
+            <td>Folyóiratcikk, nem lektorált</td>
+            <td align="center">{{points.tokenek['FOLY,NLE,KMINY'].score}}</td>
+            <td align="center">{{points.tokenek['FOLY,NLE,MMINY'].score}}</td>
+            <td align="center">{{points.tokenek['FOLY,NLE,MNY'].score}}</td>       
+        </tr>
+        <tr>
+            <td>Könyv</td>
+            <td colspan="2" align="center">{{points.tokenek['KONYV,SZERZ,INY'].score}}</td>
+            <td align="center">{{points.tokenek['KONYV,SZERZ,MNY'].score}}</td>       
+        </tr>
+        <tr>    
+            <td> Könyvrészlet, könyvfejezet</td> 
+            <td colspan="2" align="center">{{points.tokenek['KRKF,SZERZ,INY'].score}}</td>
+            <td align="center">{{points.tokenek['KRKF,SZERZ,MNY'].score}}</td>       
+        </tr>
+        <tr> 
+            <td>Szerkesztett kötetben cikk (legalább 10 oldal)</td> 
+            <td colspan="3" align="center">{{points.tokenek['KONYV,SZERK'].score}}</td>
+        </tr>
+        <tr> 
+            <td>Nyomtatott (vagy elektronikus formában közzétett) egyetemi jegyzet 
+        (legalább 25 oldal)</td> 
+            <td colspan="3" align="center">{{points.tokenek['JEGYZ25'].score}}</td>
+        </tr>
+        <tr> 
+            <td>Konferencia kiadványában megjelent előadás</td> 
+            <td align="center">{{points.tokenek['KONF,KMINY'].score}}</td>
+            <td align="center">{{points.tokenek['KONF,MMINY'].score}}</td>
+            <td align="center">{{points.tokenek['KONF,MNY'].score}}</td>
+        </tr>
+        <tr> 
+            <td>Szabadalom</td> 
+            <td align="center" colspan="3">{{points.tokenek['SZABADALOM'].score}}</td>
+        </tr>
+        <tr> 
+            <td>Recenzió (más szerző művének kinyomtatott értékelése)</td> 
+            <td align="center" colspan="3">{{points.tokenek['RECENZIO'].score}}</td>
+        </tr>
+        <tr> 
+            <td>Elektronikus publikáció (folyóirat/cég honlapján, google scholarral megtalálható, pl BME technical report – a saját honlapon való megjelentetés nem számít pontozható publikációnak)</td> 
+            <td align="center" colspan="3">{{points.tokenek['ELEK-PUB'].score}}</td>
+        </tr>
+    </table>
+
+{% else %}
+    <p class="error-message">Empty scoring error.</p>
+{% endif %}
+
+<style>
+    .nem{
+        color: orange;
+    }
+    .igen{
+        color: green;
+    }
+    .tooltip {
+        position: relative;
+    }
+    
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: auto;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+    
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+    }
+    
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+</style>

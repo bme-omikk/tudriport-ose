@@ -1,0 +1,3 @@
+# Ignore HTML and PDF files directly in this directory
+/*.html
+/*.pdf

@@ -1,0 +1,26 @@
+{% if error_messages %}
+
+    {% for e in error_messages %}
+        <p class="error-message">{{ e }}</p>
+    {% endfor %}
+
+{% elif object_list %}
+
+    <table class="dyn-table even-odd">
+        <tr>   
+            <th>Részletek</th> 
+        </tr>        
+        {% for obj in object_list %}
+            <tr>
+                <td>{{ obj.publication.description.label_html | replace("href=\"/gui2/", "href=\"https://m2.mtmt.hu/gui2/") }}
+                    {% if obj.points.fejlec['talalat_token'] %}
+                        <br/>Értékelési mód szerinti besorolás: <label title="címke: {{obj.points.tokenek[obj.points.fejlec['talalat_token']]['token']}}">{{obj.points.tokenek[obj.points.fejlec['talalat_token']]['description']}}</label>
+                    {% endif %}
+                </td> 
+            </tr>
+        {% endfor %}
+    </table>
+
+{% else %}
+    <p class="error-message">Empty scoring error.</p>
+{% endif %}

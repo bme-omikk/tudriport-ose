@@ -1,0 +1,104 @@
+<mat-sidenav-container fullscreen>
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <button mat-button [matMenuTriggerFor]="riportMenu">
+                <!-- Note: mat-button and mat-raised-button creates child element wrapper for its content. so translation key needs to be wrapped separately -->
+                <span translate>App.Menu.ChooseView.menuText</span>
+                <mat-icon class="tudriport-vertical-middle">arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #riportMenu="matMenu">
+                <button mat-menu-item
+                    routerLink="/riport/summary"
+                    routerLinkActive="active"
+                    translate>
+                    App.SummaryView.viewNameMenuItem
+                </button>
+                <button mat-menu-item
+                    routerLink="/riport/detail"
+                    routerLinkActive="active"
+                    translate>
+                    App.DetailView.viewNameMenuItem
+                </button>
+                <button mat-menu-item
+                    routerLink="/riport/adhoc"
+                    routerLinkActive="active"
+                    translate>
+                    App.AdhocView.viewNameMenuItem
+                </button>
+            </mat-menu>        
+            <button *ngIf="show.admin_page" mat-button [matMenuTriggerFor]="dashboardMenu">
+                <span translate>App.Menu.Admin.menuText</span>
+                <mat-icon class="tudriport-vertical-middle">arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #dashboardMenu="matMenu">
+                <button mat-menu-item *ngIf="show.general"
+                    routerLink="/dashboard/general"
+                    routerLinkActive="active"
+                    translate>
+                    App.Menu.Admin.generalInfo
+                </button>
+                <button mat-menu-item *ngIf="show.users"
+                    routerLink="/dashboard/users"
+                    routerLinkActive="active"
+                    translate>
+                    App.Menu.Admin.users
+                </button>
+                <button mat-menu-item *ngIf="show.ext_author_import"
+                    routerLink="/dashboard/extauthorimport"
+                    routerLinkActive="active"
+                    translate>
+                    App.Menu.Admin.extAuthorImport
+                </button>
+                <button mat-menu-item *ngIf="show.admin_page"
+                    routerLink="/dashboard/extauthormanagement"
+                    routerLinkActive="active"
+                    translate>
+                    App.Menu.Admin.extAuthorManage
+                </button>
+                <button mat-menu-item *ngIf="show.input_queue_add"
+                    routerLink="/dashboard/inputqueueadd"
+                    routerLinkActive="active">
+
+                    Adatfrissítés igénylése (kötegelt)
+                </button>
+                <button mat-menu-item *ngIf="show.input_queue"
+                    routerLink="/dashboard/inputqueuewaiting"
+                    routerLinkActive="active"
+                    translate>
+                    App.Menu.Admin.inputQueueWaitingItems
+                </button>
+                <button mat-menu-item *ngIf="show.admin_page"
+                    routerLink="/dashboard/citationduplums"
+                    routerLinkActive="active"
+                    translate>
+                    App.Menu.Admin.citationDuplums
+                </button>
+                <button mat-menu-item *ngIf="show.admin_page"
+                    routerLink="/dashboard/timemachineset"
+                    routerLinkActive="active"
+                    translate>
+                    App.Menu.Admin.timeMachineSet
+                </button>
+            </mat-menu>
+            <button mat-button *ngIf="show.input_queue" [disabled]="!show.admin_page"
+                routerLink="/dashboard/inputqueuewaiting"
+                routerLinkActive="active">
+                {{ 'App.Common.inputQueueStatus' | translate:{waitingAuthors: (status ? status?.waitingAuthors : "?") ,waitingPublications: (status ? status?.waitingPublications : "?") } }}
+            </button>
+            <span class="spacer"></span>
+            <button mat-raised-button (click)="toggleSearchFormVisibility()" *ngIf="globals.tableHasContentSubject.getValue()">
+                {{ ( globals.isSearchFormVisibleSubject.getValue() ? 'App.Common.SearchForm.btnSearchFormHide' : 'App.Common.SearchForm.btnSearchFormShow' ) | translate }}
+            </button>
+            <span class="spacer"></span>
+            <button mat-raised-button  (click)="setLang('hu')">HU</button>
+            <span>/</span>
+            <button mat-raised-button (click)="setLang('en')">EN</button>
+            <app-user-manager></app-user-manager>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <app-notification></app-notification>
+    <router-outlet *ngIf="!loadingScreen; else loadingScreenBlock"></router-outlet>
+    <ng-template #loadingScreenBlock>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </ng-template>
+</mat-sidenav-container>

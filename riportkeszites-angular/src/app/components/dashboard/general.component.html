@@ -1,0 +1,31 @@
+<mat-card *ngIf="permission">
+  <mat-card-title>
+    <mat-panel-title>Általános információk</mat-panel-title>
+    <mat-panel-description *ngIf="data">
+      <span *ngIf="showWarning; else warningsBlock">
+        <mat-icon class="warning">warning</mat-icon>
+        Manuálisan ellenőrzés szükséges!
+      </span>
+      <ng-template #warningsBlock>
+        <span>
+          <mat-icon class="success">check_circle</mat-icon>
+          Minden rendben, nincs teendő.
+        </span>
+      </ng-template>
+    </mat-panel-description>
+  </mat-card-title>
+  <div *ngIf="data">
+    <p>
+      Ellenőrizendő nyelv bejegyzések: {{ data.LangWarningsCount }}
+      <a *ngIf="data.LangWarningsCount > 0" href="{{ config.LanguagesWithWarning }}" target="_blank">
+        (Részletek)
+      </a>
+    </p>
+    <p>
+      Ellenőrizendő helyszín bejegyzések: {{ data.LocationWarningsCount }}
+      <a *ngIf="data.LocationWarningsCount > 0" href="{{ config.LocationsWithWarning }}" target="_blank">
+        (Részletek)
+      </a>
+    </p>
+  </div>
+</mat-card>

@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Designed by: István Kollár: kollar@mit.bme.hu and Péter Z. Csurcsia csurcsia@mit.bme.hu -->
+<!-- last modified: 2014.02.06. 19:06 CET -->
+<!-- Schema version 2.4-rev008, edited by: Csurcsia and Marton and Micsik -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:element name="records">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="xsd_version" type="xs:string" fixed="2.4." minOccurs="1" maxOccurs="1" />
+				<xs:element ref="record" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="record">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="technical_data" minOccurs="0" />
+				<xs:element ref="publication" minOccurs="0" />
+				<xs:element ref="citations" minOccurs="0" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="authors">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="author" minOccurs="0" maxOccurs="unbounded" type="type_person" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="classifications">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="classification" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="international_patent_classification" minOccurs="0" maxOccurs="1" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="citations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="citation" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="technical_data">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="filesource" minOccurs="0" />
+				<xs:element ref="language" minOccurs="0" />
+				<xs:element ref="owner" minOccurs="0" />
+				<xs:element ref="source" minOccurs="0" />
+				<xs:element name="edited" type="type_edited" minOccurs="0" />
+				<xs:element ref="admin_seen" minOccurs="0" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="owner" type="type_person" />
+	<xs:element name="source" type="type_source" />
+	<xs:element name="admin_seen">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="type_person">
+					<xs:attribute name="timestamp" type="xs:dateTime" />
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="citation">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="authors" minOccurs="0" />
+				<xs:element ref="editors" minOccurs="0" />
+				<xs:element ref="title" minOccurs="0" />
+				<xs:element ref="length" minOccurs="0" />
+				<xs:element ref="subtitle" minOccurs="0" />
+				<xs:element ref="classifications" minOccurs="0" />
+				<xs:element ref="issue" minOccurs="0" />
+				<xs:element ref="volume" minOccurs="0" />
+				<xs:element name="date" type="type_date" minOccurs="0" />
+				<xs:element name="application_date" type="type_date" minOccurs="0" />
+				<xs:element ref="publisher" minOccurs="0" />
+				<xs:element ref="published" minOccurs="0" />
+				<xs:element ref="organizer" minOccurs="0" />
+				<xs:element ref="location" minOccurs="0" />
+				<xs:element ref="independent" minOccurs="0" />
+				<xs:element ref="foreign_only" minOccurs="0" />
+				<xs:element ref="published_abroad" minOccurs="0" />
+				<xs:element ref="comment" minOccurs="0" />
+				<xs:element ref="administrative_comment" minOccurs="0" />
+				<xs:element name="identifiers" type="type_identifiers" minOccurs="0" />
+				<xs:element ref="language" minOccurs="0" />
+				<xs:element ref="keywords" minOccurs="0" />
+				<xs:element ref="abstract" minOccurs="0" />
+				<xs:element ref="free_fields" minOccurs="0" />
+				<xs:element ref="references" minOccurs="0" />
+				<xs:element name="cited_work" type="xs:string" minOccurs="0" />
+				<xs:element ref="container" minOccurs="0" />
+				<xs:element name="edited" type="type_edited" minOccurs="0" />
+				<xs:element ref="owner" minOccurs="0" />
+				<xs:element name="context" type="xs:string" minOccurs="0" />
+				<xs:element ref="admin_seen" minOccurs="0" />
+				<xs:element name="source" type="type_citation_source" minOccurs="0" /><!-- For backward compatibility with MTMT -->
+			</xs:all>
+			<xs:attribute name="status" type="xs:string" />
+			<xs:attribute name="error" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="classification">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="type" minOccurs="0" />
+				<xs:element ref="subtype" minOccurs="0" />
+				<xs:element ref="character" minOccurs="0" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="institutes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="institute" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="for" type="type_institutes_for" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="institute">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="direct" type="xs:string" fixed="direct" />
+					<xs:attribute name="share" type="xs:decimal" />
+					<xs:attribute name="identifier" type="xs:string" />
+					<xs:attribute name="parent" type="xs:string" />
+					<xs:attribute name="abbreviation" type="xs:string" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="container">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="container" minOccurs="0" />
+				<xs:element name="identifiers" minOccurs="0" />
+				<xs:element ref="peerreviewed" minOccurs="0" />
+				<xs:element ref="impactfactor" minOccurs="0" />
+				<xs:element ref="title" minOccurs="0" />
+				<xs:element ref="shorttitle" minOccurs="0" />
+				<xs:element ref="editors" minOccurs="0" />
+				<xs:element ref="authors" minOccurs="0" />
+				<xs:element ref="classifications" minOccurs="0" />
+				<xs:element ref="published_abroad" minOccurs="0" />
+				<xs:element name="date" type="type_date" minOccurs="0" />
+				<xs:element ref="publisher" minOccurs="0" />
+				<xs:element ref="published" minOccurs="0" />
+				<xs:element ref="organizer" minOccurs="0" />
+				<xs:element ref="location" minOccurs="0" />
+				<xs:element ref="subtitle" minOccurs="0" />
+				<xs:element ref="volume_title" minOccurs="0" />
+				<xs:element ref="volume_number" minOccurs="0" />
+				<xs:element ref="title_series" minOccurs="0" />
+				<xs:element ref="language" minOccurs="0" />	
+				<xs:element ref="length" minOccurs="0" />
+			</xs:all>
+			<xs:attribute name="type" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="publication">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="authors" minOccurs="0" />
+				<xs:element ref="editors" minOccurs="0" />
+				<xs:element ref="title" minOccurs="0" />
+				<xs:element ref="subtitle" minOccurs="0" />
+				<xs:element ref="volume" minOccurs="0" />
+				<xs:element ref="issue" minOccurs="0" />
+				<xs:element ref="length" minOccurs="0" />
+				<xs:element ref="language" minOccurs="0" />
+				<xs:element ref="abstract" minOccurs="0" />
+				<xs:element ref="comment" minOccurs="0" />
+				<xs:element ref="administrative_comment" minOccurs="0" />
+				<xs:element ref="free_fields" minOccurs="0" />
+				<xs:element ref="references" minOccurs="0" />
+				<xs:element ref="published_abroad" minOccurs="0" />
+				<xs:element ref="keywords" minOccurs="0" />
+				<xs:element ref="container" minOccurs="0" />
+				<xs:element name="date" type="type_date" minOccurs="0" />
+				<xs:element name="application_date" type="type_date" minOccurs="0" />
+				<xs:element ref="publisher" minOccurs="0" />
+				<xs:element ref="published" minOccurs="0" />
+				<xs:element ref="organizer" minOccurs="0" />
+				<xs:element name="media" type="xs:string" minOccurs="0" />
+				<xs:element ref="location" minOccurs="0" />
+				<xs:element ref="classifications" minOccurs="0" />
+				<xs:element ref="institutes" minOccurs="0" />
+				<xs:element name="identifiers" type="type_identifiers" minOccurs="0" />
+				<xs:element name="thesis_data" type="type_thesis_data" minOccurs="0" />
+				<xs:element name="participation" type="xs:string" minOccurs="0" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="type_supervisors">
+		<xs:sequence>
+			<xs:element name="supervisor" minOccurs="0" maxOccurs="unbounded" type="type_person" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="editors">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="editor" minOccurs="0" maxOccurs="unbounded" type="type_person" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="length">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="entry">
+					<xs:complexType>
+						<xs:attribute name="page_from" type="xs:string" />
+						<xs:attribute name="page_to" type="xs:string" />
+						<xs:attribute name="page_number" type="xs:string" />
+						<xs:attribute name="chapter_number" type="xs:string" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="references">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="reference" minOccurs="0" maxOccurs="unbounded" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="free_fields">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="free_field" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="num" type="xs:nonNegativeInteger" />
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="keywords">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="keyword" minOccurs="0" maxOccurs="unbounded" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="type">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="identifier" type="xs:positiveInteger" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="subtype">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="identifier" type="xs:positiveInteger" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="character">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="identifier" type="xs:positiveInteger" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="location">
+		<xs:complexType>
+			<xs:attribute name="city" type="xs:string" />
+			<xs:attribute name="country" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="published">
+		<xs:complexType>
+			<xs:attribute name="city" type="xs:string" />
+			<xs:attribute name="country" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="organizer">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="city" type="xs:string" />
+					<xs:attribute name="country" type="xs:string" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="impactfactor">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:decimal">
+					<xs:attribute name="type" type="xs:string" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="publisher">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="city" type="xs:string" />
+					<xs:attribute name="country" type="xs:string" />
+					<xs:attribute name="publisher-country" type="xs:string" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="shorttitle" type="xs:string" />
+	<xs:element name="independent">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="type_boolean">
+					<xs:attribute name="independent-ok" type="type_boolean" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="foreign_only" type="type_boolean" />
+	<xs:element name="published_abroad" type="type_boolean" />
+	<xs:complexType name="type_source">
+		<xs:attribute name="identifier" type="xs:string" />
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="date" type="xs:date" />
+		<xs:attribute name="time" type="xs:time" />
+		<xs:attribute name="year" type="xs:gYear" use="optional" />
+	</xs:complexType>
+	<xs:complexType name="type_person">
+		<xs:sequence>
+			<xs:element name="name" type="type_person_name" minOccurs="0" maxOccurs="1" />
+			<xs:element ref="comment" minOccurs="0" />
+			<xs:element name="identifiers" type="type_identifiers" minOccurs="0" />
+			<xs:element ref="institutes" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="type_date">
+		<xs:attribute name="date" type="xs:date" use="optional" />
+		<xs:attribute name="from" type="xs:date" use="optional" />
+		<xs:attribute name="to" type="xs:date" use="optional" />
+		<xs:attribute name="year" type="xs:gYear" use="optional" />
+	</xs:complexType>
+	<xs:simpleType name="type_language">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type_boolean">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="true|false|1|0|not given" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- egyszerű típusok -->
+	<xs:element name="peerreviewed" type="type_boolean" />
+	<xs:element name="filesource">
+		<xs:complexType>
+			<xs:attribute name="identifier" type="xs:string" />
+			<xs:attribute name="name" type="xs:string" />
+			<xs:attribute name="status" type="xs:string" use="optional" />
+			<xs:attribute name="accepted-by" type="xs:string" use="optional" />
+			<xs:attribute name="acceptance-date" type="xs:date" use="optional" />
+			<xs:attribute name="error" type="xs:string" use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="title" type="xs:string" />
+	<xs:element name="subtitle" type="xs:string" />
+	<xs:element name="volume" type="xs:string" />
+	<xs:element name="issue" type="xs:string" />
+	<xs:element name="language" type="xs:string" />
+	<xs:element name="abstract" type="xs:string" />
+	<xs:element name="comment" type="xs:string" />
+	<xs:element name="administrative_comment" type="xs:string" />
+	<xs:element name="volume_title" type="xs:string" />
+	<xs:element name="volume_number" type="xs:string" />
+	<xs:element name="title_series" type="xs:string" />
+	<xs:complexType name="type_identifiers">
+		<xs:sequence>
+			<xs:element name="identifier" maxOccurs="unbounded" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="name" type="xs:string" />
+							<xs:attribute name="type" type="xs:string" />
+							<xs:attribute name="identifier" type="xs:string" />
+							<xs:attribute name="category" type="xs:string" />
+							<xs:attribute name="public" type="xs:string" />
+							<xs:attribute name="validator" type="xs:string" />
+							<xs:attribute name="validation_mode" type="xs:string" />
+							<xs:attribute name="date" type="xs:string" />
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="type_edited">
+		<xs:sequence>
+			<xs:element name="entry" maxOccurs="unbounded" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="date" type="xs:string" />
+					<xs:attribute name="time" type="xs:string" />
+					<xs:attribute name="login" type="xs:string" />
+					<xs:attribute name="event" type="type_entry_event" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="type_person_name">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="first" type="xs:string" />
+				<xs:attribute name="last" type="xs:string" />
+				<xs:attribute name="suffix" type="xs:string" />
+				<xs:attribute name="share" type="xs:string" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="type_general_name">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="identifier" type="xs:string" />
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="type_date_entry">
+		<xs:attribute name="date" type="xs:date" />
+	</xs:complexType>
+	<xs:complexType name="type_date_time_entry">
+		<xs:complexContent>
+			<xs:extension base="type_date_entry">
+				<xs:attribute name="time" type="xs:time" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="type_thesis_data">
+		<xs:all>
+			<xs:element name="supervisors" type="type_supervisors" minOccurs="1" />
+			<xs:element name="school" type="xs:string" minOccurs="1" />
+			<xs:element name="institution" type="xs:string" minOccurs="1" />
+			<xs:element name="defence">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="entry" type="type_date_time_entry" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="decision">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice>
+							<xs:element name="passed" type="xs:string">
+								<!-- optional ./@text is a textual representation of/comment on the decision. -->
+							</xs:element>
+							<xs:element name="failed" type="xs:string">
+								<!-- optional ./@text is a textual representation of/comment on the decision. -->
+							</xs:element>
+						</xs:choice>
+						<xs:element name="entry" type="type_date_entry" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:simpleType name="type_institutes_for">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="document|author|docauthor" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type_entry_event">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="created|last-modified" />
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:complexType name="type_citation_source">		
+        <xs:attribute name="name" type="xs:string" use="optional"/>
+        <xs:attribute name="year" type="xs:gYear" use="optional"/>
+    </xs:complexType>
+</xs:schema>

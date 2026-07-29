@@ -1,0 +1,110 @@
+<h2>BME GPK PhD értékelő</h2>
+
+{% if error_messages %}
+
+    {% for e in error_messages %}
+        <p class="error-message">{{ e }}</p>
+    {% endfor %}
+
+{% elif object_list %}
+<table width="99%" style=" border: 1px solid;" id="tudriport-list-table">
+    <thead>
+        <tr style="font-weight: bold; background-color: #f2f2f2;">
+            <th style="text-align: center;">Név</th>
+            <th style="text-align: center;">Megjegyzés</th>
+            <th style="text-align: center;">Témavezető</th>
+
+            <th style="text-align: center;">Magyar<br>nyelvű<br>közle-<br>mény</th>
+            <th style="text-align: center;">Idegen<br>nyelvű<br>konf.-<br>cikk</th>
+            <th style="text-align: center;">IF-os,<br>angol<br>nyelvű<br>foly.-<br>cikk</th>
+            <th style="text-align: center;">Angol ny.<br>kézirat,<br>IF-os<br>folyóirat<br>bírálatra<br>befogadta<br></th>
+            <th style="text-align: center;">Scopus-<br>indexált<br>közle-<br>mény</th>
+            <th style="text-align: center;">Előző<br>hármon<br>felüli<br>közle-<br>mény</th>
+            <th style="text-align: center;">WoS/Scopus<br>angol ny.<br>foly.-cikk,<br>tézisp.<br>kapcs.</th>
+            <th style="text-align: center;">Első<br>szerzős<br>WoS/Scopus<br>angol ny.<br>foly.-cikk,<br>tézisp.<br>kapcs.</th>
+            <th style="text-align: center;">IF-os,<br>külföldi<br>kiadású<br>foly.-ban<br>angol ny.<br>cikk,<br>tézisp.<br>kapcs.</th>
+            <th style="text-align: center;">Publi-<br>káció<br>I</th>
+            <th style="text-align: center;">Publi-<br>káció<br>II</th>
+            <th style="text-align: center;">Publi-<br>káció<br>III</th>
+            <th style="text-align: center;">Publi-<br>káció<br>IV</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+            <tr style="background-color: #f2f2f2;">
+                <td style="padding: 5px;"><span style="color: blue;" data-mtmt-id="{{ object.author.mtmtcode }}" class="clickable openPopup">{{ object.author.personname }}</span></td>
+                <td>{{ object.author.role }}</td>
+                <td>{{ object.supervisor.authorname }}</td>
+
+                <td style="text-align: center;">{{object.points.extraInfo.creditPoint_1_condition_1 | length}}</td>
+                <td style="text-align: center;">{{object.points.extraInfo.creditPoint_1_condition_2 | length}}</td>
+                <td style="text-align: center;">{{object.points.extraInfo.creditPoint_2_condition_1 | length}}</td>
+                <td style="text-align: center;">{{object.points.extraInfo.creditPoint_2_condition_3 | length}}</td>
+                <td style="text-align: center;">{{object.points.extraInfo.creditPoint_2_condition_4 | length}}</td>
+                <td style="text-align: center;">{{(object.points.extraInfo.creditPoint_2_condition_2 + object.points.extraInfo.creditPoint_2_condition_5) | unique | list | length}}</td>
+                <td style="text-align: center;">{{ "%.2f"|format(object.points.extraInfo.creditPoint_4_condition_1_1 * 100)|replace('.00', '') }}%</td>
+                <td style="text-align: center;">{{object.points.extraInfo.creditPoint_4_condition_1_2 | length}}</td>
+                <td style="text-align: center;">{{ "%.2f"|format(object.points.extraInfo.creditPoint_4_condition_2 * 100)|replace('.00', '') }}%</td>
+                <td style="text-align: center;">
+                    {%if object.points.extraInfo.Pub1Fulfilled %}
+                        <span style="background-color: #dfefca;">
+                            &nbsp;&nbsp;✔&nbsp;&nbsp;
+                        </span>
+                    {%else%}
+                        <span style="background-color: #ffe6da;">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                    {%endif%}
+                </td>
+                <td style="text-align: center;">
+                    {%if object.points.extraInfo.Pub2Fulfilled %}
+                        <span style="background-color: #dfefca;">
+                            &nbsp;&nbsp;✔&nbsp;&nbsp;
+                        </span>
+                    {%else%}
+                        <span style="background-color: #ffe6da;">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                    {%endif%}
+                </td>
+                <td style="text-align: center;">
+                    {%if object.points.extraInfo.Pub3Fulfilled %}
+                        <span style="background-color: #dfefca;">
+                            &nbsp;&nbsp;✔&nbsp;&nbsp;
+                        </span>
+                    {%else%}
+                        <span style="background-color: #ffe6da;">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                    {%endif%}
+                </td>
+                <td style="text-align: center;">
+                    {%if object.points.extraInfo.Pub4Fulfilled %}
+                        <span style="background-color: #dfefca;">
+                            &nbsp;&nbsp;✔&nbsp;&nbsp;
+                        </span>
+                    {%else%}
+                        <span style="background-color: #ffe6da;">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                    {%endif%}
+                </td>
+            </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p class="error-message">Empty scoring error.</p>
+{% endif %}
+<style>
+    th {
+      border-width: 1px;
+      border-collapse: collapse;
+    }
+    thead {
+      top: 0;
+      position: sticky;
+      background: #cccccc;
+    }
+  </style>

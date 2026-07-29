@@ -1,0 +1,8 @@
+[Unit]
+Description=Tudriport input queue processor
+
+[Service]
+ExecStart=screen -D -m /var/www/tudomanymetria-riportkeszito/utils/input_queue_processor__service.sh
+
+[Install]
+WantedBy=default.target

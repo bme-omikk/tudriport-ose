@@ -1,0 +1,287 @@
+{% if error_messages %}
+
+    {% for e in error_messages %}
+        <p class="error-message">{{ e }}</p>
+    {% endfor %}
+
+{% elif points %}
+
+    {% if issummary %}
+        <h2>Összesített pontozás</h2>
+    {% else %}
+        <h2>
+            {{ author.authorname }}
+            {% if author.authorcomment %}({{ author.authorcomment }}){% endif %} 
+        </h2>
+    {% endif %}
+    {% if isriportcomment %}<i>Pontok a 'Hozzájárulás' szorzó nélkül</i>{% endif %}
+
+    <table class="dyn-table" border="1" >
+        <tr>
+            <th colspan="2" align="center">Közlemény</th>
+            <th align="center">Angol nyelvű</a></th>
+            <th align="center">Egyéb idegen nyelvű <br>vagy magyar</th>
+        </tr>
+        <tr>
+            <td rowspan="5">Folyóiratcikk</td>
+            <td > D1 besorolás</td>    
+            <td align="center" class="clickable tooltip openPopup" data-pubids="{{points.reszeredmenyek['FOLY,D1,ANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,D1,ANG'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,D1,ANG'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,D1,ANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{ points.reszeredmenyek['FOLY,D1,ANG'].szamolas }}</span>
+                            
+            </td>
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['FOLY,D1,NANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,D1,NANG'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,D1,NANG'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,D1,NANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['FOLY,D1,NANG'].szamolas }}</span>            
+            </td>
+        </tr>
+        <tr>
+            <td > Q1/Q2 besorolás</td>    
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['FOLY,Q1Q2,ANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,Q1Q2,ANG'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,Q1Q2,ANG'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,Q1Q2,ANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['FOLY,Q1Q2,ANG'].szamolas }}</span>
+            </td>
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['FOLY,Q1Q2,NANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,Q1Q2,NANG'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,Q1Q2,NANG'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,Q1Q2,NANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['FOLY,Q1Q2,NANG'].szamolas }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td > Q3/Q4 besorolás</td>    
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['FOLY,Q3Q4,ANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,Q3Q4,ANG'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,Q3Q4,ANG'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,Q3Q4,ANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['FOLY,Q3Q4,ANG'].szamolas }}</span>
+            </td>
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['FOLY,Q3Q4,NANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,Q3Q4,NANG'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,Q3Q4,NANG'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,Q3Q4,NANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['FOLY,Q3Q4,NANG'].szamolas }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td > lektorált (D,Q besorolás nélkül)</td>    
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['FOLY,LEK,ANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,LEK,ANG'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,LEK,ANG'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,LEK,ANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['FOLY,LEK,ANG'].szamolas }}</span>
+            </td>
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['FOLY,LEK,NANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,LEK,NANG'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,LEK,NANG'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,LEK,NANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['FOLY,LEK,NANG'].szamolas }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td > nem lektorált folyóiratban</td>    
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['FOLY,NLE,ANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,NLE,ANG'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,NLE,ANG'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,NLE,ANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['FOLY,NLE,ANG'].szamolas }}</span>
+            </td>
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['FOLY,NLE,NANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['FOLY,NLE,NANG'].reszpont }}
+                {% if points.reszeredmenyek['FOLY,NLE,NANG'].pubids|length > 0 %}({{ points.reszeredmenyek['FOLY,NLE,NANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['FOLY,NLE,NANG'].szamolas }}</span>
+            </td>
+        </tr>
+        
+        
+        <tr>
+            <td rowspan="2">Konferenciacikk</td>    
+            <td>WoS</td>
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['KONF,WOS,ANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONF,WOS,ANG'].reszpont }}
+                {% if points.reszeredmenyek['KONF,WOS,ANG'].pubids|length > 0 %}({{ points.reszeredmenyek['KONF,WOS,ANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['KONF,WOS,ANG'].szamolas }}</span>
+            </td>
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['KONF,WOS,NANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONF,WOS,NANG'].reszpont }}
+                {% if points.reszeredmenyek['KONF,WOS,NANG'].pubids|length > 0 %}({{ points.reszeredmenyek['KONF,WOS,NANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['KONF,WOS,NANG'].szamolas }}</span>
+            </td>
+        </tr>
+        <tr> 
+            <td>minden más</td>   
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['KONF,OTH,ANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONF,OTH,ANG'].reszpont }}
+                {% if points.reszeredmenyek['KONF,OTH,ANG'].pubids|length > 0 %}({{ points.reszeredmenyek['KONF,OTH,ANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['KONF,OTH,ANG'].szamolas }}</span>
+            </td>
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['KONF,OTH,NANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONF,OTH,NANG'].reszpont }}
+                {% if points.reszeredmenyek['KONF,OTH,NANG'].pubids|length > 0 %}({{ points.reszeredmenyek['KONF,OTH,NANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['KONF,OTH,NANG'].szamolas }}</span>
+            </td>
+        </tr>
+        
+        <tr>
+            <td >Könyv DOI/ISBN számmal; <br>könyvfejezet ilyenben</td> 
+            <td>szerzőként</td>   
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['KONYV,SZERZO,ANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONYV,SZERZO,ANG'].reszpont }}
+                {% if points.reszeredmenyek['KONYV,SZERZO,ANG'].pubids|length > 0 %}({{ points.reszeredmenyek['KONYV,SZERZO,ANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['KONYV,SZERZO,ANG'].szamolas }}</span>
+            </td>
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['KONYV,SZERZO,NANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONYV,SZERZO,NANG'].reszpont }}
+                {% if points.reszeredmenyek['KONYV,SZERZO,NANG'].pubids|length > 0 %}({{ points.reszeredmenyek['KONYV,SZERZO,NANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['KONYV,SZERZO,NANG'].szamolas }}</span>
+            </td>
+        </tr>
+        <tr>   
+            <td >Könyv/konferenciakötet<br>DOI/ISBN számmal</td> 
+            <td>szerkesztőként</td>
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['KONYV,SZERK,ANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONYV,SZERK,ANG'].reszpont }}
+                {% if points.reszeredmenyek['KONYV,SZERK,ANG'].pubids|length > 0 %}({{ points.reszeredmenyek['KONYV,SZERK,ANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['KONYV,SZERK,ANG'].szamolas }}</span>
+            </td> 
+            <td align="center" class="clickable  tooltip openPopup" data-pubids="{{points.reszeredmenyek['KONYV,SZERK,NANG'].pubids }}">
+                {{ "%.2f"%points.reszeredmenyek['KONYV,SZERK,NANG'].reszpont }}
+                {% if points.reszeredmenyek['KONYV,SZERK,NANG'].pubids|length > 0 %}({{ points.reszeredmenyek['KONYV,SZERK,NANG'].pubids|length }}){% endif %}
+                <span class="tooltiptext">{{points.reszeredmenyek['KONYV,SZERK,NANG'].szamolas }}</span>
+            </td>
+        </tr>
+        
+        <tr>
+            <td colspan="2">A fentiek összpontszáma</td>
+            <td colspan="2" align="center">{{ "%.2f"%points.osszpontszam }}</td>
+        </tr>
+        <tr>
+            <td colspan="2"> Független hivatkozás a Web of Science-ben</td>
+            <td colspan="2" align="center" class="clickable openciteids"  data-citeids="{{points.reszeredmenyek['CIT-IND,WOS'].citids }}">
+                {{ "%.2f"%points.reszeredmenyek['CIT-IND,WOS'].reszpont }}
+                {% if points.reszeredmenyek['CIT-IND,WOS'].citids|length > 0 %}({{ points.reszeredmenyek['CIT-IND,WOS'].citids|length }}){% endif %}            
+            </td>
+        </tr>
+        <!--
+        <tr>
+            <td colspan="2">Független hivatkozás a Scopus-ban</td>
+            <td colspan="2" align="center" class="clickable openciteids" data-citeids="{{points.reszeredmenyek['CIT-IND,SCOPUS'].citids }}">{{ "%.2f"%points.reszeredmenyek['CIT-IND,SCOPUS'].reszpont }}
+                {% if points.reszeredmenyek['CIT-IND,SCOPUS'].citids|length > 0 %}({{ points.reszeredmenyek['CIT-IND,SCOPUS'].citids|length }}){% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">Független hivatkozás  <br> Web of Science-ben vagy Scopus-ban</td>
+            <td colspan="2" align="center" class="clickable openciteids" data-citeids="{{points.reszeredmenyek['CIT-IND,W+S'].citids }}">{{ "%.2f"%points.reszeredmenyek['CIT-IND,W+S'].reszpont }}
+                {% if points.reszeredmenyek['CIT-IND,W+S'].citids|length > 0 %}({{ points.reszeredmenyek['CIT-IND,W+S'].citids|length }}){% endif %}
+            </td>
+        </tr>
+        -->
+    </table>
+
+    <h2>
+        Pontértékek táblázata
+    </h2>
+
+    <table class="dyn-table" border="1" id="right">
+        <tr>
+            <th colspan="2" align="center">Közlemény</th>
+            <th align="center">Angol nyelvű</a></th>
+            <th align="center">Egyéb idegen nyelvű <br> vagy magyar</th>
+        </tr>
+        <tr>
+            <td rowspan="5">Folyóiratcikk</td>
+            <td > D1 besorolás</td>    
+            <td align="center">{{points.tokenek['FOLY,D1,ANG'].score}}</td>
+            <td align="center">{{points.tokenek['FOLY,D1,NANG'].score}}</td>
+        </tr>
+        <tr>
+            <td > Q1/Q2 besorolás</td>    
+            <td align="center">{{points.tokenek['FOLY,Q1Q2,ANG'].score}}</td>
+            <td align="center">{{points.tokenek['FOLY,Q1Q2,NANG'].score}}</td>
+        </tr>
+        <tr>
+            <td > Q3/Q4 besorolás</td>    
+            <td align="center">{{points.tokenek['FOLY,Q3Q4,ANG'].score}}</td>
+            <td align="center">{{points.tokenek['FOLY,Q3Q4,NANG'].score}}</td>
+        </tr>
+        <tr>
+            <td > lektorált (D,Q besorolás nélkül)</td>    
+            <td align="center">{{points.tokenek['FOLY,LEK,ANG'].score}}</td>
+            <td align="center">{{points.tokenek['FOLY,LEK,NANG'].score}}</td>
+        </tr>
+        <tr>
+            <td > nem lektorált folyóiratban</td>    
+            <td align="center">{{points.tokenek['FOLY,NLE,ANG'].score}}</td>
+            <td align="center">{{points.tokenek['FOLY,NLE,NANG'].score}}</td>
+        </tr>
+        
+        
+        <tr>
+            <td rowspan="2">Konferenciacikk</td>    
+            <td>WoS</td>
+            <td align="center">{{points.tokenek['KONF,WOS,ANG'].score}}</td>
+            <td align="center">{{points.tokenek['KONF,WOS,NANG'].score}}</td>
+        </tr>
+        <tr> 
+            <td>minden más</td>   
+            <td align="center">{{points.tokenek['KONF,OTH,ANG'].score}}</td>
+            <td align="center">{{points.tokenek['KONF,OTH,NANG'].score}}</td>
+        </tr>
+        
+        <tr>
+            <td >Könyv DOI/ISBN számmal;<br>könyvfejezet ilyenben</td> 
+            <td>szerzőként, oldalanként</td>   
+            <td align="center">{{points.tokenek['KONYV,SZERZO,ANG'].score}}</td>
+            <td align="center">{{points.tokenek['KONYV,SZERZO,NANG'].score}}</td>
+        </tr>
+        <tr> 
+            <td >Könyv/konferenciakötet<br>DOI/ISBN számmal</td>   
+            <td>szerkesztőként, oldalanként</td>
+            <td align="center">{{points.tokenek['KONYV,SZERK,ANG'].score}}</td>
+            <td align="center">{{points.tokenek['KONYV,SZERK,NANG'].score}}</td>
+        </tr>      
+        
+        <tr>
+            <td colspan="2">Független hivatkozás a Web of Science-ben</td>
+            <td colspan="2" align="center">{{points.tokenek['CIT-IND,WOS'].score}}</td>
+        </tr>
+        
+    </table>
+
+    {% if issummary %}
+    <h2>Összesítés szabályai</h2>
+
+    <ul>
+        <li>A közleményekre járó összesített pontszám az egyes szerzők pontjainak összege.</li>
+        <li>Egy tanszéki idéző után a tanszék a teljes pontértéket kapja, függetlenül a szerzők számától és Hozzájárulásától: egy szerző után kap, teljes pontértéket.</li>
+    </ul>
+    {% else %}
+    <h2>Közleményért járó pont számítási képlete</h2>
+
+    <p>Pont=Pontérték/(Szerzők száma)*Hozzájárulás</p>
+    {% endif %}
+
+{% else %}
+    <p class="error-message">Empty scoring error.</p>
+{% endif %}
+
+<style>
+    .tooltip {
+        position: relative;
+    }
+    
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: auto;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+    
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+    }
+    
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+</style>

@@ -1,0 +1,31 @@
+{% if error_messages %}
+
+    {% for e in error_messages %}
+        <p class="error-message">{{ e }}</p>
+    {% endfor %}
+
+{% elif object_list %}
+
+{% set english = mode.endswith('_eng') %}
+    <table class="dyn-table even-odd">
+        <tr>   
+            <th>{{ 'Details' if english else 'Részletek' }}</th> 
+            <th>{{ 'Score' if english else 'Pontszám' }}</th>
+            <th>{{ 'Calculation' if english else 'Pontszámítás' }}</th> 
+        </tr>        
+        {% for obj in object_list %}
+            <tr>
+                <td>{{ obj.publication.description.label_html | replace("href=\"/gui2/", "href=\"https://m2.mtmt.hu/gui2/") }}
+                    {% if obj.points.fejlec['talalat_token'] %}
+                    <br/>{{ 'Classification (in Hungarian) according to the scoring rules' if english else 'Értékelési mód szerinti besorolás' }}: <label title="címke: {{obj.points.tokenek[obj.points.fejlec['talalat_token']]['token']}}">{{obj.points.tokenek[obj.points.fejlec['talalat_token']]['description']}}</label>
+                    {% endif %}
+                </td> 
+                <td>{{ "%.2f"%obj.points.osszpontszam }}</td>
+                <td>{{ obj.points.szamolas }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% else %}
+    <p class="error-message">Empty scoring error.</p>
+{% endif %}

@@ -1,0 +1,13 @@
+<div *ngIf="!working; else loadingBlock">
+  <button mat-button *ngIf="user?.user.username; else loginBlock" [matMenuTriggerFor]="userMenu">{{ user.user.username }}</button>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="logout()">Kijelentkezés</button>
+  </mat-menu>
+
+  <ng-template #loginBlock>
+    <button  mat-button (click)="login()">Bejelentkezés</button>
+  </ng-template>
+</div>
+<ng-template #loadingBlock>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>

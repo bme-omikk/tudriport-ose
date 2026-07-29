@@ -1,0 +1,84 @@
+<mat-card *ngIf="permission">
+    <mat-card-title>
+        Idéző ellenőrzőlisták
+    </mat-card-title>
+    <div class="form-container">
+        <button mat-raised-button (click)="search()" [disabled]="searching">
+            Keresés
+            <mat-progress-bar mode="indeterminate" *ngIf="searching"></mat-progress-bar>
+        </button>
+    </div> 
+        <mat-checkbox [ngModel]="duplicateDoi.true" [indeterminate]="duplicateDoi.dontcare" (ngModelChange)="nextState(duplicateDoi);filterDuplums()" color="primary">idéződuplumok az idéző közlemény doi-egyezése alapján</mat-checkbox>
+        <br>
+        <mat-checkbox [checked]="duplicateTitle.true" [indeterminate]="duplicateTitle.dontcare" (change)="nextState(duplicateTitle);filterDuplums()" color="primary">idéződuplumok az idéző közlemény cím-egyezése alapján</mat-checkbox> 
+        <br>
+        <mat-checkbox [checked]="notPublished.true" [indeterminate]="notPublished.dontcare" (change)="nextState(notPublished);filterDuplums()" color="primary" >nem nyilvános idézőkapcsolatok</mat-checkbox> 
+        <br>
+        <mat-checkbox [checked]="citingDocNotPublished.true" [indeterminate]="citingDocNotPublished.dontcare" (change)="nextState(citingDocNotPublished);filterDuplums()" color="primary">nem nyilvános idéző szerepű közlemények</mat-checkbox> 
+        <br>
+        <mat-checkbox [checked]="citingDocWError.true" [indeterminate]="citingDocWError.dontcare" (change)="nextState(citingDocWError);filterDuplums()" color="primary">hibás/hiányos idéző szerepű közlemények</mat-checkbox> 
+        <br>
+        <mat-checkbox [checked]="unknownExternal.true" [indeterminate]="unknownExternal.dontcare" (change)="nextState(unknownExternal);filterDuplums()" color="primary">jelöletlen függő/független idézés állapot </mat-checkbox>     
+    <table mat-table [dataSource]="dataSource">        
+        <ng-container matColumnDef="mtmt_pubid">
+            <th mat-header-cell *matHeaderCellDef>MTMT</th>
+            <td mat-cell *matCellDef="let duplum"> {{duplum.mtmt_pubid}} </td>
+        </ng-container>
+        <ng-container matColumnDef="label_txt">
+            <th mat-header-cell *matHeaderCellDef>Leírás</th>
+            <td mat-cell *matCellDef="let duplum"><i> {{duplum.label_txt}} </i></td>
+        </ng-container>
+        <ng-container matColumnDef="doi">
+            <th mat-header-cell *matHeaderCellDef>DOI duplumok</th>
+            <td mat-cell *matCellDef="let duplum">
+                <ul>
+                    <li *ngFor="let description of duplum.citation_duplicate_doi_info">
+                        <span class="clickable" (click)="openDoi($event.target.innerText)"><u>{{ description.doi }}</u></span> : <span class="clickable" (click)="openCitationsInMTMT($event.target.innerText)"><u>{{ description.citationList }}</u></span>
+                    </li>                    
+               </ul>   
+            </td>   
+        </ng-container>
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>Cím duplumok</th>
+            <td mat-cell *matCellDef="let duplum">
+                <ul>
+                    <li *ngFor="let title_info of duplum.citation_duplicate_title_info">
+                        <span *ngIf="title_info?.title.length > 50" class="tooltip">{{ title_info.title.substring(0,50) }}...
+                            <span  class="tooltiptext">{{ title_info.title }}</span>
+                        </span>
+                        <span *ngIf="title_info?.title.length < 50 || title_info.title.length==50">
+                            {{ title_info.title }}                                           
+                        </span> : <span class="clickable" (click)="openCitationsInMTMT($event.target.innerText)"><u>{{ title_info.citationList }}</u></span>
+                        
+                    </li>                    
+               </ul>   
+            </td>   
+        </ng-container> 
+        <ng-container matColumnDef="errors">
+            <th mat-header-cell *matHeaderCellDef>Hiba-esetek</th>
+            <td mat-cell *matCellDef="let duplum"> 
+                <ul>
+                    <li *ngIf="duplum.citation_list_not_published.length!=0">
+                        <dt>nem nyilvános idézőkapcsolat</dt>
+                        <dd><span class="clickable wrap" (click)="openCitationsInMTMT($event.target.innerText)"><u>{{ duplum.citation_list_not_published.join(", ") }}</u></span></dd>
+                    </li>
+                    <li *ngIf="duplum.citation_list_citingdoc_not_published.length!=0">
+                        <dt>nem nyilvános idéző</dt>
+                        <dd><span class="clickable wrap" (click)="openCitationsInMTMT($event.target.innerText)"><u>{{ duplum.citation_list_citingdoc_not_published.join(", ") }}</u></span></dd>
+                    </li>  
+                    <li *ngIf="duplum.citation_list_citingdoc_w_error.length!=0">
+                        <dt>hibás/hiányos idéző</dt>
+                        <dd><span class="clickable wrap" (click)="openCitationsInMTMT($event.target.innerText)"><u>{{ duplum.citation_list_citingdoc_w_error.join(", ") }}</u></span></dd>
+                    </li> 
+                    <li *ngIf="duplum.citation_list_unknown_external.length!=0">
+                        <dt>jelöletlen függő/független</dt>
+                        <dd><span class="clickable wrap" (click)="openCitationsInMTMT($event.target.innerText)"><u>{{ duplum.unknownExternal.join(", ") }}</u></span></dd>
+                    </li>                     
+               </ul>   
+            </td>
+        </ng-container>       
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[50, 10, 100, dataSource?.data.length]" showFirstLastButtons></mat-paginator>    
+</mat-card>

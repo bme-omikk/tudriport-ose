@@ -1,0 +1,15 @@
+Django==3.1.3
+django-cors-headers==3.5.0
+django-filter==2.4.0
+djangorestframework==3.12.2
+flake8==3.8.4
+Jinja2==2.11.2
+# markupsafe removed soft_unicode which is causing error with Jinja2 2.x! https://github.com/pallets/markupsafe/issues/304
+# ImportError: cannot import name 'soft_unicode' from 'markupsafe'
+markupsafe==2.0.1
+lxml
+# psycopg2 2.8 on Debian 12, Python3.11: SystemError: initialization of _psycopg raised unreported exception
+psycopg2>=2.9,<3.0
+pytz==2020.4
+PyGreSQL==5.2.1
+six==1.15.0

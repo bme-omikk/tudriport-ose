@@ -1,0 +1,18 @@
+{
+    "db": {
+        "SQLHOST": "localhost",
+        "SQLDB":   "tudriport",
+        "SQLUSER": "me",
+        "SQLPASS": "password-override"
+    }
+    , "riport": {
+        "VERBOSE": 2
+    }
+    , "webapi": {
+        "VERBOSE": 2
+    }
+    , "django": {
+            "logfile": "override-logfile-path/debug-tudriport.log"
+            "logfile-misc": "override-logfile-path/debug-tudriport-misc.log"
+    }
+}

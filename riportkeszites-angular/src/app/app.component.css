@@ -1,0 +1,12 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+.tudriport-vertical-middle, .tudriport-vertical-middle mat-icon {
+    vertical-align: middle;
+}
+app-notification{
+    z-index:10000;
+    position: sticky;
+    top: 0;
+}

@@ -1,0 +1,37 @@
+.mat-row {
+    height: auto;
+  }
+  
+.mat-cell {
+  padding: 8px 8px 8px 0;
+}
+
+.tooltip {
+  position: relative;
+}
+
+.button {
+  padding: 8px 8px 8px 0;
+}
+.tooltip .tooltiptext {
+  display: inline-block;
+  visibility: hidden;
+  width: 400px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+table{
+  width: 100%;
+ }

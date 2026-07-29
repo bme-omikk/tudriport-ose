@@ -1,0 +1,97 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+.clickable {
+    cursor:pointer;
+    color: blue;
+}
+
+.mat-row:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+/* dynamic tables */
+.dyn-table {
+    border-spacing: 0;
+}
+
+.dyn-table td, .dyn-table th {
+    padding-left: 24px;
+}
+
+.dyn-table.even-odd tr:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+.dyn-table tr {
+    height: 40px;
+}
+
+.dyn-table th {
+    font-weight: bold;
+}
+
+.dyn-table th, .dyn-table td {
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    padding-right: 30px;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    font-size: larger;
+    padding: 8px;
+}
+
+.warning-message {
+    color: coral;
+    font-weight: bold;
+    font-size: larger;
+}
+
+@media print { 
+    @page {
+        margin: 3mm
+    }
+    .no-print {
+        display: none;
+    }
+    h1, h2, h3, .keep-with-next {
+        break-after: avoid; /* Avoid break page after heading and selected elements */
+    }
+    table, tr, .no-page-break {
+        break-inside: avoid; /* Avoid breaking across pages: table, table rows and selected elements */
+    }
+    tbody {
+        display: table-row-group; /* Allow tbody to be split across printed pages */
+    }    
+    .mat-drawer-container, .mat-drawer-content, .mat-sidenav-container{
+        overflow: visible !important;
+    }
+    .mat-toolbar, .angular-form{
+        display: none !important;
+    }
+}

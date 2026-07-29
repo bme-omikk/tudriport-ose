@@ -1,0 +1,42 @@
+{% if error_messages %}
+
+    {% for e in error_messages %}
+        <p class="error-message">{{ e }}</p>
+    {% endfor %}
+
+{% elif object_list %}
+
+    <table class="dyn-table even-odd" id="tudriport-list-table">
+        <tr>
+            <th>Név</th>
+            <th>Megjegyzés</th>
+            <th>Hozzájárulás</th>
+            <th>MTMT ID</th>
+            <th>Közlemények pontszáma</th> 
+            <th>WOS független idézők pontszáma</th>           
+        </tr>
+        {% if is_aggregation_aware %}        
+            <tr>
+                <td><b>Összesítés</b> <span class="clickable openPopup">(részletek)</span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><b>{{ summary.osszpontszam | round(2) }}</b></td> 
+                <td><b>{{ summary.reszeredmenyek['CIT-IND,WOS'].reszpont | round(2) }}</b></td> 
+            </tr>
+        {% endif %}
+        {% for object in object_list %}
+            <tr>
+                <td><span data-mtmt-id="{{ object.author.mtmtcode }}" class="clickable openPopup">{{ object.author.personname }}</span></td>
+                <td>{{ object.author.role }}</td>
+                <td>{{ object.author.weighting }}</td>
+                <td>{{ object.author.mtmtcode }}</td>
+                <td>{{ object.points.osszpontszam | round(2) }}</td> 
+                <td>{{ object.points.reszeredmenyek['CIT-IND,WOS'].reszpont | round(2)}}</td>               
+            </tr>
+        {% endfor %}
+    </table>
+
+{% else %}
+    <p class="error-message">Empty scoring error.</p>
+{% endif %}

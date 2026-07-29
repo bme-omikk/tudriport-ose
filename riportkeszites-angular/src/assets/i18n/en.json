@@ -1,0 +1,79 @@
+{
+  "ProjectName": "Tudriport - scientometric reporting"
+, "ProjectShortName": "Tudriport"
+, "App": {
+    "Menu": {
+      "ChooseView": {
+        "menuText": "Choose view"
+      , "_comment": "menu items are given in the appropriate View sections using key viewNameMenuItem"
+      }
+    , "Admin": {
+        "menuText": "Administration"
+      , "generalInfo": "Dashboard overview"
+      , "users": "Users"
+      , "extAuthorImport": "Ext Author import"
+      , "extAuthorManage": "Ext Author manage"
+      , "inputQueueWaitingItems": "Waiting in queue"
+      , "citationDuplums": "Citation checks"
+      , "timeMachineSet": "Set time machine"
+      }
+    }
+  , "Common": {
+      "inputQueueStatus": "Currently there are {{waitingAuthors}} authors and {{waitingPublications}} publications queued for update in the system."
+    , "btnExportTableToSpreadsheet": "Export to spreadsheet"
+    , "scoringProgressbarHint": "Depending on the given parameters, this might take a few minutes."
+    , "SearchForm": {
+        "btnSearchFormHide": "Hide Settings and Update request"
+      , "btnSearchFormShow": "Show Settings and Update request"
+      , "btnDoScoring": "Run scoring"
+      , "btnRequestUpdate": "Request update of publication data"
+      , "btnRequestUpdateHint": "Update requests are processed in the background, so its result will be available later."
+      , "btnCopyToClipboard": "Copy to clipboard"
+      , "btnOpenInMTMT": "Show publications in MTMT"
+      , "displayedPublicationIDs": "MTMT ID of the displayed publications"
+      , "Steps": {
+          "ChooseScoring": {
+            "heading": "1. Choose scoring algorithm"
+          , "availableScorings": "Scoring algorithm"
+          }
+        , "ChooseSubject": {
+            "heading": "2. Select organization or author to score"
+          , "organizationLevel0": "Organization"
+          , "organizationLevel1": "Hierarchy level 1"
+          , "organizationLevel2": "Hierarchy level 2"
+          , "organizationLevel3": "Hierarchy level 3"
+          , "author": "Author"
+          , "authorLabelSupervisor": "Supervisor: {{supervisor_mtmt_authid}}"
+          , "mtmtAuthorId": "MTMT author ID"
+          }
+        , "ScoringParameters": {
+            "heading": "3. Scoring parameters"
+          , "pYear": "Year"
+          , "pYearHint": "Give a year, or in case of period-based scoring, the end year of the period. Leave blank for scoring life work."
+          , "pYearFrom": "Year from"
+          , "pYearTo": "Year to"
+          }
+        , "FilterParameters": {
+            "heading": "4. Filter criteria"
+          , "pPublicationType": "Publication type"
+          , "pPublicationSubtype": "Subtype"
+          , "pPublicationCharacter": "Character"
+          , "pPublicationIDs": "MTMT  publication IDs (separated by comma)"
+          }
+        }
+      }
+    }
+  , "DetailView": {
+      "viewName": "Detail view"
+    , "viewNameMenuItem": "Detail view"
+    }
+  , "SummaryView": {
+      "viewName": "List view"
+    , "viewNameMenuItem": "List view"
+    }
+  , "AdhocView": {
+      "viewName": "Custom search based view"
+    , "viewNameMenuItem": "Custom search based view"
+    }
+  }  
+}

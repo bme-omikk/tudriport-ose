@@ -1,0 +1,144 @@
+<h2>BME Monitoring értékelés</h2>
+
+{% if error_messages %}
+
+    {% for e in error_messages %}
+        <p class="error-message">{{ e }}</p>
+    {% endfor %}
+
+{% elif object_list %}
+
+    <p>A táblázat {{ params.year_count }} naptári év ({{params.year_from}}-{{params.year_to}}) publikációs teljesítményét mutatja
+        a BME-hez affiliált teljes tudományos közleményeket véve figyelembe
+        (<a href="https://www.omikk.bme.hu/kutatas-es-publikalas/mtmt#bme_monitoring_tablazat_informacio">részletek</a>).
+        Az adatok tudományterületi sajátossággal bírnak, az építőművészet vonatkozásában nem relevánsak.
+    </p>
+
+    <table class="dyn-table even-odd tudriport-sortable" id="tudriport-list-table">
+        <thead>
+            <tr>
+                <th>MTMT ID</th>
+                <th>Név</th>
+                <th>Kar</th>
+                <th>Tanszék</th>
+                <th>Besorolás</th>
+                <th>Összes teljes tudományos publikáció</th>
+                <th>Scopus indexált teljes tudományos publikáció</th>
+                <th>D1</th>
+                <th>Q1 (benne D1)</th>
+                <th>Q2</th>
+                <th>Q3</th>
+                <th>Q4</th>
+                <th>Szabadalom, formatervezési minta</th>
+                <th>Publikálási teljesítmény<br>Lista 1<br>Összegzett Q1 (benne D1) szerzői részarány</th>
+                <th>Idézés<br>Lista 2<br>{{ params.year_count }} éves WoS/Scopus független idéző</th>
+            </tr>
+         {% if is_aggregation_aware %}
+            <tr>
+              <td></td>
+              <td><span class="clickable openPopup"><b>Összesítés</b></span></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="tudriport-cell-centered">
+                {{ summary.extraInfo.listScientificPublicationsBME|length }}
+              </td>
+              <td class="tudriport-cell-centered">
+                {{ summary.extraInfo.listScopusPublicationsBME|length }}
+              </td>
+              <td class="tudriport-cell-centered">
+                {{ summary.reszeredmenyek['FOLY,D1,BME'].pubids|length }}
+              </td>
+              <td class="tudriport-cell-centered">
+                {{ summary.extraInfo.listSumD1Q1PublicationsBME|length }}
+              </td>
+              <td class="tudriport-cell-centered">
+                {{ summary.reszeredmenyek['FOLY,Q2,BME'].pubids|length }}
+              </td>
+              <td class="tudriport-cell-centered">
+                {{ summary.reszeredmenyek['FOLY,Q3,BME'].pubids|length }}
+              </td>
+              <td class="tudriport-cell-centered">
+                {{ summary.reszeredmenyek['FOLY,Q4,BME'].pubids|length }}
+              </td>
+              <td class="tudriport-cell-centered">
+                {{ summary.reszeredmenyek['SZABADALOM,BME'].pubids|length }}
+              </td>
+              <td class="tudriport-cell-centered">
+                {{ "%.2f"%summary.extraInfo.sumShareInD1Q1BME }}</td>
+              <td class="tudriport-cell-centered">
+                {{ summary.reszeredmenyek['CIT-IND,5YR,W+S,BME'].citids|length }}
+              </td>
+            </tr>
+          {% endif %}
+        </thead>
+        <tbody>
+          {% for object in object_list|sort(attribute="author.unit,author.subunit,author.personname") %}
+            <tr>
+                <td>{{ object.author.mtmtcode }}</td>
+                <td class="clickable openPopup"
+                  data-mtmt-id="{{ object.author.mtmtcode }}">
+                  {{ object.author.personname }}
+                </td>
+                <td>{{ object.author.unit }}</td>
+                <td>{{ object.author.subunit }}</td>
+                <td>{{ object.author.role }}</td>
+                <td class="tudriport-cell-centered" data-sort="{{ -1*object.points.extraInfo.numScientificPublicationsBME }}">
+                  {{ object.points.extraInfo.numScientificPublicationsBME }}
+                </td>
+                <td class="tudriport-cell-centered" data-sort="{{ -1*object.points.extraInfo.numScopusPublicationsBME }}">
+                  {{ object.points.extraInfo.numScopusPublicationsBME }}
+                </td>
+                <td class="tudriport-cell-centered" data-sort="{{ -1*(object.points.reszeredmenyek['FOLY,D1,BME'].pubids|length) }}">
+                  {{object.points.reszeredmenyek['FOLY,D1,BME'].pubids|length }}
+                </td>
+                <td class="tudriport-cell-centered" data-sort="{{ -1*object.points.extraInfo.numSumD1Q1PublicationsBME }}">
+                  {{ object.points.extraInfo.numSumD1Q1PublicationsBME }}
+                </td>
+                <td class="tudriport-cell-centered" data-sort="{{ -1*(object.points.reszeredmenyek['FOLY,Q2,BME'].pubids|length) }}">
+                  {{object.points.reszeredmenyek['FOLY,Q2,BME'].pubids|length }}
+                </td>
+                <td class="tudriport-cell-centered" data-sort="{{ -1*(object.points.reszeredmenyek['FOLY,Q3,BME'].pubids|length) }}">
+                  {{object.points.reszeredmenyek['FOLY,Q3,BME'].pubids|length }}
+                </td>
+                <td class="tudriport-cell-centered" data-sort="{{ -1*(object.points.reszeredmenyek['FOLY,Q4,BME'].pubids|length) }}">
+                  {{object.points.reszeredmenyek['FOLY,Q4,BME'].pubids|length }}
+                </td>
+                <td class="tudriport-cell-centered" data-sort="{{ -1*(object.points.reszeredmenyek['SZABADALOM,BME'].pubids|length) }}">
+                  {{object.points.reszeredmenyek['SZABADALOM,BME'].pubids|length }}
+                </td>
+                <td class="tudriport-cell-centered" data-sort="{{ "%.2f"%(-1*object.points.extraInfo.sumShareInD1Q1BME) }}">
+                  {{ "%.2f"%object.points.extraInfo.sumShareInD1Q1BME }}
+                </td>
+                <td class="tudriport-cell-centered" data-sort="{{ -1*(object.points.reszeredmenyek['CIT-IND,5YR,W+S,BME'].citids|length) }}">
+                  {{object.points.reszeredmenyek['CIT-IND,5YR,W+S,BME'].citids|length }}
+                </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+
+{% else %}
+    <p class="error-message">Empty scoring error.</p>
+{% endif %}
+
+<style>
+  #tudriport-list-table th {
+    border-width: 1px;
+    border-collapse: collapse;
+    text-align: center !important;
+  }
+  #tudriport-list-table td.tudriport-cell-centered {
+    text-align: center !important;
+  }
+  #tudriport-list-table thead {
+    top: 0;
+    position: sticky;
+    background-color: #ccc;
+  }
+  #tudriport-list-table tfoot {
+    /* make this appear wherever placed inside the table*/
+    display: table-row-group;
+    background-color: #ccc;
+  }
+</style>

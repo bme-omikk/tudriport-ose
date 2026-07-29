@@ -1,0 +1,96 @@
+{% if error_messages %}
+
+    {% for e in error_messages %}
+        <p class="error-message">{{ e }}</p>
+    {% endfor %}
+
+{% elif object_list %}
+
+    <table class="dyn-table even-odd">
+        <tr>
+            <th>Jelölt neve</th>
+            <th>Publikációs pontszám</th> 
+            <th>Legalább 4 közlemény</th>
+            <th>Legalább két közlemény idegen nyelvű lektorált folyóiratcikk</th>
+            <th>Legalább 1 közlemény WoS vagy Scopus adatbázisban szerepel</th>
+            <th>Legalább 2 közlemény idegen nyelvű legalább 50% tészvétellel</th> 
+            <th>Legalább 1 közlemény magyar nyelvű</th>
+            <th>Publikációs pontszám legalább 12</th> 
+            <th>Valamennyi követelménynek megfelel-e</th>
+        </tr>        
+        {% for object in object_list %}
+            <tr>
+                <td>
+                    {% if object.author.supervisor_mtmt_authid %}
+                    <span data-mtmt-id="{{ object.author.mtmtcode }}" class="clickable openPopup" supervisor_mtmt_authid="{{object.author.supervisor_mtmt_authid}}">
+                    {% else %}
+                    <span data-mtmt-id="{{ object.author.mtmtcode }}" class="clickable openPopup">
+                    {% endif %}
+                        {{ object.author.personname }}
+                    </span>
+                </td>
+                <td align="center">{{ "%.2f"%object.points.osszpontszam }}</td>
+                {% if object.points.extraInfo.numAllPublicationsThreshold > object.points.extraInfo.numAllPublications %}
+                    <td align="center" class="nem">nem?</td>
+                {% else %}
+                    <td align="center" class="igen">igen</td>
+                {% endif %}
+                
+                {% if object.points.extraInfo.numInForeignPeerreviewedJournalThreshold > object.points.extraInfo.numInForeignPeerreviewedJournal %}
+                    <td align="center" class="nem">nem?</td>
+                {% else %}
+                    <td align="center" class="igen">igen</td>
+                {% endif %}   
+                
+                {% if object.points.extraInfo.numWosOrScopusThreshold > object.points.extraInfo.numWosOrScopus %}
+                    <td align="center" class="nem">nem?</td>
+                {% else %}
+                    <td align="center" class="igen">igen</td>
+                {% endif %}
+
+                {% if object.points.extraInfo.numforeign50percentThreshold > object.points.extraInfo.numforeign50percent %}
+                    <td align="center" class="nem">nem?</td>
+                {% else %}
+                    <td align="center" class="igen">igen</td>
+                {% endif %}
+
+                {% if object.points.extraInfo.numHungarianThreshold > object.points.extraInfo.numHungarian %}
+                    <td align="center" class="nem">nem?</td>
+                {% else %}
+                    <td align="center" class="igen">igen</td>
+                {% endif %}
+
+                {% if object.points.extraInfo.pointThreshold > object.points.osszpontszam %}
+                    <td align="center" class="nem">nem?</td>
+                {% else %}
+                    <td align="center" class="igen">igen</td>
+                {% endif %}
+
+                {% if object.points.extraInfo.numAllPublicationsThreshold > object.points.extraInfo.numAllPublications or
+                    object.points.extraInfo.numInForeignPeerreviewedJournalThreshold > object.points.extraInfo.numInForeignPeerreviewedJournal or
+                    object.points.extraInfo.numWosOrScopusThreshold > object.points.extraInfo.numWosOrScopus or 
+                    object.points.extraInfo.numHungarianThreshold > object.points.extraInfo.numHungarian or
+                    object.points.extraInfo.numforeign50percentThreshold > object.points.extraInfo.numforeign50percent or    
+                    object.points.extraInfo.pointThreshold > object.points.osszpontszam %}
+                <td align="center" class="nem">nem felelt meg?</td>
+                {% else %}
+                <td align="center" class="igen">megfelelt</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+
+{% else %}
+    <p class="error-message">Empty scoring error.</p>
+{% endif %}
+
+
+
+<style>
+    .nem{
+        color: orange;
+    }
+    .igen{
+        color: green;
+    }
+</style>

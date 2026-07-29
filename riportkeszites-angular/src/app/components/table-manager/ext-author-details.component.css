@@ -1,0 +1,23 @@
+button {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 6px;
+    margin-left: 6px;
+  }
+.mat-select-panel mat-option.mat-option {
+  height: unset;
+}
+
+.mat-option-text.mat-option-text {
+  white-space: normal;  
+}
+mat-option{
+  line-height: unset;
+}
+.mat-form-field{
+  padding: 0px 8px 0px 0;
+}
+br {
+  display: block;
+  margin: 0px 0;
+}

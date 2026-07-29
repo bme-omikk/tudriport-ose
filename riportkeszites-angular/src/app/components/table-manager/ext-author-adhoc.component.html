@@ -1,0 +1,219 @@
+<mat-card *ngIf="globals.isSearchFormVisibleSubject.getValue()">
+    <mat-card-title translate>
+        App.AdhocView.viewName
+    </mat-card-title>
+    <mat-card-content>
+        <span (keyup.enter)="update()">
+            <p translate>App.Common.SearchForm.Steps.ChooseScoring.heading</p>
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ChooseScoring.availableScorings' | translate }}"
+                    [(value)]="actualSearchData.mode"
+                    [disabled]="!availableModes"
+                    (selectionChange)="modeChanged()"
+                    required>
+
+                    <mat-option *ngFor="let mode of availableModes" [value]="mode">{{ mode }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <br>
+            <p translate>App.Common.SearchForm.Steps.ChooseSubject.heading</p>
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ChooseSubject.organizationLevel0' | translate }}"
+                    [(value)]="actualSearchData.org"
+                    (selectionChange)="updateUnits();updateAuthors()"
+                    [disabled]="authorsLoadingInProgress || availableOrgs?.length == 0">
+
+                    <mat-option *ngFor="let org of availableOrgs" [value]="org">{{ org }}</mat-option>
+                </mat-select>
+                <button mat-button *ngIf="actualSearchData.org" matSuffix mat-icon-button aria-label="Clear" (click)="clearOrg()">
+                    <mat-icon>close</mat-icon>
+            </button>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ChooseSubject.organizationLevel1' | translate }}"
+                    [(value)]="actualSearchData.unit"
+                    (selectionChange)="updateSubUnits();updateAuthors()"
+                    [disabled]="authorsLoadingInProgress || !actualSearchData.org || availableUnits?.length == 0">
+
+                    <mat-option *ngFor="let unit of availableUnits" [value]="unit">{{ unit }}</mat-option>
+                </mat-select>
+                <button mat-button *ngIf="actualSearchData.unit" matSuffix mat-icon-button aria-label="Clear" (click)="clearUnits()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ChooseSubject.organizationLevel2' | translate }}"
+                    [(value)]="actualSearchData.subunit"
+                    (selectionChange)="updateSubSubUnits();updateAuthors()"
+                    [disabled]="authorsLoadingInProgress || !actualSearchData.org || !actualSearchData.unit || availableSubUnits?.length == 0">
+
+                    <mat-option *ngFor="let subunit of availableSubUnits" [value]="subunit">{{ subunit }}</mat-option>
+                </mat-select>
+                <button mat-button *ngIf="actualSearchData.subunit" matSuffix mat-icon-button aria-label="Clear" (click)="clearSubUnits()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ChooseSubject.organizationLevel3' | translate }}"
+                    [(value)]="actualSearchData.subsubunit"
+                    (selectionChange)="updateAuthors()"
+                    [disabled]="authorsLoadingInProgress || !actualSearchData.org || !actualSearchData.unit || !actualSearchData.subunit || availableSubSubUnits?.length == 0">
+
+                    <mat-option *ngFor="let subsubunit of availableSubSubUnits" [value]="subsubunit">{{ subsubunit || "(Nincs megadva)" }}</mat-option>
+                </mat-select>
+                <button mat-button *ngIf="actualSearchData.subsubunit" matSuffix mat-icon-button aria-label="Clear" (click)="clearSubSubUnits()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field [style.width.px]=360>
+                <input
+                    type="text"
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ChooseSubject.author' | translate }}"
+                    [value]="actualSearchData.author?.personname.length != 0 ? actualSearchData.author?.personname + (actualSearchData.author?.authorcomment != null ? ' (' + actualSearchData.author?.authorcomment + ')' : '') : ''"
+                    matInput
+                    [formControl]="myControl"
+                    [matAutocomplete]="auto"
+                    [disabled]="authorsLoadingInProgress || availableAuthors?.length == 0">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let author of filteredAuthors" [value]="author?.personname">
+                        <p *ngIf="author?.authorcomment">
+                            {{ author?.personname || '' }} ({{author?.authorcomment || ''}})
+                        </p>
+                        <p *ngIf="!author?.authorcomment">
+                            {{ author?.personname || '' }}
+                        </p>
+                    </mat-option>
+                </mat-autocomplete>
+                <button mat-button *ngIf="actualSearchData.author" matSuffix mat-icon-button aria-label="Clear" (click)="clearAuthors()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field>
+                <input
+                    matInput
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ChooseSubject.mtmtAuthorId' | translate }}"
+                    (change)="mtmtChanged($event.target.value)"
+                    [value]="actualSearchData.author?.mtmtcode || ''">
+            </mat-form-field>
+
+            <br>
+            <p translate>App.Common.SearchForm.Steps.ScoringParameters.heading</p>
+            <mat-form-field>
+                <input
+                    matInput
+                    type="number"
+                    maxlength="4"
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ScoringParameters.pYearFrom' | translate }}"
+                    [(ngModel)]="actualSearchData.yearFrom">
+                <button mat-button *ngIf="actualSearchData.yearFrom" matSuffix mat-icon-button aria-label="Clear" (click)="actualSearchData.yearFrom=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field>
+                <input
+                    matInput
+                    type="number"
+                    maxlength="4"
+                    placeholder="{{ 'App.Common.SearchForm.Steps.ScoringParameters.pYearTo' | translate }}"
+                    [(ngModel)]="actualSearchData.yearTo">
+                <button mat-button *ngIf="actualSearchData.yearTo" matSuffix mat-icon-button aria-label="Clear" (click)="actualSearchData.yearTo=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <br/>
+            <br/>
+            <br/>
+            <div *ngFor="let extraField of viewableExtraFields">
+                <mat-form-field>
+                    <input matInput placeholder="{{extraField.label}}" [(ngModel)]="extraField.value">
+                    <button mat-button *ngIf="extraField.value" matSuffix mat-icon-button aria-label="Clear" (click)="extraField.value=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-hint *ngIf="extraField.hint">{{extraField.hint}}</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <br>
+            <p translate>App.Common.SearchForm.Steps.FilterParameters.heading</p>
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.FilterParameters.pPublicationType' | translate }}"
+                    [(value)]="actualSearchData.type"
+                    (selectionChange)="updateTypesubtypes()"
+                    [disabled]="availableTypes?.length == 0">
+
+                    <mat-option *ngFor="let type of availableTypes" [value]="type">{{ type.type_name }}</mat-option>
+                </mat-select>
+                <button mat-button *ngIf="actualSearchData.type" matSuffix mat-icon-button aria-label="Clear" (click)="clearTypes()">
+                    <mat-icon>close</mat-icon>
+            </button>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.FilterParameters.pPublicationSubtype' | translate }}"
+                    [(value)]="actualSearchData.typesubtype"
+                    [disabled]="!actualSearchData.type || availableTypesubtypes?.length == 0">
+
+                    <mat-option *ngFor="let typesubtype of availableTypesubtypes" [value]="typesubtype">{{ typesubtype.subtype_name}}</mat-option>
+                </mat-select>
+                <button mat-button *ngIf="actualSearchData.typesubtype" matSuffix mat-icon-button aria-label="Clear" (click)="clearTypesubtypes()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select
+                    placeholder="{{ 'App.Common.SearchForm.Steps.FilterParameters.pPublicationCharacter' | translate }}"
+                    [(value)]="actualSearchData.character"
+                    [disabled]="availableCharacters?.length == 0">
+
+                    <mat-option *ngFor="let character of availableCharacters" [value]="character">{{ character.name || "(Nincs megadva)" }}</mat-option>
+                </mat-select>
+                <button mat-button *ngIf="actualSearchData.character" matSuffix mat-icon-button aria-label="Clear" (click)="clearCharacters()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <br>
+            <mat-form-field [style.width.px]=368>
+                <input
+                    matInput
+                    placeholder="{{ 'App.Common.SearchForm.Steps.FilterParameters.pPublicationIDs' | translate }}"
+                    (change)="pubidsChanged($event.target.value)"
+                    [value]="actualSearchData.pubids">
+            </mat-form-field>
+            <br>
+        </span>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button (click)="update()" [disabled]="!actualSearchData.mode">
+            <span translate>App.Common.SearchForm.btnDoScoring</span>
+        </button>
+        <br><br>
+        <mat-expansion-panel [style.width.px]=556>
+            <mat-expansion-panel-header>
+                <mat-panel-title translate>
+                    App.Common.SearchForm.displayedPublicationIDs
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>{{viewablepubids}}</p>
+            <button mat-raised-button [cdkCopyToClipboard]="viewablepubids" [cdkCopyToClipboardAttempts]="5">
+                <span translate>App.Common.SearchForm.btnCopyToClipboard</span>
+            </button>
+        </mat-expansion-panel>
+        <br>
+        <button mat-raised-button (click)="openInMTMT()">
+            <span translate>App.Common.SearchForm.btnOpenInMTMT</span>
+        </button>
+    </mat-card-actions>
+</mat-card>
+
+<app-table-manager #tableManager></app-table-manager>

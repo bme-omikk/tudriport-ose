@@ -1,0 +1,4 @@
+# automata letoltesu kozlemeny fajlok, l. download.sh
+tmp_kozlemeny_*
+# helyi teszt fajlok
+local_*

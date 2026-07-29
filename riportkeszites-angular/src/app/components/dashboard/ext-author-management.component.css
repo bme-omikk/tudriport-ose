@@ -1,0 +1,16 @@
+.mat-row {
+    height: auto;
+  }
+  
+.mat-cell {
+  padding: 8px 8px 8px 0;
+}
+.mat-header-cell{
+  padding: 8px 8px 8px 0;
+}
+.button{
+  padding: 8px 8px 8px 0;
+}
+.checkbox{
+  padding: 8px 8px 8px 0;
+}

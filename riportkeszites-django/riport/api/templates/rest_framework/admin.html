@@ -1,0 +1,35 @@
+{% extends "rest_framework/admin.html" %}
+{% load static %}
+
+{% block style %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}"/>
+{% endblock %}
+
+{% block branding %}
+    <a class='navbar-brand' rel="nofollow" href='#'>
+      Tudománymetria
+    </a>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb"></ul>
+{% endblock %}
+
+{% block description %}
+    {{ block.super }}
+    {% if filter_form %}
+        <div class="col-sm-12">
+          <form class="form-inline">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" class="form-control" name="search" value="">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+      {% endif %}
+{% endblock %}

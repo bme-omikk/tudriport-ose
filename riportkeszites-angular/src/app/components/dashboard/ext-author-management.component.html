@@ -1,0 +1,146 @@
+<mat-card *ngIf="permission">
+    <mat-card-title>Névsorok kezelése</mat-card-title>
+    <h3>Intézményi hierarchia kiválasztása</h3> 
+    <div class="form-container">
+        <mat-form-field>
+            <mat-select
+                placeholder="Intézmény"
+                [(value)]="org"
+                (selectionChange)="updateUnits()"
+                [disabled]="availableOrgs?.length == 0">
+
+                <mat-option *ngFor="let org of availableOrgs" [value]="org">{{ org }}</mat-option>
+            </mat-select>
+            <button mat-button *ngIf="org" matSuffix mat-icon-button aria-label="Clear" (click)="clearOrg()">
+                <mat-icon>close</mat-icon>
+        </button>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select
+                placeholder="Hierarchia 1. szint"
+                [(value)]="unit"
+                (selectionChange)="updateSubUnits()"
+                [disabled]="!org || availableUnits?.length == 0">
+
+                <mat-option *ngFor="let unit of availableUnits" [value]="unit">{{ unit }}</mat-option>
+            </mat-select>
+            <button mat-button *ngIf="unit" matSuffix mat-icon-button aria-label="Clear" (click)="clearUnits()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select
+                placeholder="Hierarchia 2. szint"
+                [(value)]="subunit"
+                (selectionChange)="updateSubSubUnits()"
+                [disabled]="!org || !unit || availableSubUnits?.length == 0">
+
+                <mat-option *ngFor="let subunit of availableSubUnits" [value]="subunit">{{ subunit }}</mat-option>
+            </mat-select>
+            <button mat-button *ngIf="subunit" matSuffix mat-icon-button aria-label="Clear" (click)="clearSubUnits()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select
+                placeholder="Hierarchia 3. szint"
+                [(value)]="subsubunit"
+                [disabled]="!org || !unit || !subunit || availableSubSubUnits?.length == 0">
+
+                <mat-option *ngFor="let subsubunit of availableSubSubUnits" [value]="subsubunit">{{ subsubunit || "(Nincs megadva)" }}</mat-option>
+            </mat-select>
+            <button mat-button *ngIf="subsubunit != null" matSuffix mat-icon-button aria-label="Clear" (click)="clearSubSubUnits()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="listSubhierarchy" color="primary">Alegységek listázása</mat-checkbox>
+        <button mat-raised-button [disabled]="!dataLoaded" (click)="getAuthors();updateHeader()">Listáz</button>
+    </div>
+    <h3>Új létrehozása a beállított intézményi hierarchiához</h3> 
+    <button mat-raised-button (click)="addAuthor()">Új bejegyzés</button>  
+    <h3>{{header}}</h3>
+    <mat-progress-bar mode="indeterminate" *ngIf="!dataLoaded"></mat-progress-bar>
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="org">
+            <th mat-header-cell *matHeaderCellDef>Intézmény</th>
+            <td mat-cell *matCellDef="let author"> {{author.org}} </td>
+        </ng-container> 
+        <ng-container matColumnDef="unit">
+            <th mat-header-cell *matHeaderCellDef>Hierarchia 1. szint</th>
+            <td mat-cell *matCellDef="let author"> 
+                <input matInput required="true" [(ngModel)]="author.unit">
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="subunit">
+            <th mat-header-cell *matHeaderCellDef>Hierarchia 2. szint</th>
+            <td mat-cell *matCellDef="let author"> 
+                <input matInput required="true" [(ngModel)]="author.subunit">
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="subsubunit">
+            <th mat-header-cell *matHeaderCellDef>Hierarchia 3. szint</th>
+            <td mat-cell *matCellDef="let author"> 
+                <input matInput required="true" [(ngModel)]="author.subsub_unit">
+            </td>
+        </ng-container>    
+        <ng-container matColumnDef="mtmtcode">
+            <th mat-header-cell *matHeaderCellDef>Mtid</th>
+            <td mat-cell *matCellDef="let author"> 
+                <input matInput required="true" [(ngModel)]="author.mtmtcode">
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="personname">
+            <th mat-header-cell *matHeaderCellDef>Név</th>
+            <td mat-cell *matCellDef="let author">
+                <input matInput required="true" [(ngModel)]="author.personname">
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="weighting">
+            <th mat-header-cell *matHeaderCellDef>Hozzájárulás</th>
+            <td mat-cell *matCellDef="let author">
+                <input matInput required="true" [(ngModel)]="author.weighting">
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="neptuncode">
+            <th mat-header-cell *matHeaderCellDef>Neptun kód</th>
+            <td mat-cell *matCellDef="let author">
+                <input matInput required="true" [(ngModel)]="author.neptuncode">
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef>Megjegyzés</th>
+            <td mat-cell *matCellDef="let author">
+                <input matInput required="true" [(ngModel)]="author.role">
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="supervisor_mtmt_authid">
+            <th mat-header-cell *matHeaderCellDef>Témavezető Mtid-ja</th>
+            <td mat-cell *matCellDef="let author">
+                <input matInput required="true" [(ngModel)]="author.supervisor_mtmt_authid">
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="for_rollup">
+            <th mat-header-cell *matHeaderCellDef>Szülő szervezethez beszámít</th>
+            <td mat-cell *matCellDef="let author" >
+                <mat-checkbox [(ngModel)]="author.for_rollup" color="primary"></mat-checkbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="save">
+            <th mat-header-cell *matHeaderCellDef>Mentés</th>
+            <td mat-cell *matCellDef="let author" >
+                <button mat-raised-button (click)="saveAuthor(author)" color="primary">Mentés</button>
+            </td>            
+        </ng-container>
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef>Törlés</th>
+            <td mat-cell *matCellDef="let author" >
+                <button mat-raised-button (click)="deleteAuthor(author)" color="warn">Törlés</button>
+            </td>            
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</mat-card>

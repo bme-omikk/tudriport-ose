@@ -1,0 +1,545 @@
+<h2 style="text-align:center;">BME GPK
+    {% if points.fejlec.mode_data.is_supervisor_mode %}
+        témavezetői
+    {% elif points.fejlec.mode_data.is_phd_mode %}
+        PhD
+    {% else %}
+        UNKNOWN
+    {% endif %}
+    értékelő
+</h2>
+
+{% if error_messages %}
+
+    {% for e in error_messages %}
+        <p class="error-message">{{ e }}</p>
+    {% endfor %}
+
+{% elif points %}
+<!-- Feltételek teljeseülése -->
+    <div id="ideredmenyhu" align="center">
+        <table id="fejlecsor" width="99%" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td width="10%">{{ now.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td width="10%" align="center">&nbsp;</td>
+                    <td align="center">
+                        <!-- <span style="font-size: 16px;"> -->
+                        <b>{{ author.authorname }}</b> (<a
+                            href="https://m2.mtmt.hu/gui2/?type=authors&amp;mode=browse&amp;sel=authors{{author.mtmt_authid}}"
+                            target="_blank">MTMT</a>), {{author.role}}{% if points.fejlec.mode_data.is_phd_mode %},
+                            témavezető: <i>{{supervisor.authorname}}</i> (<a
+                            href="https://m2.mtmt.hu/gui2/?type=authors&amp;mode=browse&amp;sel=authors{{supervisor.mtmt_authid}}"
+                            target="_blank">MTMT</a>)
+                            {% endif %}
+                        <!-- </span> -->
+                    </td>
+                    <td width="20%" align="center">&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <div class="grid-container">
+
+        <div align="center" class="no-print">
+            <button class="toggle-button" toggleable-id="Pub1" display-mode="table-row"><b>Publ.&nbsp;I</b>&nbsp;<span {%if points.extraInfo.Pub1Fulfilled %} style="background-color: #dfefca;" {%else%} style="background-color: #ffe6da; color: #ffe6da;" {%endif%}>&nbsp;&nbsp;✔&nbsp;&nbsp;</span> <i>({%if points.extraInfo.MaxPubNFulfilled in [0, 1] %}bezár{%else%}kinyit{%endif%})</i></button>
+              &nbsp;&nbsp;
+            <button class="toggle-button" toggleable-id="Pub2" display-mode="table-row"><b>Publ.&nbsp;II</b>&nbsp;<span {%if points.extraInfo.Pub2Fulfilled %} style="background-color: #dfefca;" {%else%} style="background-color: #ffe6da; color: #ffe6da;" {%endif%}>&nbsp;&nbsp;✔&nbsp;&nbsp;</span> <i>({%if points.extraInfo.MaxPubNFulfilled==2 %}bezár{%else%}kinyit{%endif%})</i></button>
+              &nbsp;&nbsp;
+            <button class="toggle-button" toggleable-id="Pub3" display-mode="table-row"><b>Publ.&nbsp;III</b>&nbsp;<span {%if points.extraInfo.Pub3Fulfilled %} style="background-color: #dfefca;" {%else%} style="background-color: #ffe6da; color: #ffe6da;" {%endif%}>&nbsp;&nbsp;✔&nbsp;&nbsp;</span> <i>({%if points.extraInfo.MaxPubNFulfilled==3 %}bezár{%else%}kinyit{%endif%})</i></button>
+              &nbsp;&nbsp;
+            <button class="toggle-button" toggleable-id="Pub4" display-mode="table-row"><b>Publ.&nbsp;IV</b>&nbsp;<span {%if points.extraInfo.Pub4Fulfilled %} style="background-color: #dfefca;" {%else%} style="background-color: #ffe6da; color: #ffe6da;" {%endif%}>&nbsp;&nbsp;✔&nbsp;&nbsp;</span> <i>({%if points.extraInfo.MaxPubNFulfilled==4 %}bezár{%else%}kinyit{%endif%})</i></button>
+              &nbsp;&nbsp;
+            <button class="toggle-button" toggleable-id="Details"><b>Tudnivalók</b> <i>(kinyit)</i></button>
+              &nbsp;&nbsp;
+            <button class="toggle-button" toggleable-id="Todo"><b>Tennivalók</b> <i>(kinyit)</i></button>
+              &nbsp;&nbsp;
+            <button class="toggle-button" toggleable-id="BESZ" display-mode="table-row-group"><b>Beszámítható&nbsp;közl.</b> <i>(bezár)</i></button>
+              &nbsp;&nbsp;
+            <button class="toggle-button" toggleable-id="TOV" display-mode="table-row-group"><b>További&nbsp;közl.</b> <i>(kinyit)</i></button>
+        </div>
+        <br>
+        <!-- <div id="ideredmenyhu" align="center" style="display: visible;"> -->
+        <table width="99%" id="PubRequirementsTable" class="scroll-container">
+            <tr id="Pub1" {%if points.extraInfo.MaxPubNFulfilled in [0, 1] %} style="display:table-row;" {%else%} style="display:none;" {%endif%}>
+                <td valign="top">
+                    Publikáció I
+					{% if points.fejlec.mode_data.is_phd_mode %}
+						kreditponthoz
+					{% endif %}
+                    <div width="100%" class="cursor-pointer highlightable" data-pubids="{{ (points.extraInfo.creditPoint_1_condition_1 + points.extraInfo.creditPoint_1_condition_2) | unique | list }}"
+                        {% if points.extraInfo.Pub1Fulfilled %}
+                            style="background: #dfefca;">{{_("Teljesül")}}
+                        {% else %}
+                            style="background: #ffe6da;">{{_("Nem teljesül")}}
+                        {% endif %}
+                    </div>
+                </td>
+                <td valign="top">
+                    {% if points.fejlec.mode_data.is_supervisor_mode %}
+                        {{ points.fejlec.mode_data.supervisor_mode_min_publication_year }}
+                        kezdő évtől számítva:
+                    {% else %}
+                        (a 3. félév végéig)
+                    {% endif %}
+                </td>
+                <td valign="top">
+                    <ul class="PublConditionLevel1">
+                        <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_1_condition_1 }}">
+                            VAGY&nbsp;≥1 magyar nyelvű folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ points.extraInfo.creditPoint_1_condition_1 }})
+                        </li>
+                        <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_1_condition_2 }}">
+                            VAGY&nbsp;≥1 idegen nyelvű folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ points.extraInfo.creditPoint_1_condition_2 }})
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr id="Pub2" {%if points.extraInfo.MaxPubNFulfilled==2 %} style="display:table-row;" {%else%} style="display:none;" {%endif%}>
+                <!-- PII kezdődik: -->
+                <td valign="top">
+                    Publikáció II
+					{% if points.fejlec.mode_data.is_phd_mode %}
+						kreditponthoz és komplex&nbsp;vizsgához
+					{% endif %}
+                    <div width="100%" class="cursor-pointer highlightable" data-pubids="{{ (points.extraInfo.creditPoint_2_condition_1 + points.extraInfo.creditPoint_2_condition_2 + points.extraInfo.creditPoint_2_condition_3 + points.extraInfo.creditPoint_2_condition_4 + points.extraInfo.creditPoint_2_condition_5) | unique | list }}"
+                        {% if points.extraInfo.Pub2Fulfilled %}
+                            style="background: #dfefca;">{{_("Teljesül")}}
+                        {% else %}
+                            style="background: #ffe6da;">{{_("Nem teljesül")}}
+                        {% endif %}
+                    </div>
+                </td>
+                <td valign="top">
+                    {% if points.fejlec.mode_data.is_supervisor_mode %}
+                        {{ points.fejlec.mode_data.supervisor_mode_min_publication_year }}
+                        kezdő évtől számítva:
+                    {% else %}
+                        (a 2. év végi komplex vizsga idejéig)
+                    {% endif %}
+                </td>
+                <td valign="top">
+                    <ul class="PublConditionLevel1">
+                        <li>
+                            <span class="cursor-pointer highlightable" data-pubids="{{ (points.extraInfo.creditPoint_2_condition_1 + points.extraInfo.creditPoint_2_condition_2) | unique | list }}">
+                                VAGY&nbsp;
+                            </span>
+                            <ul class="PublConditionLevel2">
+                                <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_2_condition_1 }}">
+                                    ≥1 IF-os, angol nyelvű folyóiratcikk ({{ points.extraInfo.creditPoint_2_condition_1 }})
+                                </li>
+                                <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_2_condition_2 }}">
+                                    ≥1 további folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ points.extraInfo.creditPoint_2_condition_2 }})
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="cursor-pointer highlightable" data-pubids="{{ (points.extraInfo.creditPoint_2_condition_3 + points.extraInfo.creditPoint_2_condition_4 + points.extraInfo.creditPoint_2_condition_5) | unique | list }}">
+                                VAGY&nbsp;
+                            </span>
+                            <ul class="PublConditionLevel2">
+                                <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_2_condition_3 }}">
+                                    ≥1 IF-os folyóiratnál bírálatra befogadott angol nyelvű kézirat ({{ points.extraInfo.creditPoint_2_condition_3 }})
+                                </li>
+                                <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_2_condition_4 }}">
+                                    ≥1 Scopus-ban szereplő folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ points.extraInfo.creditPoint_2_condition_4 }})
+                                </li>
+                                <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_2_condition_5 }}">
+                                    ≥1 további folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ points.extraInfo.creditPoint_2_condition_5 }})
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr id="Pub3" {%if points.extraInfo.MaxPubNFulfilled==3 %} style="display:table-row;" {%else%} style="display:none;" {%endif%}>
+                <!-- PIII kezdődik: -->
+                <td valign="top">
+                    Publikáció III
+					{% if points.fejlec.mode_data.is_phd_mode %}
+						kreditponthoz
+					{% endif %}
+                    <div width="100%" class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_3_condition_1_pubids }}"
+                        {% if points.extraInfo.Pub3Fulfilled %}
+                            style="background: #dfefca;">{{_("Teljesül")}}
+                        {% else %}
+                            style="background: #ffe6da;">{{_("Nem teljesül")}}
+                        {% endif %}
+                    </div>
+                </td>
+                <td valign="top">
+                    {% if points.fejlec.mode_data.is_supervisor_mode %}
+                        {{ points.fejlec.mode_data.supervisor_mode_min_publication_year }}
+                        kezdő évtől számítva:
+                    {% endif %}
+                    Publikáció&nbsp;II teljesül ÉS
+                </td>
+                <td valign="top">
+                    <ul class="PublConditionLevel1">
+                        <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_3_condition_1_pubids }}">
+                            ≥50% szerzőhányadnyi, IF-ral rendelkező folyóiratcikk külföldi kiadású
+                            folyóiratban ({{ "%.2f"|format(points.extraInfo.creditPoint_3_condition_1*100)|replace('.00', '') }}%) ({{ points.extraInfo.creditPoint_3_condition_1_pubids }})
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr id="Pub4" {%if points.extraInfo.MaxPubNFulfilled==4 %} style="display:table-row;" {%else%} style="display:none;" {%endif%}>
+                <!-- PIV kezdődik: -->
+                <td valign="top">
+                    Publikáció IV
+					{% if points.fejlec.mode_data.is_phd_mode %}
+						kreditponthoz és fokozatszerzéshez
+					{% endif %}
+                    <div width="100%" class="cursor-pointer highlightable" data-pubids="{{ (points.extraInfo.creditPoint_4_condition_4 + points.extraInfo.creditPoint_4_condition_1_1_pubids + points.extraInfo.creditPoint_4_condition_2_pubids + points.extraInfo.creditPoint_4_condition_3_pubids) | unique | list }}"
+                        {% if points.extraInfo.Pub4Fulfilled %}
+                            style="background: #dfefca;">{{_("Teljesül")}}
+                        {% else %}
+                            style="background: #ffe6da;">{{_("Nem teljesül")}}
+                        {% endif %}
+                    </div>
+                </td>
+                <td valign="top">
+                    {% if points.fejlec.mode_data.is_supervisor_mode %}
+                        {{ points.fejlec.mode_data.supervisor_mode_min_publication_year }}
+                        kezdő évtől számítva:
+                    {% endif %}
+                    Publikáció I-III teljesül ÉS
+                </td>
+                <td valign="top">
+                    <ul class="PublConditionLevel1">
+                        <li>
+                            <span class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_4_condition_4 }}">
+                                ≥3{% if points.fejlec.mode_data.is_phd_mode %}, tézisponthoz kapcsolódó{% endif %}
+								folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ points.extraInfo.creditPoint_4_condition_4 }}),
+                            </span>
+                            <br>
+                                VAN KÖZÖTTÜK
+                            <ul class="PublConditionLevel2">
+                                <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_4_condition_1_1_pubids }}">
+                                    ≥200% szerzőhányadnyi, WoS-ban vagy Scopus-ban szereplő, angol nyelvű
+                                    folyóiratcikk ({{ "%.2f"|format(points.extraInfo.creditPoint_4_condition_1_1*100)|replace('.00', '') }}%) ({{ points.extraInfo.creditPoint_4_condition_1_1_pubids }}){% if points.fejlec.mode_data.is_phd_mode %}, <span class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_4_condition_1_2 }}"> közülük ≥1 első szerzős ({{ points.extraInfo.creditPoint_4_condition_1_2 }})</span>{% endif %}
+                                </li>
+                                <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_4_condition_2_pubids }}">
+                                    ≥50% szerzőhányadnyi, IF-os, angol nyelvű folyóiratcikk külföldi kiadású folyóiratban ({{ "%.2f"|format(points.extraInfo.creditPoint_4_condition_2 * 100)|replace('.00', '') }}%) ({{ points.extraInfo.creditPoint_4_condition_2_pubids }})
+                                </li>
+								{% if points.fejlec.mode_data.is_phd_mode %}
+                                	<li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_4_condition_3_pubids }}">
+                                    	magyar nyelvű képzés esetén: ≥100% szerzőhányadnyi magyar nyelvű
+                                    	folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ "%.2f"|format(points.extraInfo.creditPoint_4_condition_3*100)|replace('.00', '') }}%) ({{ points.extraInfo.creditPoint_4_condition_3_pubids }})
+                                	</li>
+								{% endif %}
+                            </ul>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table><!-- Követelménytáblázat vége. -->
+
+        <div id="Details" class="fromLatvanyterv" style="display:none" width="99%" style="display: none;">
+            {% include "riport_gpk_phd_template_tudnivalok.html" without context %}
+        </div>
+
+        <div id="Todo" class="fromLatvanyterv" width="99%" style="display: none;">
+            {% include "riport_gpk_phd_template_tennivalok.html" without context %}
+        </div>
+
+        <table id="gpkPhDKozlemenyek" width="99%" mtmt-all_pubids={{points.extraInfo.all_pubids}}>
+            <thead>
+                <tr>
+                    <td><b>Beszámítható és <span style="background-color: #ddd;">további</span> közlemények</b><button id="disable-highligths-button" style="display:none" class="disable-highligths-button highlightable" data-pubids="">Kiemelések kikapcsolása</button></td>
+                    <td width="1%" align="center"><b>közlemény állapota</b></td>
+                    <td width="1%" align="center"><b>Típus<br>Besorolás</b></td>
+                    <td width="1%" align="center"><b>kiadás<br>info</b></td>
+                    <td width="1%" align="center"><b>WoS, IF,<br>Scopus,&nbsp;SJR</b></td>
+                    <td width="1%" align="center"><b>szerző-<br>hányad</b></td>
+                {% if points.fejlec.mode_data.is_phd_mode %}
+                    <td width="1%" align="center"><b>tézisponthoz<br>kapcsolódik?</b></td>
+                {% endif %}
+                </tr>
+            </thead>
+        {%for token in ['BESZ', 'TOV'] %}
+            <tbody id="{{token}}" class="pub_data_tbody" width="99%" {%if token=='TOV' %} style="display:none" {%endif%}>
+            {% for publicationData in points.extraInfo.publication_table_data | selectattr("token", "equalto", token) %}
+                <tr id="{{ publicationData.mtmt_pubid }}" {% if publicationData.token == 'TOV' %} style="background-color: #ddd;" {% endif %}>
+                    <td>
+                        <div id="{{ publicationData.mtmt_pubid }}" class="gpk_phd_publication_table_row" data-pubtype="{{publicationData.url_based_data.pubtype}}" data-pubtype_container_id="{{publicationData.url_based_data.pubtype_container_id}}" data-mtmt-id="{{ publicationData.mtmt_pubid }}">
+                            {{publicationData.label_html | replace("href=\"/gui2/", "href=\"https://m2.mtmt.hu/gui2/") }}                        
+                        </div>
+
+                        {% if publicationData.url_based_data.warning or not publicationData.url_based_data.has_valid_bme_gpk_description %}
+                            <ul>
+                                {% if not publicationData.url_based_data.has_valid_bme_gpk_description %}
+                                    <li class="warning-message">Missing or incomplete URL. / Hiányzik vagy hiányos a BME GPK PhD extrainfo ({{ publicationData.url_based_data.raw_url }}).</li>
+                                {%endif%}
+                                {% for w in publicationData.url_based_data.warning or [] %}
+                                    <li class="warning-message">{{ w }}</li>
+                                {% endfor %}
+                            </ul>
+                        {%endif%}
+                    </td>
+                    <!-- állapot oszlop -->
+                    <td align="center">
+                        {{ publicationData.url_based_data.level_string }}
+                    </td>
+                    <!-- típusok oszlop -->
+                    <td align="center">
+                        {% if publicationData.typesubtype.had_mtmt_other_type %}
+                            <span class="felteteles">{{ publicationData.typesubtype.effective_type_name | capitalize }}</span>
+                        {% else %}
+                            {{ publicationData.typesubtype.type_name | capitalize }}
+                            <br>
+                            {{ publicationData.typesubtype.subtype_name | capitalize}}
+                        {% endif %}
+                    </td>
+
+                    <!-- kiadás info oszlop -->
+                    <td align="center">
+                        <span  {% if publicationData.typesubtype.had_mtmt_other_type %}  class="felteteles" {% endif %}>
+                            {% if publicationData.publish_info.mta_listan_nullas %}
+                                {% if publicationData.url_based_data.pubtype_container_id %}
+                                    <a target="_blank" class="decoration-none" href="https://m2.mtmt.hu/api/journal?format=template&cond=mtid;eq;{{ publicationData.url_based_data.pubtype_container_id }}"><span class="text-red">MTA kifogásolható</span></a>
+                                {% else %}
+                                    <span class="text-red">MTA kifogásolható</span>
+                                {% endif %}
+                            {% else %}
+                                {% if publicationData.url_based_data.pubtype == 'j' %}
+                                    {{ publicationData.publish_info.is_foreign_string }}
+                                    <br>
+                                    {{ publicationData.publish_info.lektoralt_string }}
+                                {% else %}
+                                    {{ publicationData.publish_info.isxn_string }}
+                                {% endif %}
+                            {% endif %}
+                        </span>
+                    </td>
+
+                    <!-- WoS, IF, Scopus, SJR -->
+                    <td align="center">
+                        <span  {% if publicationData.typesubtype.had_mtmt_other_type %}  class="felteteles" {% endif %}>
+                            {{publicationData.publish_info.wosdb_string }} {{publicationData.publish_info.if_string }}
+                                <br>
+                            {{ publicationData.publish_info.scopusdb_string }} {{ publicationData.publish_info.sjr }}
+                        </span>
+                    </td>
+                    <!-- szerzőhányad -->
+                    <td align="center">{{ "%.2f"|format(100 * publicationData.share)|replace('.00', '') }}%</td>
+                {% if points.fejlec.mode_data.is_phd_mode %}
+                    <!-- tézisponthoz kapcsolódik -->
+                    <td align="center">
+                        {% if publicationData.url_based_data.thesis_related_string %}
+                            {{ publicationData.url_based_data.thesis_related_string }}
+                        {% endif %}
+                    </td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+{% else %}
+    <p class="error-message">Empty scoring error.</p>
+{% endif %}
+<style type="text/css">
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    * {
+        font-family: "Trebuchet MS", Verdana, Helvetica, sans-serif;
+        font-size: 14px;
+    }
+
+    body {
+        background-color: #fff;
+        margin: 20px 24px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 99%;
+        margin-bottom: 10px;
+    }
+
+    #PubRequirementsTable {
+        border-collapse:separate;
+        border-spacing:0 1em;
+    }
+
+    tr[id^='Pub'] {
+        margin-bottom: 1em;
+    }
+
+    tr[id^='Pub'] td {
+        border: 1px solid #aaa;
+        padding-left: 6px;
+        padding-right: 6px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    /* sticky header borders: https://stackoverflow.com/a/53559396 */
+    #gpkPhDKozlemenyek {
+        border-collapse: separate; /* Don't collapse */
+        border-spacing: 0;
+    }
+
+    #gpkPhDKozlemenyek thead tr{
+        top: 0;
+        position: sticky;
+        background-color: #fff;
+    }
+
+    #gpkPhDKozlemenyek thead td {
+        /* Apply both top and bottom borders to the <th> */
+        border-top: 1px solid #aaa;
+        border-bottom: 1px solid #aaa;
+        border-right: 1px solid #aaa;
+    }
+
+    #gpkPhDKozlemenyek td {
+        /* For cells, apply the border to one of each side only (right but not left, bottom but not top) */
+        border-bottom: 1px solid #aaa;
+        border-right: 1px solid #aaa;
+    }
+
+    #gpkPhDKozlemenyek th:first-child,
+    #gpkPhDKozlemenyek td:first-child {
+        /* Apply a left border on the first <td> or <th> in a row */
+        border-left: 1px solid;
+    }
+
+    #gpkPhDKozlemenyek td,
+    #gpkPhDKozlemenyek th {
+        padding-left: 4px;
+        padding-right: 4px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    ul {
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    ul.PublConditionLevel1 {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    ul.PublConditionLevel2 {
+        list-style-type: square;
+        padding-left: 2em;
+    }
+
+    .emph {
+        font-weight: bold;
+    }
+
+    .felteteles {
+        color: #aaa;
+    }
+
+    a:link {
+        color: black;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    a:visited {
+        color: black;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    a:hover {
+        color: black;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    a:active {
+        color: black;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .highlight{
+        background-color: #dfefca;
+    }
+    .disable-highligths-button{
+        float: right
+    }
+    .toggle-button{
+        cursor: pointer;
+        background-color: transparent;
+        border-radius: 4px;
+        border-width: 2px;
+        border-style: solid;
+        border-color: #555;
+        padding: 7px;
+    }
+    .grid-container {
+        gap: 50px;
+    }
+
+    /* A látványtervből származó HTML-részletre alkalmazandó stílusok (CSS nagyrészt szintén a látványtervből) */
+    .fromLatvanyterv {
+        text-align: left;
+    }
+    div.fromLatvanyterv {
+        padding: 1em;
+    }
+
+    .fromLatvanyterv ul {
+        display: block; list-style-type: disc; margin-top: 0; margin-bottom: 0;
+        margin-left: 0; margin-right: 0; padding-left: 15px;
+    }
+
+    .fromLatvanyterv .emph { font-weight: bold; }
+    .fromLatvanyterv .felteteles { color: #aaa; }
+    .fromLatvanyterv .szina { background-color: #ffe380; font-family: monospace; }
+    .fromLatvanyterv .szinb { background-color: #ccddff; font-family: monospace; }
+    .fromLatvanyterv .szinc { background-color: #f8f87a; font-family: monospace; }
+    .fromLatvanyterv .szind { background-color: #ffdcff; font-family: monospace; }
+    .fromLatvanyterv .szine { background-color: #c7ff4e; font-family: monospace; }
+    .fromLatvanyterv a:link    { color: black; text-decoration:none; cursor: pointer; }
+    .fromLatvanyterv a:visited { color: black; text-decoration:none; cursor: pointer; }
+    .fromLatvanyterv a:hover   { color: black; text-decoration:none; cursor: pointer; }
+    .fromLatvanyterv a:active  { color: black; text-decoration:none; cursor: pointer; }
+    .text-red { color: red }
+    .decoration-none { text-decoration:none !important}
+
+    #kovetelmenyek td, #kovetelmenyek th, #idbeszamithatoszoveg td, #idbeszamithatoszoveg th, #idtovabbiszoveg td, #idtovabbiszoveg th { border: 2px solid #ddd;
+    padding-left: 6px; padding-right: 6px; padding-top: 2px; padding-bottom: 2px; }
+    #idkozlemenyekszoveg td, #idkozlemenyekszoveg th { border: 2px solid #ddd; padding-left: 4px;
+    padding-right: 4px; padding-top: 2px; padding-bottom: 2px; }
+    ul { display: block; list-style-type: disc; margin-top: 0; margin-bottom: 0;
+    margin-left: 0; margin-right: 0; padding-left: 15px;
+    }
+
+
+    #idvezerlosor td, #idmegjegyzesgeneralo td, #idurlgeneralo td { border-collapse: separate; border: 2px solid #555; border-radius: 6px; padding: 3px 5px 3px 5px; background-color: #fff; line-height: 1.5; text-align: center; cursor: pointer; }
+
+    #generalo .highlightPlaceholder::placeholder {
+        color: coral;
+        font-weight: bold;
+    }
+
+    .generalotd { padding: 4px 20px 4px 2px; }
+    .vagolaptd {  background-color: #d3d3d3; }
+    .fajtatr { background-color: #e1e1e1; }
+    .allapottr { background-color: #f0f0f0; }
+    .tezisponttr { background-color: #e1e1e1; }
+    .megjegyzestr { background-color: #f0f0f0; }
+    .kovetelmenysorelvalasztas { font-size: 14px; }
+    .clipboard-button{
+        cursor: pointer;
+        background-color: white;
+        border-radius: 4px;
+        border-width: 2px;
+        border-style: solid;
+        border-color: #555;
+        padding: 7px;
+    }
+</style>

@@ -1,0 +1,52 @@
+<mat-card>
+  <mat-card-title>Ext author import</mat-card-title>
+  <div class="form-container">
+    <mat-form-field>
+      <input matInput
+        placeholder="Intézmény"
+        [(ngModel)]="data.org"
+        [value]="data.org.toUpperCase()"
+        required>
+      <span class="help is-danger mat-error" *ngIf="errors?.org">{{ errors?.org }}</span>
+      <mat-hint>Rövidítéssel, pl. BME</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput
+        placeholder="Hierarchia 1. szint"
+        [(ngModel)]="data.unit"
+        [value]="data.unit.toUpperCase()"
+        required>
+      <span class="help is-danger mat-error" *ngIf="errors?.unit">{{ errors?.unit }}</span>
+      <mat-hint>Rövidítéssel, pl. VIK</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput
+        placeholder="Hierarchia 2. szint"
+        [(ngModel)]="data.subunit"
+        [value]="data.subunit.toUpperCase()"
+        required>
+      <span class="help is-danger mat-error" *ngIf="errors?.subunit">{{ errors?.subunit }}</span>
+      <mat-hint>Rövidítéssel, pl. TMIT</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput
+        placeholder="Hierarchia 3. szint"
+        [(ngModel)]="data.subsub_unit"
+        [value]="data.subsub_unit.toUpperCase()">
+      <span class="help is-danger mat-error" *ngIf="errors?.subsub_unit">{{ errors?.subsub_unit }}</span>
+      <mat-hint>Rövidítéssel, pl. DBLAB</mat-hint>
+    </mat-form-field>
+
+    <input type="file" class="ng-hide" (change)="onFileChange($event)" id="file" required>
+    <span class="help is-danger mat-error" *ngIf="errors?.file_data">{{ errors?.file_data }}</span>
+  </div>
+  <mat-action-row>
+    <button mat-raised-button (click)="submit()" [disabled]="working">
+        Feltöltés
+        <mat-progress-bar mode="indeterminate" *ngIf="working"></mat-progress-bar>
+      </button>
+  </mat-action-row>
+</mat-card>

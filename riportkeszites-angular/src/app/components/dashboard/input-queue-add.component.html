@@ -1,0 +1,35 @@
+<mat-card *ngIf="show.update_publication">
+  <mat-card-title>
+    Közlemény frissítése
+  </mat-card-title>
+
+  <div class="form-container">
+    <mat-form-field>
+      <input matInput placeholder="MTMT azonosítók" [(ngModel)]="publicationIds" (keyup)="validate_publications()" (keyup.enter)="submit_publications()">
+      <mat-hint>Vesszővel elválaszott MTMT azonosítók listája. A frissítési kérelmek feldolgozása ütemezetten történik, így azok hatása nem azonnali.</mat-hint>
+      <span class="help is-danger mat-error" *ngIf="!isValidPubs">Hibás formátum!</span>
+    </mat-form-field>
+  </div>
+
+  <mat-action-row>
+    <button mat-raised-button color="primary" (click)="submit_publications()">Feltöltés</button>
+  </mat-action-row>
+</mat-card>
+
+<mat-card *ngIf="show.update_author">
+  <mat-card-title>
+    Szerző frissítése
+  </mat-card-title>
+
+  <div class="form-container">
+    <mat-form-field>
+      <input matInput placeholder="MTMT azonosítók" [(ngModel)]="authorIds" (keyup)="validate_authors()" (keyup.enter)="submit_authors()">
+      <mat-hint>Vesszővel elválaszott MTMT azonosítók listája. A frissítési kérelmek feldolgozása ütemezetten történik, így azok hatása nem azonnali.</mat-hint>
+      <span class="help is-danger mat-error" *ngIf="!isValidAuthors">Hibás formátum!</span>
+    </mat-form-field>
+  </div>
+
+  <mat-action-row>
+    <button mat-raised-button color="primary" (click)="submit_authors()">Feltöltés</button>
+  </mat-action-row>
+</mat-card>

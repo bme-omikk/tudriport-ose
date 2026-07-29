@@ -1,0 +1,133 @@
+SQL schema szöveges leírása:
+
+Enum:
+   enum3: enum ("yes", "no", "not given")
+   input_queue_type_enum: enum ("publication", "author")
+   input_queue_status_enum: enum ("new", "processing", "processed")
+
+
+Táblák áttekintő listája:
+-------------------------
+ author_db
+ authortype
+ character    <-- publications.character_id
+ issn
+ input_queue
+ language     <-- publications.language_id
+ pubauthors
+ publications - fő tábla
+ pubref
+ typesubtype  <-- publications.typesubtype_id
+
+
+
+Fő tábla: publications
+----------------------
+ id              auto increment ID
+ mtmt_pubid      mtmt xml pubid
+ typesubtype_id  ---> typesubtype tábla    id oszlopa
+ character_id    ---> character tábla      id oszlopa
+ impactfactor    xml impactfactor
+ pubdate         mtmt pubdata
+ language_id     ---> language tábla       id oszlopa
+ peerreviewed    enum3 ('yes', 'no' 'not given')
+ pubcountry      mtmt pubcountry
+ pagenum         mtmt pagenum (pagenum vagy page_to - page_from)
+ wosdb           mtmt WoS - bool
+ scopusdb        mtmt Scopus - bool
+ refcount        hányan hivatkoznak rá
+ valid_from      publications felvételekor töltendő ki
+ valid_to        NULL vagy lezáró dátum. Lezárási dátum, ha az mtmt_pubid adatai változtak.
+
+
+typesubtype tábla: publications typesubtype_id hivatkozik ide
+------------------
+ id              auto increment ID
+ type_mtmt1      NULL vagy mtmt1-ben levő type azonosítószám
+ type_mtmt2      NULL vagy mtmt2-ben levő type azonosítószám
+ subtype_mtmt1   NULL vagy mtmt1-ben levő subtype azonosítószám
+ subtype_mtmt2   NULL vagy mtmt2-ben levő subtype azonosítószám
+ type_name       szöveges neve, sor létrejöttekor íródik bele, ugyanilyen MTMT1 vagy MTM2 type azonosítószám esetén ha változott, frissítjük
+ subtype_name    szöveges neve, sor létrejöttekor íródik bele, ugyanilyen MTMT1 vagy MTM2 subtype azonosítószám esetén ha változott, frissítjük
+
+
+character tábla: publications character_id hivatkozik ide
+----------------
+ id              auto increment ID
+ chid_mtmt1      NULL vagy mtmt1-ben levő character_id
+ chid_mtmt2      NULL vagy mtmt2-ben levő character_id
+ name            szöveges neve, sor létrejöttekor íródik bele
+
+
+language tábla: publications language_id hivatkozik ide
+----------------
+ id              auto increment ID
+ name            neve, indexelése kisbetűvel
+ foreignlang     idegen? Default: Null
+ mainlang        főnyelv? Default: Null
+
+========= Inverz felépítmény =================
+
+pubauthors tábla: többen írhatják a művet, ennek a fő táblája
+-------------
+ id                   auto increment ID
+ mtmt_authid          xml-ben szereplő mtmt author id
+ mtmt_pubauthorname   neve az xml-ben
+ authortype_id        ---> authortype tábla    id oszlopa
+ publication_id       ---> publications tábla  id oszlopa
+ share                mekkora részben (mtmt xml-ből)
+ position             hányadik az xml-ben?
+ isfirst              első? Nem csak MTMT id-sek között
+ islast               utolsó? Nem csak MTMT id-sek között
+
+authortype tábla: a pubauthors kisegítő táblája
+-----------------
+ id                   auto increment ID
+ name                 személy szerepe (author, editor, ...)
+
+
+pubref tábla: referenciák (rá hivatkozók) fő táblája
+-------------
+ id                   auto increment ID
+ publication_id       ---> publications tábla    id oszlopa
+ year                 összefoglalva adott évre
+ independent          száma year szerint éves bontásban
+ independent_wos      száma year szerint éves bontásban
+ independent_scopus   száma year szerint éves bontásban
+ notindependent       száma year szerint éves bontásban
+
+
+author_db: ??? kell
+-------------------
+
+container:
+----------------------
+ id                   auto increment ID
+ groupid              ez lesz a folyóirat táblában
+ issn1                1. ISSN száma
+ issn2                2. ISSN száma vagy NULL
+ peerreviewed         enum3 ('yes', 'no' 'not given')
+ valid_from           sor létrehozásának dátuma
+ valid_to             NULL vagy lezáró dátum
+
+
+input_queue tábla: bejövő frissítési kérések táblája
+-------------
+id                    auto increment ID
+source                forrás azonosítója, a configurációban a forrás dictionary kulcsa, pl. mtmt1, mtmt2
+type                  input_queue_type_enum('publication', 'author'): közlemény vagy személy a feldolgozandó
+identifier            a "source" adatbázis "type" típusú rekordjának azonosítója, amit frissíteni kell
+status                input_queue_status_enum('new', 'processing', 'processed'): a frissítési kérés állapota
+status_date           a legutóbbi státuszváltás időbélyege
+processed_date        a 'processed' státusz beállításának időbélyege, kezdetben NULL
+-- az alábbiak majd minden táblába kellenek (dokumentálni nem kell mindenhol külön),
+-- l. specifikáció: Rekordok technikai metaadatai
+created_date
+created_user
+updated_date
+updated_user
+
+
+========================================================
+author_db_identifier: külső, nem az MTMT importáló része
+========================================================

@@ -1,0 +1,177 @@
+<h2>BME Monitoring értékelés</h2>
+
+{% if error_messages %}
+
+    {% for e in error_messages %}
+        <p class="error-message">{{ e }}</p>
+    {% endfor %}
+
+{% elif points %}
+
+    <p>A táblázat {{ params.year_count }} naptári év ({{params.year_from}}-{{params.year_to}}) publikációs teljesítményét mutatja
+        a BME-hez affiliált teljes tudományos közleményeket véve figyelembe
+        (<a href="https://www.omikk.bme.hu/kutatas-es-publikalas/mtmt#bme_monitoring_tablazat_informacio">részletek</a>).
+        Az adatok tudományterületi sajátossággal bírnak, az építőművészet vonatkozásában nem relevánsak.
+    </p>
+
+    {% if issummary %}
+        <h2>Szervezeti szinten összesített értékelés</h2>
+    {% else %}
+        <h2>
+            {{ author.authorname }}
+            {% if author.authorcomment %}({{ author.authorcomment }}){% endif %}
+        </h2>
+    {% endif %}
+
+    <table class="dyn-table" border="1">
+        <tr>
+            <th align="center" colspan="2">Közlemény típusa</th>
+            <th align="center">BME-affiliációval</a></th>
+            <th align="center">BME affiliáció nélkül<br/>(nem számít a monitoring során)</th>
+        </tr>
+        <tr>
+            <td align="center" colspan="2">Összes teljes tudományos publikáció</td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.extraInfo.listScientificPublicationsBME }}">
+                {{ points.extraInfo.listScientificPublicationsBME|length }}
+            </td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.extraInfo.listScientificPublicationsNoBME }}">
+                {{ points.extraInfo.listScientificPublicationsNoBME|length }}
+            </td>
+        </tr>
+        <tr>
+            <td align="center" colspan="2">Scopus indexált teljes tudományos publikáció</td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.extraInfo.listScopusPublicationsBME }}">
+                {{ points.extraInfo.listScopusPublicationsBME|length }}
+            </td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.extraInfo.listScopusPublicationsNoBME }}">
+                {{ points.extraInfo.listScopusPublicationsNoBME|length }}
+            </td>
+        </tr>
+        <tr>
+            <td align="center" rowspan="5">Folyóiratcikk (teljes tudományos publikáció)</td>
+            <td align="center">D1</td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.reszeredmenyek['FOLY,D1,BME'].pubids }}">
+                {{points.reszeredmenyek['FOLY,D1,BME'].pubids|length }}
+            </td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.reszeredmenyek['FOLY,D1,NoBME'].pubids }}">
+                {{points.reszeredmenyek['FOLY,D1,NoBME'].pubids|length }}
+            </td>
+        </tr>
+        <tr>
+            <td align="center">Q1 (benne D1)</td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.extraInfo.listSumD1Q1PublicationsBME }}">
+                {{ points.extraInfo.listSumD1Q1PublicationsBME|length }}
+            </td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.extraInfo.listSumD1Q1PublicationsNoBME }}">
+                {{ points.extraInfo.listSumD1Q1PublicationsNoBME|length }}
+            </td>
+        </tr>
+        <tr>
+            <td align="center">Q2</td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.reszeredmenyek['FOLY,Q2,BME'].pubids }}">
+                {{points.reszeredmenyek['FOLY,Q2,BME'].pubids|length }}
+            </td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.reszeredmenyek['FOLY,Q2,NoBME'].pubids }}">
+                {{points.reszeredmenyek['FOLY,Q2,NoBME'].pubids|length }}
+            </td>
+        </tr>
+        <tr>
+            <td align="center">Q3</td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.reszeredmenyek['FOLY,Q3,BME'].pubids }}">
+                {{points.reszeredmenyek['FOLY,Q3,BME'].pubids|length }}
+            </td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.reszeredmenyek['FOLY,Q3,NoBME'].pubids }}">
+                {{points.reszeredmenyek['FOLY,Q3,NoBME'].pubids|length }}
+            </td>
+        </tr>
+        <tr>
+            <td align="center">Q4</td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.reszeredmenyek['FOLY,Q4,BME'].pubids }}">
+                {{points.reszeredmenyek['FOLY,Q4,BME'].pubids|length }}
+            </td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.reszeredmenyek['FOLY,Q4,NoBME'].pubids }}">
+                {{points.reszeredmenyek['FOLY,Q4,NoBME'].pubids|length }}
+            </td>
+        </tr>
+        <tr>
+            <td align="center" colspan="2">Szabadalom, formatervezési minta</td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.reszeredmenyek['SZABADALOM,BME'].pubids }}">
+                {{points.reszeredmenyek['SZABADALOM,BME'].pubids|length }}
+            </td>
+            <td align="center" class="clickable openPopup"
+                data-pubids="{{points.reszeredmenyek['SZABADALOM,NoBME'].pubids }}">
+                {{points.reszeredmenyek['SZABADALOM,NoBME'].pubids|length }}
+            </td>
+        </tr>
+        <tr>
+            <td align="center" colspan="2">Összegzett Q1 (benne D1) szerzői részarány</td>
+            <td align="center">
+                {{ "%.2f"%points.extraInfo.sumShareInD1Q1BME }}
+            </td>
+            <td class="notApplicable"></td>
+        </tr>
+        <tr>
+            <td align="center" colspan="2">{{ params.year_count }} éves WoS/Scopus független idéző</td>
+            <td align="center" class="clickable openciteids"  data-citeids="{{points.reszeredmenyek['CIT-IND,5YR,W+S,BME'].citids }}">
+                {{ points.reszeredmenyek['CIT-IND,5YR,W+S,BME'].citids|length }}
+            </td>
+            <td align="center" class="clickable openciteids"  data-citeids="{{points.reszeredmenyek['CIT-IND,5YR,W+S,NoBME'].citids }}">
+                {{ points.reszeredmenyek['CIT-IND,5YR,W+S,NoBME'].citids|length }}
+            </td>
+        </tr>
+        <tr>
+            <td align="center" colspan="2">A fenti kategóriákban nem szereplő közlemények</td>
+            <td colspan="2" align="center" class="clickable openPopup"
+                data-pubids="{{points.reszeredmenyek['NEMPONTOZOTT'].pubids }}">
+                {{ points.reszeredmenyek['NEMPONTOZOTT'].pubids|length }}</td>
+        </tr>
+    </table>
+
+{% else %}
+    <p class="error-message">Empty scoring error.</p>
+{% endif %}
+
+<style>
+    td.notApplicable {
+        background-image:  url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH5wMPEyoRw+0a7wAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAABkSURBVDjLndAxDsAwCANAN915LA/Jl8nQSm0iQjCevJws+TIzkOm9P6WVJY3/ksOLVNVWltllV6bwTp5xIA84lhE+yi3OSB8npYPzcsWUnDArP1yQL65JALeI1OR6GCUnzEoAAwrvNlCn2OzuAAAAAElFTkSuQmCC');
+        background-repeat: repeat;
+        background-position: 50% 50%;
+    }
+
+    .tooltip {
+        position: relative;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: auto;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+</style>
