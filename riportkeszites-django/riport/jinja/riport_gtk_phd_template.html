@@ -47,11 +47,15 @@
             {% elif mode == 'gtk_habil' %}
                 <td>Öt WoS és öt Scopus adatbázisban szereplő idegen nyelvű folyóiratcikk </td>
             {% endif %}
-            {% if points.extraInfo.constraint1Passed %}
-                <td align="center" class="igen">{{ 'yes' if english else 'igen'}}</td>
-            {% else %}
-                <td align="center" class="nem">{{ 'no' if english else 'nem'}}</td>
-            {% endif %}
+            <td align="center" class="{{ 'igen' if points.extraInfo.constraint1Passed else 'nem' }} clickable openPopup"
+                data-pubids="{{ points.extraInfo.WosUNIONScopusPublicationPubids }}">
+                {% if points.extraInfo.constraint1Passed %}
+                    {{ 'yes' if english else 'igen'}}
+                {% else %}
+                    {{ 'no' if english else 'nem'}}
+                {% endif %}
+                ({{ points.extraInfo.WosUNIONScopusPublicationPubids|length }})
+            </td>
         </tr>
         <tr> 
             <td>2.</td> 
@@ -66,11 +70,15 @@
             {% elif mode == 'gtk_habil' %}
                 <td>Tíz darab Scopus adatbázisban szereplő idegen nyelvű folyóiratcikk, amelyből öt a Scimago szerint Q1 besorolású folyóiratban jelent meg</td> 
             {% endif %}
-            {% if points.extraInfo.constraint2Passed %}
-                <td align="center" class="igen">{{ 'yes' if english else 'igen'}}</td>
-            {% else %}
-                <td align="center" class="nem">{{ 'no' if english else 'nem'}}</td>
-            {% endif %}
+            <td align="center" class="{{ 'igen' if points.extraInfo.constraint2Passed else 'nem' }} clickable openPopup"
+                data-pubids="{{ points.extraInfo.ScopusPublicationPubids }}">
+                {% if points.extraInfo.constraint2Passed %}
+                    {{ 'yes' if english else 'igen'}}
+                {% else %}
+                    {{ 'no' if english else 'nem'}}
+                {% endif %}
+                ({{ points.extraInfo.ScopusPublicationPubids|length }})
+            </td>
         </tr>  
         <tr> 
             <td>3.</td> 
@@ -79,11 +87,14 @@
             {% else %}
             <td>Publikációs pontszám legalább {{points.extraInfo.publicationPointThreshold}}</td>
             {% endif %}
-            {% if points.extraInfo.constraint3Passed %}
-                <td align="center" class="igen">{{ 'yes' if english else 'igen'}}</td>
-            {% else %}
-                <td align="center" class="nem">{{ 'no' if english else 'nem'}}</td>
-            {% endif %}
+            <td align="center" class="{{ 'igen' if points.extraInfo.constraint3Passed else 'nem' }}">
+                {% if points.extraInfo.constraint3Passed %}
+                    {{ 'yes' if english else 'igen'}}
+                {% else %}
+                    {{ 'no' if english else 'nem'}}
+                {% endif %}
+                ({{ "%.2f"%points.osszpontszam }})
+            </td>
         </tr>
         <tr>
             <td></td>
@@ -92,11 +103,13 @@
             {% else %}
             <td><b>A minimumkövetelményeket teljesítette</b> (1. és 3.) vagy (2. és 3.) feltételek egyidejű teljesítése esetén</td>
             {% endif %}
-            {% if points.extraInfo.constraintsAllPassed %}
-                <td align="center" class="igen">{{ 'yes' if english else 'igen'}}</td>
-            {% else %}
-                <td align="center" class="nem">{{ 'no' if english else 'nem'}}</td>
-            {% endif %}
+            <td align="center" class="{{ 'igen' if points.extraInfo.constraintsAllPassed else 'nem' }}">
+                {% if points.extraInfo.constraintsAllPassed %}
+                    {{ 'yes' if english else 'igen'}}
+                {% else %}
+                    {{ 'no' if english else 'nem'}}
+                {% endif %}
+            </td>
         </tr>
     </table>
 

@@ -17,9 +17,9 @@ class RIPORT(PUB_UTIL):
         self.extraInfo = {
             'numWOSPublications': 0,
             'numScopusPublications': 0,
-            'numWosXORScopusPublications': 0,
-            'numWosANDScopusPublications': 0,
+            'ScopusPublicationPubids': [],
             'numScopusQ1': 0,
+            'WosUNIONScopusPublicationPubids': [],
             'publicationPointThreshold': p_publicationPointTreshold,
             'max3ScoreCap': p_max3ScoreCap,
             'constraintMultiplier': p_constraintMultiplier,
@@ -183,12 +183,11 @@ class RIPORT(PUB_UTIL):
                             self.extraInfo['numWOSPublications'] += 1
                         if scopusdb:
                             self.extraInfo['numScopusPublications'] += 1
+                            self.extraInfo['ScopusPublicationPubids'].append(pubid)
                             if besorolas in ['D1','Q1']:
                                 self.extraInfo['numScopusQ1'] += 1
-                        if wosdb ^ scopusdb:
-                            self.extraInfo['numWosXORScopusPublications'] += 1
-                        if wosdb and scopusdb:
-                            self.extraInfo['numWosANDScopusPublications'] += 1
+                        if wosdb or scopusdb:
+                            self.extraInfo['WosUNIONScopusPublicationPubids'].append(pubid)
                 else:
                     if magyar:
                         token = 'FOLY,NEMLEK,MAGY'
@@ -283,9 +282,9 @@ class RIPORT(PUB_UTIL):
     def nullCounters(self):
         self.extraInfo['numWOSPublications'] = 0
         self.extraInfo['numScopusPublications'] = 0
+        self.extraInfo['ScopusPublicationPubids'] = []
         self.extraInfo['numScopusQ1'] = 0
-        self.extraInfo['numWosXORScopusPublications'] = 0
-        self.extraInfo['numWosANDScopusPublications'] = 0        
+        self.extraInfo['WosUNIONScopusPublicationPubids'] = []
 
     def citations_gtk(self, pubrefs):
         citlist = []
@@ -340,7 +339,7 @@ class RIPORT(PUB_UTIL):
         """GTK PhD alapú pontozók minimumkövetelmény-teljesülések számítása"""
         cm = extraInfo['constraintMultiplier']
 
-        extraInfo['constraint1Passed'] = extraInfo['numWOSPublications'] >= 1*cm and extraInfo['numScopusPublications'] >= 1*cm and extraInfo['numWosANDScopusPublications'] + extraInfo['numWosXORScopusPublications'] >= 2*cm
+        extraInfo['constraint1Passed'] = extraInfo['numWOSPublications'] >= 1*cm and extraInfo['numScopusPublications'] >= 1*cm and len(extraInfo['WosUNIONScopusPublicationPubids']) >= 2*cm
         extraInfo['constraint2Passed'] = extraInfo['numScopusPublications'] >= 2*cm and extraInfo['numScopusQ1'] >= 1*cm
         extraInfo['constraint3Passed'] = totalScore >= extraInfo['publicationPointThreshold']
         extraInfo['constraintsAllPassed'] = extraInfo['constraint3Passed'] and (extraInfo['constraint1Passed'] or extraInfo['constraint2Passed'])
