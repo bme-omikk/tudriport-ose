@@ -493,6 +493,11 @@
                 ({{ points.reszeredmenyek['NEMPONTOZOTT,KIFOGASOLHATO'].pubids|length }})</td>
         </tr>
         <tr>
+            <td align="center">{{ 'Publications not included in the above scoring, foreign language \'Republication\' journal articles in the WoS or Scopus database' if english else 'A fenti pontozásban nem szereplő, WoS/Scopus indexált, \'Utánközlés\' besorolású, idegen nyelvű folyóiratcikkek' }}</td>
+            <td colspan="3" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['NEMPONTOZOTT,UTANKOZLES,IDEG'].pubids }}">
+                ({{ points.reszeredmenyek['NEMPONTOZOTT,UTANKOZLES,IDEG'].pubids|length }})</td>
+        </tr>
+        <tr>
             <td align="center">{{ 'Further publications not included in the above scoring' if english else 'További a fenti pontozásban nem szereplő közlemények' }}</td>
             <td colspan="3" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['NEMPONTOZOTT,NEM-KIFOGASOLHATO'].pubids }}">
                 ({{ points.reszeredmenyek['NEMPONTOZOTT,NEM-KIFOGASOLHATO'].pubids|length }})</td>

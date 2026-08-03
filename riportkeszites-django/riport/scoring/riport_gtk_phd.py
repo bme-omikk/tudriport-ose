@@ -79,6 +79,7 @@ class RIPORT(PUB_UTIL):
         ScoringToken('CIT-IND,SCOPUS', 5.0, 'SCI adatbázisban megtalálható adott évben idézett'),
         ScoringToken('CIT-IND,W+S', 5.0, 'SCI adatbázisban megtalálható adott évben idézett'),
         ScoringToken('NEMPONTOZOTT,KIFOGASOLHATO', 0.0, 'A pontozásban nem szerepel, MTMT kifogásolható gyakorlatot folytató folyóiratban jelentek meg'),
+        ScoringToken('NEMPONTOZOTT,UTANKOZLES,IDEG', 0.0, 'A pontozásban nem szerepel, WoS/Scopus indexált, \'Utánközlés\' besorolású, idegen nyelvű folyóiratcikk'),
         ScoringToken('NEMPONTOZOTT,NEM-KIFOGASOLHATO', 0.0, 'A pontozásban nem szerepel'),
         ScoringToken('HIBASARANY', 0.0, 'Közlemények hibás vagy hiányos szerzői részaránnyal'),
         ScoringToken('ERROR', 0.0, 'Hibakezelés'),
@@ -263,6 +264,8 @@ class RIPORT(PUB_UTIL):
         if token == '':
             if mta_listan_nullas:
                 token = 'NEMPONTOZOTT,KIFOGASOLHATO'
+            elif type_name == 'folyóiratcikk' and subtype_name == 'utánközlés' and jelleg == 'tudományos' and author_type == 'author' and not magyar and (wosdb or scopusdb):
+                token = 'NEMPONTOZOTT,UTANKOZLES,IDEG'
             else:
                 token = 'NEMPONTOZOTT,NEM-KIFOGASOLHATO'
 
