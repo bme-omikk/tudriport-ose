@@ -440,8 +440,8 @@
         </tr>
         <tr>
             <td align="center">{{ 'Further GTK-affiliated publications not in the above categories' if english else 'További GTK-hoz affiliált, a fenti kategóriákba nem tartozó közlemények' }}</td>
-            <td colspan="3" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['NEMPONTOZOTT,GTK,NEM-KIFOGASOLHATO'].pubids }}">
-                ({{ points.reszeredmenyek['NEMPONTOZOTT,GTK,NEM-KIFOGASOLHATO'].pubids|length }})</td>
+            <td colspan="3" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['NEMPONTOZOTT,GTK,TOVABBI'].pubids }}">
+                ({{ points.reszeredmenyek['NEMPONTOZOTT,GTK,TOVABBI'].pubids|length }})</td>
         </tr>
         <tr>
             <td align="center">{{ 'Publications not affiliated to GTK in journal listed in MTMT as a journal that engage in objectionable practices' if english else 'GTK-hoz nem affiliált MTMT kifogásolható gyakorlatot folytató folyóiratban megjelent közlemények' }} (*)</td>
@@ -450,8 +450,8 @@
         </tr>
         <tr>
             <td align="center">{{ 'Further publications not affiliated to GTK' if english else 'További GTK-hoz nem affiliált közlemények' }}</td>
-            <td colspan="3" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['NEMPONTOZOTT,NEM-GTK,NEM-KIFOGASOLHATO'].pubids }}">
-                ({{ points.reszeredmenyek['NEMPONTOZOTT,NEM-GTK,NEM-KIFOGASOLHATO'].pubids|length }})</td>
+            <td colspan="3" align="center" class="clickable openPopup" data-pubids="{{points.reszeredmenyek['NEMPONTOZOTT,NEM-GTK,TOVABBI'].pubids }}">
+                ({{ points.reszeredmenyek['NEMPONTOZOTT,NEM-GTK,TOVABBI'].pubids|length }})</td>
         </tr>
         <tr>
             <td align="center">{{ 'Total score' if english else 'A fentiek összpontszáma' }}</td>
@@ -652,7 +652,7 @@
         </tr>
         <tr>
             <td align="center">{{ 'Further GTK-affiliated publications not in the above categories' if english else 'További GTK-hoz affiliált, a fenti kategóriákba nem tartozó közlemények' }}</td>
-            <td colspan="3" align="center">{{points.tokenek['NEMPONTOZOTT,GTK,NEM-KIFOGASOLHATO'].score}}</td>
+            <td colspan="3" align="center">{{points.tokenek['NEMPONTOZOTT,GTK,TOVABBI'].score}}</td>
         </tr>
         <tr>
             <td align="center">{{ 'Publications not affiliated to GTK in journal listed in MTMT as a journal that engage in objectionable practices' if english else 'GTK-hoz nem affiliált MTMT kifogásolható gyakorlatot folytató folyóiratban megjelent közlemények' }} (*)</td>
@@ -660,7 +660,7 @@
         </tr>
         <tr>
             <td align="center">{{ 'Further publications not affiliated to GTK' if english else 'További GTK-hoz nem affiliált közlemények' }}</td>
-            <td colspan="3" align="center">{{points.tokenek['NEMPONTOZOTT,NEM-GTK,NEM-KIFOGASOLHATO'].score}}</td>
+            <td colspan="3" align="center">{{points.tokenek['NEMPONTOZOTT,NEM-GTK,TOVABBI'].score}}</td>
         </tr>
     </table>
     (*) {% if english %}

@@ -78,9 +78,9 @@ class RIPORT(PUB_UTIL):
         ScoringToken('CIT-IND,SCOPUS', 5.0, 'SCI adatbázisban megtalálható adott évben idézett'),
         ScoringToken('CIT-IND,W+S', 5.0, 'SCI adatbázisban megtalálható adott évben idézett'),
         ScoringToken('NEMPONTOZOTT,GTK,KIFOGASOLHATO', 0.0, 'A pontozásban nem szereplő, GTK-hoz affiliált közlemények, MTMT kifogásolható gyakorlatot folytató folyóiratban jelentek meg'),
-        ScoringToken('NEMPONTOZOTT,GTK,NEM-KIFOGASOLHATO', 0.0, 'A pontozásban nem szereplő, GTK-hoz affiliált közlemények'),
+        ScoringToken('NEMPONTOZOTT,GTK,TOVABBI', 0.0, 'A pontozásban nem szereplő, GTK-hoz affiliált további közlemények'),
         ScoringToken('NEMPONTOZOTT,NEM-GTK,KIFOGASOLHATO', 0.0, 'GTK-hoz nem affiliált közlemények, MTMT kifogásolható gyakorlatot folytató folyóiratban jelentek meg'),
-        ScoringToken('NEMPONTOZOTT,NEM-GTK,NEM-KIFOGASOLHATO', 0.0, 'GTK-hoz nem affiliált közlemények'),
+        ScoringToken('NEMPONTOZOTT,NEM-GTK,TOVABBI', 0.0, 'GTK-hoz nem affiliált további közlemények'),
         ScoringToken('ERROR', 0.0, 'Hibakezelés'),
     ]
 
@@ -320,9 +320,6 @@ class RIPORT(PUB_UTIL):
                 else:
                     token = 'FOLY,NEMTUD,IDEG'
                 
-            else:
-                token = 'NEMPONTOZOTT,GTK,NEM-KIFOGASOLHATO'
-
             if token.startswith('SZERK'):
                 if editorcount == 0:
                     share = 0
@@ -335,7 +332,7 @@ class RIPORT(PUB_UTIL):
                     share = 1./authorcount
 
             if token == '':
-                token = 'NEMPONTOZOTT,GTK,NEM-KIFOGASOLHATO'
+                token = 'NEMPONTOZOTT,GTK,TOVABBI'
 
         elif published.has_author_affiliation_BME_GTK and mta_listan_nullas:
             token = 'NEMPONTOZOTT,GTK,KIFOGASOLHATO'
@@ -344,7 +341,7 @@ class RIPORT(PUB_UTIL):
             if mta_listan_nullas:
                 token = 'NEMPONTOZOTT,NEM-GTK,KIFOGASOLHATO'
             else:
-                token = 'NEMPONTOZOTT,NEM-GTK,NEM-KIFOGASOLHATO'
+                token = 'NEMPONTOZOTT,NEM-GTK,TOVABBI'
 
         return (pubid, token, tokenkieg, share, debuginfo)
 
