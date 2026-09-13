@@ -19,9 +19,9 @@ pip install -r requirements.txt
 cd riportkeszites-angular
 ## use package-lock.json
 npm ci
-## use package.json
-npm install @angular/cli
-npm install
+## if using package.json instead:
+#npm install @angular/cli
+#npm install
 ## build the Angular app
 node_modules/.bin/ng build --base-href=/tudriport/ --prod
 cd ..
