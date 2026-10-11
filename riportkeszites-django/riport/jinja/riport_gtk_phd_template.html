@@ -672,26 +672,26 @@
         </tr>
         <tr>
             <td align="center">{{ 'Book or book chapter; with ISBN number' if english else 'Könyv vagy könyvfejezet ISBN számmal' }}</td>
-            <td align="center">{{points.tokenek['KONYV,ISBN,MAGY'].score}}/{{ '16 pages' if english else 'iv (16 oldal)' }}</td>
-            <td align="center">{{points.tokenek['KONYV,ISBN,IDEG,HAZA'].score}}/{{ '16 pages' if english else 'iv (16 oldal)' }}</td>
-            <td align="center">{{points.tokenek['KONYV,ISBN,IDEG,NEMZ'].score}}/{{ '16 pages' if english else 'iv (16 oldal)' }}</td>
+            <td align="center">{{points.tokenek['KONYV,ISBN,MAGY'].score}}/{{ 'page' if english else 'oldal' }}</td>
+            <td align="center">{{points.tokenek['KONYV,ISBN,IDEG,HAZA'].score}}/{{ 'page' if english else 'oldal' }}</td>
+            <td align="center">{{points.tokenek['KONYV,ISBN,IDEG,NEMZ'].score}}/{{ 'page' if english else 'oldal' }}</td>
         </tr>
         <tr>
             <td align="center">{{ 'Book or book chapter; without ISBN number' if english else 'Könyv vagy könyvfejezet ISBN szám nélkül' }}</td>
-            <td align="center">{{points.tokenek['KONYV,NEMISBN,MAGY'].score}}/{{ '16 pages' if english else 'iv (16 oldal)' }}</td>
-            <td align="center">{{points.tokenek['KONYV,NEMISBN,IDEG,HAZA'].score}}/{{ '16 pages' if english else 'iv (16 oldal)' }}</td>
-            <td align="center">{{points.tokenek['KONYV,NEMISBN,IDEG,NEMZ'].score}}/{{ '16 pages' if english else 'iv (16 oldal)' }}</td>
+            <td align="center">{{points.tokenek['KONYV,NEMISBN,MAGY'].score}}/{{ 'page' if english else 'oldal' }}</td>
+            <td align="center">{{points.tokenek['KONYV,NEMISBN,IDEG,HAZA'].score}}/{{ 'page' if english else 'oldal' }}</td>
+            <td align="center">{{points.tokenek['KONYV,NEMISBN,IDEG,NEMZ'].score}}/{{ 'page' if english else 'oldal' }}</td>
         </tr>
         <tr>
             <td align="center">{{ 'Textbook for higher education, Educational material or part thereof; with ISBN number' if english else 'Felsőoktatási tankönyv, egyetemi jegyzet vagy részlete ISBN-el' }}</td>
-            <td align="center">{{points.tokenek['TKJEGYZ,ISBN,MAGY'].score}}/{{ '16 pages' if english else 'iv (16 oldal)' }}</td>
-            <td align="center" colspan="2">{{points.tokenek['TKJEGYZ,ISBN,IDEG'].score}}/{{ '16 pages' if english else 'iv (16 oldal)' }}</td>
+            <td align="center">{{points.tokenek['TKJEGYZ,ISBN,MAGY'].score}}/{{ 'page' if english else 'oldal' }}</td>
+            <td align="center" colspan="2">{{points.tokenek['TKJEGYZ,ISBN,IDEG'].score}}/{{ 'page' if english else 'oldal' }}</td>
         </tr>
         <tr>
             <td align="center">{{ 'Textbook for higher education, Educational material or part thereof; without ISBN number' if english else 'Felsőoktatási tankönyv, egyetemi jegyzet vagy részlete ISBN nélkül' }}
             </td>
-            <td align="center">{{points.tokenek['TKJEGYZ,NEMISBN,MAGY'].score}}/{{ '16 pages' if english else 'iv (16 oldal)' }}</td>
-            <td align="center" colspan="2">{{points.tokenek['TKJEGYZ,NEMISBN,IDEG'].score}}/{{ '16 pages' if english else 'iv (16 oldal)' }}</td>
+            <td align="center">{{points.tokenek['TKJEGYZ,NEMISBN,MAGY'].score}}/{{ 'page' if english else 'oldal' }}</td>
+            <td align="center" colspan="2">{{points.tokenek['TKJEGYZ,NEMISBN,IDEG'].score}}/{{ 'page' if english else 'oldal' }}</td>
         </tr>
     </table>
 

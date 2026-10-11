@@ -60,18 +60,18 @@ class RIPORT(PUB_UTIL):
         ScoringToken('RECENZIO,MAGY', 1.0, 'Recenzió - magyar nyelven', False),
         ScoringToken('RECENZIO,IDEG', 1.0, 'Recenzió - idegen nyelven', False),
 
-        ScoringToken('KONYV,ISBN,MAGY', 2.0, 'Könyv ISBN számmal: Magyar nyelven'),
-        ScoringToken('KONYV,ISBN,IDEG,HAZA', 2.0, 'Könyv ISBN számmal: Idegen nyelven'),
-        ScoringToken('KONYV,ISBN,IDEG,NEMZ', 2.0, 'Könyv ISBN számmal: Idegen nyelven'),
+        ScoringToken('KONYV,ISBN,MAGY', 0.125, 'Könyv ISBN számmal: Magyar nyelven'),
+        ScoringToken('KONYV,ISBN,IDEG,HAZA', 0.125, 'Könyv ISBN számmal: Idegen nyelven'),
+        ScoringToken('KONYV,ISBN,IDEG,NEMZ', 0.125, 'Könyv ISBN számmal: Idegen nyelven'),
 
-        ScoringToken('KONYV,NEMISBN,MAGY', 2.0, 'Könyv ISBN szám nélkül: Magyar nyelven'),
-        ScoringToken('KONYV,NEMISBN,IDEG,HAZA', 2.0, 'Könyv ISBN szám nélkül: Idegen nyelven'),
-        ScoringToken('KONYV,NEMISBN,IDEG,NEMZ', 2.0, 'Könyv ISBN szám nélkül: Idegen nyelven'),
+        ScoringToken('KONYV,NEMISBN,MAGY', 0.125, 'Könyv ISBN szám nélkül: Magyar nyelven'),
+        ScoringToken('KONYV,NEMISBN,IDEG,HAZA', 0.125, 'Könyv ISBN szám nélkül: Idegen nyelven'),
+        ScoringToken('KONYV,NEMISBN,IDEG,NEMZ', 0.125, 'Könyv ISBN szám nélkül: Idegen nyelven'),
 
-        ScoringToken('TKJEGYZ,ISBN,MAGY', 1.0, 'Tankönyv, jegyzet ISBN számmal - magyar nyelven'),
-        ScoringToken('TKJEGYZ,ISBN,IDEG', 1.0, 'Tankönyv, jegyzet ISBN számmal - idegen nyelven'),
-        ScoringToken('TKJEGYZ,NEMISBN,MAGY', 1.0, 'Tankönyv, jegyzet ISBN nélkül - magyar nyelven'),
-        ScoringToken('TKJEGYZ,NEMISBN,IDEG', 1.0, 'Tankönyv, jegyzet ISBN nélkül - idegen nyelven'),
+        ScoringToken('TKJEGYZ,ISBN,MAGY', 0.0625, 'Tankönyv, jegyzet ISBN számmal - magyar nyelven'),
+        ScoringToken('TKJEGYZ,ISBN,IDEG', 0.0625, 'Tankönyv, jegyzet ISBN számmal - idegen nyelven'),
+        ScoringToken('TKJEGYZ,NEMISBN,MAGY', 0.0625, 'Tankönyv, jegyzet ISBN nélkül - magyar nyelven'),
+        ScoringToken('TKJEGYZ,NEMISBN,IDEG', 0.0625, 'Tankönyv, jegyzet ISBN nélkül - idegen nyelven'),
 
         ScoringToken('MAX3->MAX5', 1.0, 'legfeljebb 3 pontos közleményekből elszámolt pontszám (legfeljebb 5)'),
 
@@ -227,7 +227,7 @@ class RIPORT(PUB_UTIL):
             elif (type_name == 'könyv' and subtype_name in ['szakkönyv', 'monográfia', 'tanulmánykötet', 'kézikönyv', 'műhelytanulmány'] and author_type == 'author') \
                 or (type_name == 'könyvrészlet' and subtype_name in ['szaktanulmány', 'könyvfejezet', 'műhelytanulmány része']) and author_type == 'author':
                     debuginfo = 'GTK 5.- Könyv (%s oldal)'%oldalszam
-                    tokenkieg = min(math.floor(oldalszam/16), 4.0*authorcount)
+                    tokenkieg = min(oldalszam, 64*authorcount)
                     if has_isbn:
                         if magyar:
                             token = 'KONYV,ISBN,MAGY'
@@ -246,7 +246,7 @@ class RIPORT(PUB_UTIL):
                                 token = 'KONYV,NEMISBN,IDEG,NEMZ'                
 
         elif jelleg == 'oktatási' and not mta_listan_nullas:
-            tokenkieg = min(math.floor(oldalszam/16), 4.0*authorcount)
+            tokenkieg = min(oldalszam, 64*authorcount)
             if (type_name == 'könyv' and subtype_name in ['felsőoktatási tankönyv', 'oktatási anyag']) \
                 or (type_name == 'könyvrészlet' and subtype_name in ['felsőoktatási tankönyv része', 'oktatási anyag része']):
                 if author_type == 'author':

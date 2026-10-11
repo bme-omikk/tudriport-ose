@@ -54,22 +54,22 @@ class RIPORT(PUB_UTIL):
         ScoringToken('RECENZIO,MAGY', 1.0, 'Recenzió - magyar nyelven'),
         ScoringToken('RECENZIO,IDEG', 1.0, 'Recenzió - idegen nyelven'),
 
-        ScoringToken('KONYV,ISBN,MAGY', 2.0, 'Könyv ISBN számmal: Magyar nyelven'),
-        ScoringToken('KONYV,ISBN,IDEG,HAZA', 2.0, 'Könyv ISBN számmal: Idegen nyelven'),
-        ScoringToken('KONYV,ISBN,IDEG,NEMZ', 2.0, 'Könyv ISBN számmal: Idegen nyelven'),
+        ScoringToken('KONYV,ISBN,MAGY', 0.125, 'Könyv ISBN számmal: Magyar nyelven'),
+        ScoringToken('KONYV,ISBN,IDEG,HAZA', 0.125, 'Könyv ISBN számmal: Idegen nyelven'),
+        ScoringToken('KONYV,ISBN,IDEG,NEMZ', 0.125, 'Könyv ISBN számmal: Idegen nyelven'),
 
-        ScoringToken('KONYV,NEMISBN,MAGY', 2.0, 'Könyv ISBN szám nélkül: Magyar nyelven'),
-        ScoringToken('KONYV,NEMISBN,IDEG,HAZA', 2.0, 'Könyv ISBN szám nélkül: Idegen nyelven'),
-        ScoringToken('KONYV,NEMISBN,IDEG,NEMZ', 2.0, 'Könyv ISBN szám nélkül: Idegen nyelven'),
+        ScoringToken('KONYV,NEMISBN,MAGY', 0.125, 'Könyv ISBN szám nélkül: Magyar nyelven'),
+        ScoringToken('KONYV,NEMISBN,IDEG,HAZA', 0.125, 'Könyv ISBN szám nélkül: Idegen nyelven'),
+        ScoringToken('KONYV,NEMISBN,IDEG,NEMZ', 0.125, 'Könyv ISBN szám nélkül: Idegen nyelven'),
 
-        ScoringToken('SZERK,MAGY', 1.0, 'Szerkesztett közlemények - magyar nyelven'),
-        ScoringToken('SZERK,IDEG', 2.0, 'Szerkesztett közlemények - idegen nyelven'),
+        ScoringToken('SZERK,MAGY', 0.0625, 'Szerkesztett közlemények - magyar nyelven'),
+        ScoringToken('SZERK,IDEG', 0.125, 'Szerkesztett közlemények - idegen nyelven'),
 
 
-        ScoringToken('TKJEGYZ,ISBN,MAGY', 1.0, 'Tankönyv, jegyzet ISBN számmal - magyar nyelven'),
-        ScoringToken('TKJEGYZ,ISBN,IDEG', 1.0, 'Tankönyv, jegyzet ISBN számmal - idegen nyelven'),
-        ScoringToken('TKJEGYZ,NEMISBN,MAGY', 1.0, 'Tankönyv, jegyzet ISBN nélkül - magyar nyelven'),
-        ScoringToken('TKJEGYZ,NEMISBN,IDEG', 1.0, 'Tankönyv, jegyzet ISBN nélkül - idegen nyelven'),
+        ScoringToken('TKJEGYZ,ISBN,MAGY', 0.0625, 'Tankönyv, jegyzet ISBN számmal - magyar nyelven'),
+        ScoringToken('TKJEGYZ,ISBN,IDEG', 0.0625, 'Tankönyv, jegyzet ISBN számmal - idegen nyelven'),
+        ScoringToken('TKJEGYZ,NEMISBN,MAGY', 0.0625, 'Tankönyv, jegyzet ISBN nélkül - magyar nyelven'),
+        ScoringToken('TKJEGYZ,NEMISBN,IDEG', 0.0625, 'Tankönyv, jegyzet ISBN nélkül - idegen nyelven'),
 
         ScoringToken('FOLY,NEMTUD,MAGY', 1.0, 'Nem tudományos folyóiratcikk - magyar nyelven'),
         ScoringToken('FOLY,NEMTUD,IDEG', 2.0, 'Nem tudományos folyóiratcikk - idegen nyelven'),
@@ -272,7 +272,7 @@ class RIPORT(PUB_UTIL):
                 elif (type_name == 'könyv' and subtype_name in ['szakkönyv', 'monográfia', 'tanulmánykötet', 'kézikönyv', 'műhelytanulmány'] and author_type == 'author') \
                     or (type_name == 'könyvrészlet' and subtype_name in ['szaktanulmány', 'könyvfejezet', 'műhelytanulmány része']) and author_type == 'author':
                         debuginfo = 'GTK 5.- Könyv (%s oldal)'%oldalszam
-                        tokenkieg = math.floor(oldalszam/16)
+                        tokenkieg = oldalszam
                         if has_isbn:
                             if magyar:
                                 token = 'KONYV,ISBN,MAGY'
@@ -292,14 +292,14 @@ class RIPORT(PUB_UTIL):
                 # --- GTK 6. Szerkesztőként
                 elif author_type == 'editor':
                     debuginfo = 'GTK 6. Szerkesztőként (%s oldal)'%oldalszam
-                    tokenkieg = math.floor(oldalszam/16)
+                    tokenkieg = oldalszam
                     if magyar:
                         token = 'SZERK,MAGY'
                     else:
                         token = 'SZERK,IDEG'
 
             elif jelleg == 'oktatási':
-                tokenkieg = math.floor(oldalszam/16)
+                tokenkieg = oldalszam
                 if (type_name == 'könyv' and subtype_name in ['felsőoktatási tankönyv', 'oktatási anyag']) \
                     or (type_name == 'könyvrészlet' and subtype_name in ['felsőoktatási tankönyv része', 'oktatási anyag része']):
                     if author_type == 'author':
