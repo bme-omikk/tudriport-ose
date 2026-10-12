@@ -27,10 +27,10 @@
                         <!-- <span style="font-size: 16px;"> -->
                         <b>{{ author.authorname }}</b> (<a
                             href="https://m2.mtmt.hu/gui2/?type=authors&amp;mode=browse&amp;sel=authors{{author.mtmt_authid}}"
-                            target="_blank">MTMT</a>), {{author.role}}{% if points.fejlec.mode_data.is_phd_mode %},
+                            target="_blank" class="gpk_phd_external_link">MTMT</a>), {{author.role}}{% if points.fejlec.mode_data.is_phd_mode %},
                             témavezető: <i>{{supervisor.authorname}}</i> (<a
                             href="https://m2.mtmt.hu/gui2/?type=authors&amp;mode=browse&amp;sel=authors{{supervisor.mtmt_authid}}"
-                            target="_blank">MTMT</a>)
+                            target="_blank" class="gpk_phd_external_link">MTMT</a>)
                             {% endif %}
                         <!-- </span> -->
                     </td>
@@ -86,10 +86,10 @@
                 <td valign="top">
                     <ul class="PublConditionLevel1">
                         <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_1_condition_1 }}">
-                            VAGY&nbsp;≥1 magyar nyelvű folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ points.extraInfo.creditPoint_1_condition_1 }})
+                            VAGY&nbsp;≥1 magyar nyelvű folyóiratcikk, konferenciacikk vagy könyv(fejezet) (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_1_condition_1 or '' }}</span>)
                         </li>
                         <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_1_condition_2 }}">
-                            VAGY&nbsp;≥1 idegen nyelvű folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ points.extraInfo.creditPoint_1_condition_2 }})
+                            VAGY&nbsp;≥1 idegen nyelvű folyóiratcikk, konferenciacikk vagy könyv(fejezet) (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_1_condition_2  or '' }}</span>)
                         </li>
                     </ul>
                 </td>
@@ -125,10 +125,10 @@
                             </span>
                             <ul class="PublConditionLevel2">
                                 <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_2_condition_1 }}">
-                                    ≥1 IF-os, angol nyelvű folyóiratcikk ({{ points.extraInfo.creditPoint_2_condition_1 }})
+                                    ≥1 IF-os, angol nyelvű folyóiratcikk (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_2_condition_1 or '' }}</span>)
                                 </li>
                                 <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_2_condition_2 }}">
-                                    ≥1 további folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ points.extraInfo.creditPoint_2_condition_2 }})
+                                    ≥1 további folyóiratcikk, konferenciacikk vagy könyv(fejezet) (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_2_condition_2 or '' }}</span>)
                                 </li>
                             </ul>
                         </li>
@@ -138,13 +138,13 @@
                             </span>
                             <ul class="PublConditionLevel2">
                                 <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_2_condition_3 }}">
-                                    ≥1 IF-os folyóiratnál bírálatra befogadott angol nyelvű kézirat ({{ points.extraInfo.creditPoint_2_condition_3 }})
+                                    ≥1 IF-os folyóiratnál bírálatra befogadott angol nyelvű kézirat (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_2_condition_3  or '' }}</span>)
                                 </li>
                                 <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_2_condition_4 }}">
-                                    ≥1 Scopus-ban szereplő folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ points.extraInfo.creditPoint_2_condition_4 }})
+                                    ≥1 Scopus-ban szereplő folyóiratcikk, konferenciacikk vagy könyv(fejezet) (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_2_condition_4 or '' }}</span>)
                                 </li>
                                 <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_2_condition_5 }}">
-                                    ≥1 további folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ points.extraInfo.creditPoint_2_condition_5 }})
+                                    ≥1 további folyóiratcikk, konferenciacikk vagy könyv(fejezet) (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_2_condition_5 or '' }}</span>)
                                 </li>
                             </ul>
                         </li>
@@ -177,7 +177,7 @@
                     <ul class="PublConditionLevel1">
                         <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_3_condition_1_pubids }}">
                             ≥50% szerzőhányadnyi, IF-ral rendelkező folyóiratcikk külföldi kiadású
-                            folyóiratban ({{ "%.2f"|format(points.extraInfo.creditPoint_3_condition_1*100)|replace('.00', '') }}%) ({{ points.extraInfo.creditPoint_3_condition_1_pubids }})
+                            folyóiratban ({{ "%.2f"|format(points.extraInfo.creditPoint_3_condition_1*100)|replace('.00', '') }}%) (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_3_condition_1_pubids or '' }}</span>)
                         </li>
                     </ul>
                 </td>
@@ -209,22 +209,23 @@
                         <li>
                             <span class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_4_condition_4 }}">
                                 ≥3{% if points.fejlec.mode_data.is_phd_mode %}, tézisponthoz kapcsolódó{% endif %}
-								folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ points.extraInfo.creditPoint_4_condition_4 }}),
+                                folyóiratcikk, konferenciacikk vagy könyv(fejezet) (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_4_condition_4 or '' }}</span>),
                             </span>
                             <br>
                                 VAN KÖZÖTTÜK
                             <ul class="PublConditionLevel2">
-                                <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_4_condition_1_1_pubids }}">
+                                <li>
+                                    <span class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_4_condition_1_1_pubids }}">
                                     ≥200% szerzőhányadnyi, WoS-ban vagy Scopus-ban szereplő, angol nyelvű
-                                    folyóiratcikk ({{ "%.2f"|format(points.extraInfo.creditPoint_4_condition_1_1*100)|replace('.00', '') }}%) ({{ points.extraInfo.creditPoint_4_condition_1_1_pubids }}){% if points.fejlec.mode_data.is_phd_mode %}, <span class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_4_condition_1_2 }}"> közülük ≥1 első szerzős ({{ points.extraInfo.creditPoint_4_condition_1_2 }})</span>{% endif %}
+                                    folyóiratcikk ({{ "%.2f"|format(points.extraInfo.creditPoint_4_condition_1_1*100)|replace('.00', '') }}%) (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_4_condition_1_1_pubids or '' }}</span>)</span>{% if points.fejlec.mode_data.is_phd_mode %}, <span class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_4_condition_1_2 }}"> közülük ≥1 első szerzős (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_4_condition_1_2 or '' }}</span>)</span>{% endif %}
                                 </li>
                                 <li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_4_condition_2_pubids }}">
-                                    ≥50% szerzőhányadnyi, IF-os, angol nyelvű folyóiratcikk külföldi kiadású folyóiratban ({{ "%.2f"|format(points.extraInfo.creditPoint_4_condition_2 * 100)|replace('.00', '') }}%) ({{ points.extraInfo.creditPoint_4_condition_2_pubids }})
+                                    ≥50% szerzőhányadnyi, IF-os, angol nyelvű folyóiratcikk külföldi kiadású folyóiratban ({{ "%.2f"|format(points.extraInfo.creditPoint_4_condition_2 * 100)|replace('.00', '') }}%) (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_4_condition_2_pubids or '' }}</span>)
                                 </li>
 								{% if points.fejlec.mode_data.is_phd_mode %}
                                 	<li class="cursor-pointer highlightable" data-pubids="{{ points.extraInfo.creditPoint_4_condition_3_pubids }}">
-                                    	magyar nyelvű képzés esetén: ≥100% szerzőhányadnyi magyar nyelvű
-                                    	folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ "%.2f"|format(points.extraInfo.creditPoint_4_condition_3*100)|replace('.00', '') }}%) ({{ points.extraInfo.creditPoint_4_condition_3_pubids }})
+                                        magyar nyelvű képzés esetén: ≥100% szerzőhányadnyi magyar nyelvű
+                                        folyóiratcikk, konferenciacikk vagy könyv(fejezet) ({{ "%.2f"|format(points.extraInfo.creditPoint_4_condition_3*100)|replace('.00', '') }}%) (<span class="gpk_pubids_list">{{ points.extraInfo.creditPoint_4_condition_3_pubids or '' }}</span>)
                                 	</li>
 								{% endif %}
                             </ul>
@@ -245,7 +246,7 @@
         <table id="gpkPhDKozlemenyek" width="99%" mtmt-all_pubids={{points.extraInfo.all_pubids}}>
             <thead>
                 <tr>
-                    <td><b>Beszámítható és <span style="background-color: #ddd;">további</span> közlemények</b><button id="disable-highligths-button" style="display:none" class="disable-highligths-button highlightable" data-pubids="">Kiemelések kikapcsolása</button></td>
+                    <td><b>Beszámítható és <span style="background-color: #ddd;">további</span> közlemények</b><button id="disable-highligths-button" style="display:none" class="disable-highligths-button highlightable gpk_pubids_list" data-pubids="">Kiemelések kikapcsolása</button></td>
                     <td width="1%" align="center"><b>közlemény állapota</b></td>
                     <td width="1%" align="center"><b>Típus<br>Besorolás</b></td>
                     <td width="1%" align="center"><b>kiadás<br>info</b></td>
@@ -414,6 +415,32 @@
         padding-right: 4px;
         padding-top: 2px;
         padding-bottom: 2px;
+    }
+
+    /*
+     * External links: emphasize linking by
+     * - special character appended, and
+     * - underline upon mouse cursor hover
+     */
+    a.gpk_phd_external_link {
+        text-decoration: none !important;
+    }
+
+    a.gpk_phd_external_link:hover {
+        text-decoration: underline !important;
+    }
+
+    a.gpk_phd_external_link::after {
+        content: " ⎆";
+    }
+
+    /* Mark Publication ID list by special character */
+    .gpk_pubids_list:not(:empty)::after {
+        content: " ⇣";
+    }
+    /*Mark empty value. U+2013 is &ndash; */
+    .gpk_pubids_list:empty::after {
+        content: "[\2013]";
     }
 
     ul {

@@ -211,9 +211,9 @@ export class TableManagerComponent implements OnInit {
             newDiv.appendChild(authorContent);
 
             const titleNode = document.createElement("a");
-            titleNode.textContent = `${publication.title} ⎆`;
+            titleNode.textContent = publication.title;
             titleNode.setAttribute('href', `https://m2.mtmt.hu/api/publication?format=template&cond=mtid;in;${publication.mtid}`);
-            titleNode.setAttribute("style", "text-decoration:none");
+            titleNode.setAttribute('class', 'gpk_phd_external_link');
             newDiv.append(titleNode, '. ');
 
             const pubType = firstCell.getAttribute('data-pubtype');
